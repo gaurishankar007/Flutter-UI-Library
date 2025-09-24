@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_colors.dart';
-import '../../base_slider.dart';
+import '../../../../../../../core/constants/app_colors.dart';
+import '../../../base_slider.dart';
 
 class MediaSeeker extends StatelessWidget {
   /// A stream of double between 0 to 1 of the current position of the media player.

@@ -1,9 +1,8 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_colors.dart';
-import '../../../../utils/screen_util/screen_util.dart';
-import '../../../user_inputs/button/base_icon_button.dart';
+import '../../../../../../../core/constants/app_colors.dart';
+import '../../../../../utils/screen_util/screen_util.dart';
+import '../../../../user_inputs/button/base_icon_button.dart';
 
 class MediaPlaySeekButton extends StatelessWidget {
   final ValueNotifier<bool> playingNotifier;
@@ -20,17 +19,16 @@ class MediaPlaySeekButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double iconSize = ScreenUtil.I.getAdaptiveValue(
-      baseValue: 64,
+      baseValue: 96,
       screenValues: {
-        {1, 2}: 40,
-        {3}: 48,
+        {1, 2}: 48,
+        {3}: 64,
       },
     );
-    if (kIsWeb) iconSize = 28;
 
     return Row(
       mainAxisSize: MainAxisSize.min,
-      spacing: kIsWeb ? 4 : 24,
+      spacing: 24,
       children: [
         BaseIconButton(
           onPressed: () => onReplayForward(true),

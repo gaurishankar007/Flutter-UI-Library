@@ -1,46 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-import '../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_colors.dart';
 import '../images/base_cached_network_image.dart';
 
 class YoutubeThumbnail extends StatelessWidget {
   final Function()? onTap;
   final String videoUrl;
-  final double? height;
-  final double? width;
 
-  const YoutubeThumbnail({
-    super.key,
-    this.onTap,
-    required this.videoUrl,
-    this.height,
-    this.width,
-  });
+  const YoutubeThumbnail({super.key, this.onTap, required this.videoUrl});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          BaseCachedNetworkImage(
-            url: _getThumbnailUrl(),
-            height: height,
-            width: width,
-            fit: BoxFit.cover,
-          ),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              return Icon(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final maxWidth = constraints.maxWidth;
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              BaseCachedNetworkImage(
+                url: _getThumbnailUrl(),
+                height: constraints.maxHeight,
+                width: maxWidth,
+                cacheWidth: maxWidth.toInt(),
+                fit: BoxFit.cover,
+              ),
+              Icon(
                 Icons.play_arrow_rounded,
                 color: AppColors.white,
-                size: constraints.maxWidth * .45,
-              );
-            },
-          ),
-        ],
+                size: maxWidth * .45,
+              ),
+            ],
+          );
+        },
       ),
     );
   }

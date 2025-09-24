@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_colors.dart';
-import '../../base_text.dart';
+import '../../../../../../../core/constants/app_colors.dart';
+import '../../../base_text.dart';
 
 class MediaPlaybackSpeed extends StatelessWidget {
   final ValueNotifier<double> playbackRateNotifier;
@@ -22,12 +23,15 @@ class MediaPlaybackSpeed extends StatelessWidget {
           onSelected: onRateChanged,
           padding: EdgeInsets.zero,
           menuPadding: EdgeInsets.zero,
-          icon: Icon(Icons.speed_sharp, size: 28, color: AppColors.white),
+          icon: Icon(
+            Icons.speed_sharp,
+            size: kIsWeb ? 40 : 32,
+            color: AppColors.white,
+          ),
           itemBuilder: (context) {
             return [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0].map((value) {
               final text = value == 1.0 ? "Normal" : "$value";
-              final textColor =
-                  value == playbackRate
+              final textColor = value == playbackRate
                       ? AppColors.primary
                       : AppColors.black.withAlpha(222);
               return PopupMenuItem(

@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_colors.dart';
-import '../../../user_inputs/button/base_icon_button.dart';
+import '../../../../../../../core/constants/app_colors.dart';
+import '../../../../user_inputs/button/base_icon_button.dart';
 
 class MediaPlayButton extends StatelessWidget {
   final ValueNotifier<bool> playingNotifier;
@@ -22,7 +23,7 @@ class MediaPlayButton extends StatelessWidget {
           onPressed: onPressed,
           icon: Icon(
             playing ? Icons.pause : Icons.play_arrow,
-            size: 28,
+            size: kIsWeb ? 40 : 32,
             color: AppColors.white,
           ),
           padding: EdgeInsets.zero,
