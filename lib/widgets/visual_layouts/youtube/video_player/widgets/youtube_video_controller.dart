@@ -25,7 +25,7 @@ class YoutubeVideoController extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: kIsWeb ? UIHelpers.smallAllPadding : UIHelpers.smallHPadding,
+        padding: kIsWeb ? UIHelpers.paddingA12 : UIHelpers.paddingH12,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -34,7 +34,7 @@ class YoutubeVideoController extends StatelessWidget {
               bufferedNotifier: controller.bufferedNotifier,
               onChanged: controller.onPositionChanged,
             ),
-            UIHelpers.xxSmallVSpace,
+            UIHelpers.spaceV4,
             Row(
               children: [
                 MediaPlayButton(
@@ -42,10 +42,10 @@ class YoutubeVideoController extends StatelessWidget {
                   onPressed: controller.onPlayPause,
                 ),
                 if (kIsWeb || !Platform.isIOS) ...[
-                  UIHelpers.xSmallHSpace,
+                  UIHelpers.spaceH8,
                   MediaVolumeButton(controller: controller),
                 ],
-                UIHelpers.smallHSpace,
+                UIHelpers.spaceH12,
                 ValueListenableBuilder(
                   valueListenable: controller.positionNotifier,
                   builder: (context, position, child) {

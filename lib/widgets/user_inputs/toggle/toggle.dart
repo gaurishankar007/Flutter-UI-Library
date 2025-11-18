@@ -44,7 +44,7 @@ class Toggle extends HookWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         child,
-        UIHelpers.xSmallHSpace,
+        UIHelpers.spaceH8,
         BaseText(
           label!,
           color:

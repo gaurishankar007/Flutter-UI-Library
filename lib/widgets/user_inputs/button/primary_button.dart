@@ -4,8 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../../core/constants/app_colors.dart';
 import '../../../utils/ui_helpers.dart';
-import '../../visual_layouts/loading_circle.dart';
 import '../../visual_layouts/base_text.dart';
+import '../../visual_layouts/loading_circle.dart';
 
 class PrimaryButton extends HookWidget {
   final Function()? onTap;
@@ -73,7 +73,7 @@ class PrimaryButton extends HookWidget {
             return AppColors.white;
           }),
           shape: WidgetStatePropertyAll(
-            RoundedRectangleBorder(borderRadius: UIHelpers.xSmallCRadius),
+            RoundedRectangleBorder(borderRadius: UIHelpers.radiusC8),
           ),
         ),
         child: ValueListenableBuilder(

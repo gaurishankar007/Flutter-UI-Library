@@ -23,12 +23,12 @@ class UploadIconContainer extends StatelessWidget {
         Navigator.pop(context);
         onTap.call();
       },
-      borderRadius: UIHelpers.smallCRadius,
+      borderRadius: UIHelpers.radiusC12,
       child: Ink(
-        padding: UIHelpers.xLargeAllPadding,
+        padding: UIHelpers.paddingA32,
         decoration: BoxDecoration(
           color: AppColors.highlight,
-          borderRadius: UIHelpers.smallCRadius,
+          borderRadius: UIHelpers.radiusC12,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -42,7 +42,7 @@ class UploadIconContainer extends StatelessWidget {
               ),
               child: Icon(iconData, color: AppColors.white),
             ),
-            UIHelpers.xSmallVSpace,
+            UIHelpers.spaceV8,
             BaseText(text, fontSize: 16),
           ],
         ),

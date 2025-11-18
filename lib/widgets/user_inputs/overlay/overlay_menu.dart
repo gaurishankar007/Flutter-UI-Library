@@ -21,6 +21,7 @@ import 'overlay_decoration.dart';
 ///
 /// The [menuWidth] parameter allows specifying a custom width for the overlay menu.
 /// The [menuItemAlign] parameter allows customizing the alignment of the menu item labels.
+/// The [shrinkWrap] adjusts the height of the menu based on the children's size.
 class OverlayMenu<T> extends StatefulWidget {
   final Widget menuWidget;
   final List<OverlayMenuItem<T>> menuItems;
@@ -28,6 +29,7 @@ class OverlayMenu<T> extends StatefulWidget {
   final bool isLeftMenu;
   final bool isTopMenu;
   final TextAlign? menuItemAlign;
+  final bool shrinkWrap;
 
   const OverlayMenu({
     super.key,
@@ -37,6 +39,7 @@ class OverlayMenu<T> extends StatefulWidget {
     this.isLeftMenu = false,
     this.isTopMenu = false,
     this.menuItemAlign,
+    this.shrinkWrap = true,
   });
 
   @override
@@ -70,17 +73,18 @@ class _OverlayMenuState<T> extends State<OverlayMenu<T>> {
   /// Shows the overlay entry if it is not already visible.
   /// If the overlay is already shown, it will be hidden.
   void _showOverlay() {
-    if (_overlayEntry != null) {
-      _hideOverlay();
-      return;
-    }
+    if (_overlayEntry != null) return;
 
     _overlayEntry = _buildOverlay();
     Overlay.of(context).insert(_overlayEntry!);
   }
 
   /// Removes and disposes the overlay entry if it exists.
-  void _hideOverlay() {
+  /// A small delay is introduced to allow [_showOverlay] to complete its execution
+  /// when the trigger widget [CompositedTransformTarget] is tapped, preventing immediate re-display of the overlay.
+  void _hideOverlay() async {
+    await Future.delayed(Duration(milliseconds: 50));
+
     _overlayEntry?.remove();
     _overlayEntry = null;
   }
@@ -95,7 +99,7 @@ class _OverlayMenuState<T> extends State<OverlayMenu<T>> {
 
     // If the widget hasn't been laid out yet, return an empty overlay.
     if (renderBox == null || !renderBox.hasSize) {
-      return OverlayEntry(builder: (_) => UIHelpers.nothing);
+      return OverlayEntry(builder: (_) => SizedBox.shrink());
     }
 
     // Get the size of the trigger widget.
@@ -114,14 +118,24 @@ class _OverlayMenuState<T> extends State<OverlayMenu<T>> {
 
     return OverlayEntry(
       builder: (context) {
-        return Positioned(
-          width: widget.menuWidth,
-          child: CompositedTransformFollower(
-            link: _layerLink,
-            showWhenUnlinked: false,
-            offset: Offset(menuXOffset, menuYOffset),
-            child: _buildOverlayContainer(),
-          ),
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: Listener(
+                onPointerDown: (_) => _hideOverlay(),
+                behavior: HitTestBehavior.translucent,
+              ),
+            ),
+            Positioned(
+              width: widget.menuWidth,
+              child: CompositedTransformFollower(
+                link: _layerLink,
+                showWhenUnlinked: false,
+                offset: Offset(menuXOffset, menuYOffset),
+                child: _buildOverlayContainer(),
+              ),
+            ),
+          ],
         );
       },
     );
@@ -135,9 +149,9 @@ class _OverlayMenuState<T> extends State<OverlayMenu<T>> {
         color: Colors.transparent,
         child: ListView.separated(
           padding: EdgeInsets.zero,
-          shrinkWrap: true,
+          shrinkWrap: widget.shrinkWrap,
           itemCount: widget.menuItems.length,
-          separatorBuilder: (context, index) => UIHelpers.xxSmallVSpace,
+          separatorBuilder: (context, index) => UIHelpers.spaceV4,
           itemBuilder: (context, index) {
             final item = widget.menuItems[index];
             return OverlayButton(

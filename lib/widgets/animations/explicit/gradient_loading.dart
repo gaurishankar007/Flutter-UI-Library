@@ -87,7 +87,7 @@ class _GradientLoadingState extends State<GradientLoading>
         mainAxisSize: MainAxisSize.min,
         children: [
           child,
-          UIHelpers.largeVSpace,
+          UIHelpers.spaceV24,
           BaseText.heading2("Loading..."),
         ],
       );

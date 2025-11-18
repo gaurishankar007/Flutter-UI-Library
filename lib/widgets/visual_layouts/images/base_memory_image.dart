@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import '../../../utils/ui_helpers.dart';
 import '../cupertino_loading.dart';
 import '../error_indicator.dart';
 
@@ -31,7 +30,7 @@ class BaseMemoryImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (uint8List.isEmpty) return UIHelpers.nothing;
+    if (uint8List.isEmpty) return SizedBox.shrink();
 
     Widget child = Image.memory(
       uint8List,

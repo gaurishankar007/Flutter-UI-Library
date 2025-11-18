@@ -41,7 +41,7 @@ class BaseCheckbox extends HookWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         child,
-        UIHelpers.xSmallHSpace,
+        UIHelpers.spaceH8,
         BaseText(
           label!,
           color:

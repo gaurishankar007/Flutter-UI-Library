@@ -19,16 +19,16 @@ class OTPField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: UIHelpers.xLargeVPadding,
+      padding: UIHelpers.paddingV32,
       child: Pinput(
         controller: controller,
         onChanged: onChanged,
-        separatorBuilder: (index) => UIHelpers.sMediumHSpace,
+        separatorBuilder: (index) => UIHelpers.spaceH12,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         defaultPinTheme: PinTheme(
           height: 60,
           decoration: BoxDecoration(
-            borderRadius: UIHelpers.smallCRadius,
+            borderRadius: UIHelpers.radiusC12,
             border: Border.all(
               color: hasError ? AppColors.error : AppColors.border,
             ),

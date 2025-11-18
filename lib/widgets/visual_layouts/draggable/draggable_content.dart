@@ -117,7 +117,7 @@ class _DraggableContentState extends State<DraggableContent> {
       builder: (context, scrollController) {
         return DecoratedBox(
           decoration: BoxDecoration(
-            borderRadius: UIHelpers.largeTRadius,
+            borderRadius: UIHelpers.radiusTL24TR24,
             gradient: LinearGradient(
               colors: [
                 AppColors.primary.withAlpha(25),
@@ -139,14 +139,14 @@ class _DraggableContentState extends State<DraggableContent> {
                   ),
                   child: ListView(
                     controller: scrollController,
-                    padding: UIHelpers.sMediumHPadding,
+                    padding: UIHelpers.paddingH12,
                     children: [
                       Column(
                         key: _alwaysVisibleContentKey,
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          UIHelpers.xSmallVSpace,
+                          UIHelpers.spaceV8,
                           Center(
                             child: SizedBox(
                               width: 96,
@@ -159,7 +159,7 @@ class _DraggableContentState extends State<DraggableContent> {
                               ),
                             ),
                           ),
-                          UIHelpers.largeVSpace,
+                          UIHelpers.spaceV24,
                           ...widget.alwaysVisibleChildren,
                         ],
                       ),

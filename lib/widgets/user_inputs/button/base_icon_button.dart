@@ -25,7 +25,7 @@ class BaseIconButton extends StatelessWidget {
     Widget child = IconButton(
       onPressed: disabled ? null : onPressed,
       style: IconButton.styleFrom(
-        padding: padding ?? UIHelpers.xSmallAllPadding,
+        padding: padding ?? UIHelpers.paddingA8,
         minimumSize: minimumSize ?? Size.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         overlayColor: disableSplash ? Colors.transparent : null,

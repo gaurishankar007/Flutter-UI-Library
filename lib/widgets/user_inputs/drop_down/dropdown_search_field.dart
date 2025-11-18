@@ -27,6 +27,9 @@ class DropdownSearchField<T> extends StatefulWidget {
   final double overlayMaxHeight;
   final EdgeInsets? overlayPadding;
 
+  /// Adjusts the height of the overlay based on the children's size.
+  final bool shrinkWrap;
+
   const DropdownSearchField({
     super.key,
     this.controller,
@@ -40,15 +43,14 @@ class DropdownSearchField<T> extends StatefulWidget {
     this.overlayGap = 8,
     this.overlayMaxHeight = double.infinity,
     this.overlayPadding,
+    this.shrinkWrap = true,
   });
 
   @override
-  State<DropdownSearchField<T>> createState() =>
-      _DropdownSearchFieldState<T>();
+  State<DropdownSearchField<T>> createState() => _DropdownSearchFieldState<T>();
 }
 
-class _DropdownSearchFieldState<T>
-    extends State<DropdownSearchField<T>> {
+class _DropdownSearchFieldState<T> extends State<DropdownSearchField<T>> {
   final GlobalKey _textFieldKey = GlobalKey();
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
@@ -126,7 +128,7 @@ class _DropdownSearchFieldState<T>
     /// Check condition if widget hasn't been laid out yet or
     /// the layout might have completed yet and size is not available yet
     if (renderBox == null || !renderBox.hasSize) {
-      return OverlayEntry(builder: (_) => UIHelpers.nothing);
+      return OverlayEntry(builder: (_) => SizedBox.shrink());
     }
 
     final size = renderBox.size;
@@ -155,11 +157,11 @@ class _DropdownSearchFieldState<T>
         child: Material(
           color: Colors.transparent,
           child: ListView.separated(
-            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            shrinkWrap: widget.shrinkWrap,
             itemCount: widget.overlayItems.length,
             separatorBuilder: (context, index) {
-              return widget.overlayItemSeparatorWidget ??
-                  UIHelpers.xSmallVSpace;
+              return widget.overlayItemSeparatorWidget ?? UIHelpers.spaceV8;
             },
             itemBuilder: (context, index) {
               return widget.overlayItemWidget(widget.overlayItems[index]);

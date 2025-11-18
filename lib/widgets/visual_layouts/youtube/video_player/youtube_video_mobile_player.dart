@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import '../../../../utils/debounce_time.dart';
-import '../../../../utils/ui_helpers.dart';
 import '../../error_icon.dart';
 import 'util/youtube_media_controller.dart';
 import 'widgets/youtube_video_controller.dart';
@@ -85,7 +84,7 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
                 ValueListenableBuilder(
                   valueListenable: _visibilityNotifier,
                   builder: (context, show, child) {
-                    if (!show) return UIHelpers.nothing;
+                    if (!show) return SizedBox.shrink();
                     return YoutubeVideoController(controller: _mediaController);
                   },
                 ),

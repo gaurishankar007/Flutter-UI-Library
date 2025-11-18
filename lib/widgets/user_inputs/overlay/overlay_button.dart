@@ -20,7 +20,7 @@ class OverlayButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: UIHelpers.sMediumHSmallVPadding,
+        padding: UIHelpers.paddingH16V12,
         child: BaseText(label, textAlign: labelAlignment),
       ),
     );

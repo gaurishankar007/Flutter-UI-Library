@@ -25,15 +25,15 @@ class DocumentListItem extends StatelessWidget {
       dense: true,
       minVerticalPadding: 1,
       horizontalTitleGap: 8,
-      contentPadding: UIHelpers.sMediumHSmallVPadding,
+      contentPadding: UIHelpers.paddingH16V12,
       visualDensity: const VisualDensity(vertical: -2),
       tileColor: AppColors.highlight,
       shape: RoundedRectangleBorder(
-        borderRadius: UIHelpers.smallCRadius,
+        borderRadius: UIHelpers.radiusC12,
         side: const BorderSide(color: AppColors.containerBorder),
       ),
       leading: Container(
-        padding: UIHelpers.xSmallAllPadding,
+        padding: UIHelpers.paddingA8,
         decoration: const BoxDecoration(
           color: AppColors.primary,
           shape: BoxShape.circle,

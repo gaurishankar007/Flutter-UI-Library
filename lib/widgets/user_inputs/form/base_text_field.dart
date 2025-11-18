@@ -114,7 +114,7 @@ class BaseTextField extends HookWidget {
               );
             },
           ),
-          UIHelpers.xxSmallVSpace,
+          UIHelpers.spaceV4,
           child,
         ],
       );

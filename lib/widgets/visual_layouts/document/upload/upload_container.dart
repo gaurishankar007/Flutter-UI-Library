@@ -15,10 +15,10 @@ class UploadContainer extends StatelessWidget {
       strokeColor: AppColors.primary,
       dashWidth: 6,
       gapWidth: 4,
-      borderRadius: UIHelpers.xSmallCRadius,
+      borderRadius: UIHelpers.radiusC8,
       child: Container(
         width: double.maxFinite,
-        padding: UIHelpers.largeAllPadding,
+        padding: UIHelpers.paddingA24,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           spacing: 12,

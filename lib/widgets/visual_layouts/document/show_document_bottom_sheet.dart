@@ -20,7 +20,7 @@ showDocumentBottomSheet(
       BottomSheetTitle(title: title ?? "Document"),
       Container(
         width: double.maxFinite,
-        padding: UIHelpers.sMediumAllPadding,
+        padding: UIHelpers.paddingA16,
         color: AppColors.scaffold,
         child: documentData.build(width: width, height: height ?? 300),
       ),

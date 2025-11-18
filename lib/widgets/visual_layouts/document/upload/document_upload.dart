@@ -42,12 +42,12 @@ class DocumentUpload extends StatelessWidget {
                   documentType: documentType,
                 ),
               ),
-          borderRadius: UIHelpers.xSmallCRadius,
+          borderRadius: UIHelpers.radiusC8,
           splashFactory: InkSplash.splashFactory,
           splashColor: AppColors.highlight,
           child: UploadContainer(maxFileCount: maxFileCount),
         ),
-        UIHelpers.xSmallVSpace,
+        UIHelpers.spaceV8,
         BaseText(
           "Only support "
           "${documentType.allowedFileTypes.join(", ")} files.",

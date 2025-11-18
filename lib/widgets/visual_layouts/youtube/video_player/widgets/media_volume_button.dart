@@ -36,7 +36,7 @@ class MediaVolumeButton extends HookWidget {
                 },
               ),
             ),
-            UIHelpers.xxSmallHSpace,
+            UIHelpers.spaceH4,
             SizedBox(
               width: 60,
               child: BaseSlider(
@@ -51,7 +51,7 @@ class MediaVolumeButton extends HookWidget {
                 onChanged: controller.onVolumeChanged,
               ),
             ),
-            UIHelpers.xxSmallHSpace,
+            UIHelpers.spaceH4,
           ],
         );
       },

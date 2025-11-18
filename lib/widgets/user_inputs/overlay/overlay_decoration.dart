@@ -14,7 +14,7 @@ class OverlayDecoration extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: UIHelpers.xSmallCRadius,
+        borderRadius: UIHelpers.radiusC8,
         border: Border.all(color: AppColors.fade),
         boxShadow: [
           BoxShadow(
@@ -25,7 +25,7 @@ class OverlayDecoration extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: padding ?? UIHelpers.smallAllPadding,
+        padding: padding ?? UIHelpers.paddingA12,
         child: child,
       ),
     );

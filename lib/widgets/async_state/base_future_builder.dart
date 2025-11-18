@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../utils/ui_helpers.dart';
-
 class BaseFutureBuilder<T> extends HookWidget {
   final Future<T> Function() future;
   final Widget? loadingWidget;
@@ -24,13 +22,13 @@ class BaseFutureBuilder<T> extends HookWidget {
 
     if (snapshot.hasData) {
       final data = snapshot.data;
-      if (data == null) return UIHelpers.nothing;
+      if (data == null) return SizedBox.shrink();
       return dataBuilder(data);
     } else if (snapshot.hasError) {
       return errorBuilder?.call(snapshot.error, snapshot.stackTrace) ??
-          UIHelpers.nothing;
+          SizedBox.shrink();
     } else {
-      return loadingWidget ?? UIHelpers.nothing;
+      return loadingWidget ?? SizedBox.shrink();
     }
   }
 }

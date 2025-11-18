@@ -18,6 +18,9 @@ class DropdownTextField<T> extends StatefulWidget {
   final Widget? prefixIcon;
   final double menuMaxHeight;
   final double? menuMaxWidth;
+
+  /// Adjusts the height of the menu based on the children's size.
+  final bool shrinkWrap;
   final DropdownItem<T>? selectedItem;
   final List<DropdownItem<T>> items;
   final Function(T value) onChanged;
@@ -29,6 +32,7 @@ class DropdownTextField<T> extends StatefulWidget {
     this.prefixIcon,
     this.menuMaxHeight = double.infinity,
     this.menuMaxWidth,
+    this.shrinkWrap = true,
     required this.items,
     required this.onChanged,
     this.selectedItem,
@@ -123,7 +127,7 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
     /// Check condition if widget hasn't been laid out yet or
     /// the layout might have completed yet and size is not available yet
     if (renderBox == null || !renderBox.hasSize) {
-      return OverlayEntry(builder: (_) => UIHelpers.nothing);
+      return OverlayEntry(builder: (_) => SizedBox.shrink());
     }
 
     final height = renderBox.size.height;
@@ -154,15 +158,15 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
           color: Colors.transparent,
           child: ListView.separated(
             padding: EdgeInsets.zero,
-            shrinkWrap: true,
+            shrinkWrap: widget.shrinkWrap,
             itemCount: widget.items.length,
-            separatorBuilder: (context, index) => UIHelpers.xxSmallVSpace,
+            separatorBuilder: (context, index) => UIHelpers.spaceV4,
             itemBuilder: (context, index) {
               final item = widget.items[index];
               return InkWell(
                 onTap: () => _onDropdownItemSelect(item),
                 child: Padding(
-                  padding: UIHelpers.sMediumHSmallVPadding,
+                  padding: UIHelpers.paddingH16V12,
                   child: BaseText(item.label),
                 ),
               );

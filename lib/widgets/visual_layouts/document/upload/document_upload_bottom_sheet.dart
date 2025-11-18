@@ -30,7 +30,7 @@ class DocumentUploadBottomSheet extends StatelessWidget {
           title: "Select Option",
           titleAlignment: Alignment.center,
         ),
-        UIHelpers.sMediumVSpace,
+        UIHelpers.spaceV16,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -52,7 +52,7 @@ class DocumentUploadBottomSheet extends StatelessWidget {
             ),
           ],
         ),
-        UIHelpers.sMediumVSpace,
+        UIHelpers.spaceV16,
       ],
     );
   }
