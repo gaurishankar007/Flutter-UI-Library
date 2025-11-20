@@ -6,7 +6,7 @@ import '../../user_inputs/bottom_sheet/bottom_sheet_title.dart';
 import '../../user_inputs/bottom_sheet/generic_bottom_sheet.dart';
 import 'models/document_data.dart';
 
-showDocumentBottomSheet(
+void showDocumentBottomSheet(
   BuildContext context, {
   required DocumentData documentData,
   String? title,

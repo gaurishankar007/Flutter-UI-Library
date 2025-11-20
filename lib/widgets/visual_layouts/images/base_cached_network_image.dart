@@ -42,7 +42,7 @@ class BaseCachedNetworkImage extends StatelessWidget {
         fit: fit,
         imageUrl: url!,
         placeholder: (context, url) => CupertinoLoading(),
-        errorWidget: (_, __, ___) => const ErrorIndicator(),
+        errorWidget: (_, _, _) => const ErrorIndicator(),
       ),
     );
   }

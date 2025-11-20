@@ -1,10 +1,10 @@
-name: ui_components
-description: "A new Flutter project containing customized components."
+name: ui_library
+description: "A new Flutter project containing custom ui components."
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.7.2
+  sdk: ^3.10.0
 
 dependencies:
   flutter:
@@ -20,9 +20,10 @@ dependencies:
   pinput: ^5.0.1
   youtube_player_iframe: ^5.2.1
   pointer_interceptor: ^0.10.1+2
+  vector_math: ^2.1.4
 
 dev_dependencies:
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true

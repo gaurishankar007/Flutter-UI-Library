@@ -61,7 +61,7 @@ class _StopwatchTimerState extends State<StopwatchTimer> {
   Widget build(BuildContext context) => BaseText(elapsedDuration);
 
   /// Update stop watch elapsed time
-  startTimer() {
+  void startTimer() {
     timer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) =>
@@ -70,5 +70,5 @@ class _StopwatchTimerState extends State<StopwatchTimer> {
   }
 
   /// Stop updating stop watch elapsed time
-  stopTimer() => timer.cancel();
+  void stopTimer() => timer.cancel();
 }

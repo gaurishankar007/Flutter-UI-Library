@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class Polygon extends CustomPainter {
+class PolygonPainter extends CustomPainter {
   final int sides;
-  const Polygon({required this.sides});
+  const PolygonPainter({required this.sides});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -55,5 +55,5 @@ class Polygon extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) =>
-      oldDelegate is Polygon && oldDelegate.sides != sides;
+      oldDelegate is PolygonPainter && oldDelegate.sides != sides;
 }

@@ -16,16 +16,16 @@ class ResendOTPButton extends HookWidget {
     if (loading.value) {
       return SizedBox(
         height: 30,
-        child: LoadingCircle.small(color: Colors.white),
+        child: LoadingCircle.small(color: Colors.black),
       );
     }
 
     return TweenAnimationBuilder(
       tween: Tween<Duration>(
-        begin: const Duration(seconds: 60),
+        begin: const Duration(seconds: 10),
         end: Duration.zero,
       ),
-      duration: const Duration(seconds: 60),
+      duration: const Duration(seconds: 10),
       onEnd: () => showTimer.value = false,
       builder: (context, duration, child) {
         return BaseTextButton(
@@ -35,11 +35,10 @@ class ResendOTPButton extends HookWidget {
             loading.value = false;
             showTimer.value = true;
           },
-          text:
-              showTimer.value
-                  ? "Resend OTP (${duration.inSeconds})"
-                  : "Resend OTP",
-          foregroundColor: Colors.white,
+          text: showTimer.value
+              ? "Resend OTP (${duration.inSeconds})"
+              : "Resend OTP",
+          foregroundColor: Colors.black,
           fontSize: 16,
           expanded: true,
           disabled: showTimer.value,

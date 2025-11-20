@@ -18,11 +18,11 @@ class MediaPlaySeekButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double iconSize = ScreenUtil.I.getAdaptiveValue(
-      baseValue: 96,
-      screenValues: {
-        {1, 2}: 48,
-        {3}: 64,
+    double iconSize = ScreenUtil.I.getResponsiveValue(
+      base: 96,
+      screens: {
+        {.compact, .phone}: 48,
+        {.tablet}: 64,
       },
     );
 

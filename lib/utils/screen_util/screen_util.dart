@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/widgets.dart';
 
 part 'screen_type.dart';
@@ -35,7 +36,7 @@ class ScreenUtil {
   ScreenType get type => _type;
 
   /// Set screen dimensions, orientation, screen type, etc.
-  configureScreen(Size size) {
+  void configureScreen(Size size) {
     _height = size.height;
     _width = size.width;
     _statusBarHeight = 0;
@@ -79,29 +80,36 @@ class ScreenUtil {
     return _limitedNumber(width, min: min, max: max);
   }
 
-  /// Returns a value adapted to the current screen type.
-  /// It checks the current screen type's index (from the [ScreenType] enum)
-  /// with the keys in [screenValues]. If a key contains the current index,
-  /// its corresponding value is returned.
-  /// Otherwise, the [baseValue] is returned as the default.
-  T getAdaptiveValue<T>({
-    required T baseValue,
-    required Map<Set<int>, T> screenValues,
+  /// The first matching screen type value is returned otherwise use [base].
+  T getResponsiveValue<T>({
+    required T base,
+    required Map<Set<ScreenType>, T> screens,
   }) {
-    for (final entry in screenValues.entries) {
-      if (entry.key.contains(_type.index)) return entry.value;
+    for (final entry in screens.entries) {
+      if (entry.key.contains(_type)) return entry.value;
     }
-    return baseValue;
+    return base;
   }
+
+  /// Get adapted values for compact and small screens otherwise use [base]
+  T getMobileValue<T>({required T base, required T screen12}) =>
+      getResponsiveValue(
+        base: base,
+        screens: {
+          {.compact, .phone}: screen12,
+        },
+      );
 
   /// Whether the screen is smartphone screen
   bool get _isPhoneScreen => _type.index <= ScreenType.phone.index;
+
+  /// Whether the screen is desktop screen in web view
+  bool get isWebDesktopScreen => kIsWeb && _type == ScreenType.desktop;
 
   /// Spacing between the items in the grid view
   double gridViewSpace = 20;
 
   /// View horizontal padding
-  ///
   double get horizontalSpace => _isPhoneScreen ? widthPart(5.55, max: 20) : 24;
 
   /// View vertical padding
@@ -124,4 +132,14 @@ class ScreenUtil {
   /// Width of the screen excluding left and right screen padding
   double availableWidth({double extraSpace = 0}) =>
       width - (horizontalSpace * 2) - extraSpace;
+}
+
+extension NumScreenUtilExtension<T extends num> on T {
+  /// Required percentage of height with limitation
+  double heightPart({double? min, double? max}) =>
+      ScreenUtil.I.heightPart(toDouble(), min: min, max: max);
+
+  /// Required percentage of width with limitation
+  double widthPart({double? min, double? max}) =>
+      ScreenUtil.I.widthPart(toDouble(), min: min, max: max);
 }

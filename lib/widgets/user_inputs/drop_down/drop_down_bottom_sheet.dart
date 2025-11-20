@@ -53,8 +53,8 @@ class _DropdownBottomSheetState<T> extends State<DropdownBottomSheet<T>> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:
-          () => showGenericBottomSheet(context, child: _buildDropdownItems()),
+      onTap: () =>
+          showGenericBottomSheet(context, child: _buildDropdownItems()),
       child: ListenableBuilder(
         listenable: controller,
         builder: (context, child) {
@@ -102,10 +102,9 @@ class _DropdownBottomSheetState<T> extends State<DropdownBottomSheet<T>> {
                         vertical: 16,
                       ),
                       decoration: BoxDecoration(
-                        color:
-                            _selectedItem?.value == dropDownData.value
-                                ? Colors.lightBlueAccent
-                                : Colors.white,
+                        color: _selectedItem?.value == dropDownData.value
+                            ? Colors.lightBlueAccent
+                            : Colors.white,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Row(
@@ -114,13 +113,13 @@ class _DropdownBottomSheetState<T> extends State<DropdownBottomSheet<T>> {
                           BaseText(dropDownData.label),
                           _selectedItem?.value == dropDownData.value
                               ? const Icon(
-                                Icons.radio_button_checked,
-                                color: Colors.blue,
-                              )
+                                  Icons.radio_button_checked,
+                                  color: Colors.blue,
+                                )
                               : const Icon(
-                                Icons.radio_button_off,
-                                color: Colors.grey,
-                              ),
+                                  Icons.radio_button_off,
+                                  color: Colors.grey,
+                                ),
                         ],
                       ),
                     ),

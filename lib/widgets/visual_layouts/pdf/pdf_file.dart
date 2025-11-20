@@ -31,7 +31,7 @@ class PDFFile extends StatelessWidget {
         swipeHorizontal: swipeHorizontal ?? false,
         pageFling: pageFling ?? true,
         onError: (_) => const ErrorIndicator(),
-        onPageError: (_, __) => const ErrorIndicator(),
+        onPageError: (_, _) => const ErrorIndicator(),
       ),
     );
   }

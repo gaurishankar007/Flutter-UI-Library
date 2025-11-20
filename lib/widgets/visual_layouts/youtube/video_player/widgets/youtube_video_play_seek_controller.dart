@@ -68,11 +68,11 @@ class YoutubeVideoPlaySeekController extends HookWidget {
             child: Center(
               child: Icon(
                 isReplay ? Icons.replay_5_sharp : Icons.forward_5_sharp,
-                size: ScreenUtil.I.getAdaptiveValue(
-                  baseValue: 96,
-                  screenValues: {
-                    {1, 2}: 40,
-                    {3}: 64,
+                size: ScreenUtil.I.getResponsiveValue(
+                  base: 96,
+                  screens: {
+                    {.compact, .phone}: 40,
+                    {.tablet}: 64,
                   },
                 ),
                 color: AppColors.white,

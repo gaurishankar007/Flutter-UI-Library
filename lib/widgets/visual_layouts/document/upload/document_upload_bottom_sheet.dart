@@ -57,7 +57,7 @@ class DocumentUploadBottomSheet extends StatelessWidget {
     );
   }
 
-  pickUpImages(ImageSource source) async {
+  Future<void> pickUpImages(ImageSource source) async {
     List<XFile> xFiles = [];
     if (multiSelector && source == ImageSource.gallery) {
       xFiles = await ImagePicker().pickMultiImage();
@@ -70,7 +70,7 @@ class DocumentUploadBottomSheet extends StatelessWidget {
     onSelection.call(xFiles.map((e) => File(e.path)).toList());
   }
 
-  pickUpFiles() async {
+  Future<void> pickUpFiles() async {
     final filePicker = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: FileType.custom,

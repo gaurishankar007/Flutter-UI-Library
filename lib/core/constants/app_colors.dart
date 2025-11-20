@@ -11,6 +11,8 @@ class AppColors {
   static const black20 = Color(0x33000000); // 0.2 opacity
   static const black25 = Color(0x40000000); // 0.25 opacity
   static const black60 = Color(0x99000000); // 0.6 opacity
+  static const black38 = Color(0x61000000); // from Colors.black38
+  static const black87 = Color(0xDE000000); // from Colors.black87
   static const black70 = Color(0xB3000000); // 0.7 opacity
   static const black95 = Color(0xF2000000); // 0.95 opacity
 
@@ -33,6 +35,11 @@ class AppColors {
 
   // Color Scheme
   static const primary = Color(0xFF003399);
+  static const primary50 = Color(0xFFE5EAF3);
+  static const primary200 = Color(0xFF99ADD6);
+  static const primary250 = Color(0xFF8096C9);
+  static const primary700 = Color(0xFF002266);
+
   static const secondary = Color(0xFF263A43);
   static const surface = white;
   static const onSurface = base;

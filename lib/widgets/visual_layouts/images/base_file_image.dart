@@ -40,7 +40,7 @@ class BaseFileImage extends StatelessWidget {
         if (frame != null) return child;
         return CupertinoLoading(dimension: height);
       },
-      errorBuilder: (_, __, ___) => const ErrorIndicator(),
+      errorBuilder: (_, _, _) => const ErrorIndicator(),
     );
 
     if (isCircular) {

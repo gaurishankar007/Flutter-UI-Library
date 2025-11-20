@@ -1,28 +1,25 @@
 # Flutter UI Library 🎨
 
-A Flutter project showcasing a library of reusable custom widgets to accelerate UI development and maintain design consistency across projects. [Learn about most commonly used handy Flutter widgets.](./flutter_cheat_sheet.md)
+A collection of reusable and customizable widgets for Flutter, designed to accelerate UI development and ensure design consistency across your projects. [Learn about most commonly used handy Flutter widgets.](./flutter_cheat_sheet.md)
 
 ## Table of Contents 📌
 
 - [Flutter UI Library 🎨](#flutter-ui-library-)
   - [Table of Contents 📌](#table-of-contents-)
-  - [Overview 🛠️](#overview-️)
-  - [Features 📋](#features-)
-    - [Animation Widgets ✨](#animation-widgets-)
-    - [Clipper Widgets ✂️](#clipper-widgets-️)
-    - [Painter Widgets 🎨](#painter-widgets-)
-    - [Visual Layouts 🧱](#visual-layouts-)
+  - [Custom Widgets 📋](#custom-widgets-)
+    - [Animation ✨](#animation-)
+    - [Async \& State ⚡️](#async--state-️)
+    - [Clipper ✂️](#clipper-️)
+    - [Painter 🎨](#painter-)
     - [User Inputs ✍️](#user-inputs-️)
-    - [Async \& State Widgets ⚡️](#async--state-widgets-️)
-  - [Why Use This Project? 🤔](#why-use-this-project-)
+    - [Visual Layouts 🧱](#visual-layouts-)
+  - [Animation Views 🎬](#animation-views-)
+    - [Explicit Animation Views](#explicit-animation-views)
+    - [Implicit Animation Views](#implicit-animation-views)
 
-## Overview 🛠️
+## Custom Widgets 📋
 
-This project provides a collection of pre-built, customizable widgets to simplify your Flutter app's development. These components are designed to be flexible and reusable, ensuring consistency and reducing development time.
-
-## Features 📋
-
-### Animation Widgets ✨
+### Animation ✨
 
 Bring your UI to life with smooth animations:
 
@@ -36,7 +33,16 @@ Bring your UI to life with smooth animations:
 
 ---
 
-### Clipper Widgets ✂️
+### Async & State ⚡️
+
+Widgets for handling asynchronous operations and managing state reactively.
+
+- ✅ **Base Future Builder**: An efficient `FutureBuilder` using `flutter_hooks` with dedicated builders for data, error, and loading states.
+- ✅ **Base Stream Builder**: A simplified `StreamBuilder` wrapper with dedicated builders for data, error, and loading states.
+
+---
+
+### Clipper ✂️
 
 Custom-shaped widgets for creative designs:
 
@@ -46,13 +52,40 @@ Custom-shaped widgets for creative designs:
 
 ---
 
-### Painter Widgets 🎨
+### Painter 🎨
 
 Draw custom shapes with ease:
 
 - ✅ **Dotted Circle**: A custom painter that draws a circle with a dotted or dashed border.
 - ✅ **Dotted Container**: A container with a customizable dotted or dashed border, perfect for upload areas or callouts.
 - ✅ **Polygon**: A custom painter that draws a regular polygon with a specified number of sides.
+
+---
+
+### User Inputs ✍️
+
+Intuitive and interactive components for user input:
+
+- ✅ **Bottom Sheet**: A structured bottom sheet component with a title and body for presenting options or information.
+- **Button**
+  - ✅ **Icon Button**: A simple `IconButton` with sensible defaults for padding and size.
+  - ✅ **Link Button**: A button that looks like a hyperlink, with optional icons and customizable states.
+  - ✅ **Primary Button**: A `FilledButton` for primary actions, with support for loading states and icons.
+  - ✅ **Secondary Button**: An `OutlinedButton` for secondary actions, also with loading state and icon support.
+  - ✅ **Text Button**: A wrapper around `TextButton` that can be expanded and show a loading indicator.
+- ✅ **Checkbox**: A `Checkbox` with an optional label and support for tristate values.
+- **Dropdown**
+  - ✅ **Drop Down Bottom Sheet**: A dropdown that opens a modal bottom sheet for item selection, ideal for mobile-friendly lists.
+  - ✅ **Drop Down Button**: A styled wrapper around Flutter's native `DropdownButton`.
+  - ✅ **Drop Down Menu**: A modern dropdown based on `DropdownMenu` with built-in search and filtering capabilities.
+  - ✅ **Drop Down Search Field**: An autocomplete-style text field that shows a dropdown of suggestions as the user types.
+  - ✅ **Drop Down Text Field**: A text field that, when tapped, reveals a dropdown overlay for item selection.
+- **Overlay**
+  - ✅ **Overlay Menu**: A widget that displays a customizable popup menu anchored to its child.
+- **Form**
+  - ✅ **OTP Field**: A set of input fields for entering one-time passwords (OTP), using the `pinput` package.
+  - ✅ **Text Field**: A highly customizable `TextFormField` with an optional title, icons, and validation support.
+- ✅ **Toggle(Switch)**: A `Switch` with an optional label for simple on/off toggling.
 
 ---
 
@@ -90,45 +123,26 @@ Enhance your UI with foundational layout elements:
 
 ---
 
-### User Inputs ✍️
+## Animation Views 🎬
 
-Intuitive and interactive components for user input:
+Explore our collection of pre-built animation views that demonstrate complex animations. [Learn more about Flutter animations.](./flutter_animation.md)
 
-- ✅ **Bottom Sheet**: A structured bottom sheet component with a title and body for presenting options or information.
-- **Button**
-  - ✅ **Icon Button**: A simple `IconButton` with sensible defaults for padding and size.
-  - ✅ **Link Button**: A button that looks like a hyperlink, with optional icons and customizable states.
-  - ✅ **Primary Button**: A `FilledButton` for primary actions, with support for loading states and icons.
-  - ✅ **Secondary Button**: An `OutlinedButton` for secondary actions, also with loading state and icon support.
-  - ✅ **Text Button**: A wrapper around `TextButton` that can be expanded and show a loading indicator.
-- ✅ **Checkbox**: A `Checkbox` with an optional label and support for tristate values.
-- **Dropdown**
-  - ✅ **Drop Down Bottom Sheet**: A dropdown that opens a modal bottom sheet for item selection, ideal for mobile-friendly lists.
-  - ✅ **Drop Down Button**: A styled wrapper around Flutter's native `DropdownButton`.
-  - ✅ **Drop Down Menu**: A modern dropdown based on `DropdownMenu` with built-in search and filtering capabilities.
-  - ✅ **Drop Down Search Field**: An autocomplete-style text field that shows a dropdown of suggestions as the user types.
-  - ✅ **Drop Down Text Field**: A text field that, when tapped, reveals a dropdown overlay for item selection.
-- **Overlay**
-  - ✅ **Overlay Menu**: A widget that displays a customizable popup menu anchored to its child.
-- **Form**
-  - ✅ **OTP Field**: A set of input fields for entering one-time passwords (OTP), using the `pinput` package.
-  - ✅ **Text Field**: A highly customizable `TextFormField` with an optional title, icons, and validation support.
-- ✅ **Toggle(Switch)**: A `Switch` with an optional label for simple on/off toggling.
+### Explicit Animation Views
 
----
+- ✅ **Animated Prompt**: A view that displays a prompt with an icon that animates its scale and position, ideal for confirmations.
+- ✅ **Animated Polygon**: A view that animates a polygon's sides, radius, and rotation simultaneously.
+- ✅ **Bouncing Position**: A view demonstrating an elastic bouncing effect on a widget's position using `SlideTransition`.
+- ✅ **Bouncing Size**: A view that showcases a heart icon with a bouncing size and color animation when tapped.
+- ✅ **3D Cube**: A view that renders a 3D cube rotating on its X, Y, and Z axes.
+- ✅ **3D Drawer**: A view demonstrating a 3D drawer that swings open with a rotation effect on the main content.
+- ✅ **Ticker Animation**: A view that uses a `Ticker` to display a running stopwatch, updating on every frame.
+- ✅ **Transform and Clip Path**: A view demonstrating a complex animation combining `Transform` and `ClipPath` to create a rotating and flipping effect.
+- ✅ **Rotation Transform**: A view that shows a container continuously rotating around its Y-axis.
+- ✅ **Transitions**: A view that showcases various explicit transition widgets like `SlideTransition`, `SizeTransition`, `FadeTransition`, `ScaleTransition`, and `RotationTransition`.
 
-### Async & State Widgets ⚡️
+### Implicit Animation Views
 
-Widgets for handling asynchronous operations and managing state reactively.
-
-- ✅ **Base Future Builder**: An efficient `FutureBuilder` using `flutter_hooks` with dedicated builders for data, error, and loading states.
-- ✅ **Base Stream Builder**: A simplified `StreamBuilder` wrapper with dedicated builders for data, error, and loading states.
-
----
-
-## Why Use This Project? 🤔
-
-- 🏗️ **Reusable Design**: Save time by reusing tested and flexible components.
-- 🎨 **Consistency**: Maintain a unified design language across your app.
-- ⚙️ **Customizability**: Easily tweak widgets to fit your specific requirements.
-- 🚀 **Speed Up Development**: Focus on functionality, not reinventing the UI.
+- ✅ **Animated List View**: A view demonstrating an `AnimatedList` where items are inserted with a slide animation.
+- ✅ **Animated Widgets**: A view showcasing `AnimatedContainer` that animates its size and color properties.
+- ✅ **Hero Animation**: A view demonstrating `Hero` animations, where an element smoothly transitions from one screen to another.
+- ✅ **Tween Builders**: A view that uses `TweenAnimationBuilder` to create animations for opacity, a countdown timer, and color transitions.
