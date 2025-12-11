@@ -4,6 +4,7 @@ import '../../../../../core/constants/app_colors.dart';
 import '../../../utils/ui_helpers.dart';
 import '../../visual_layouts/base_text.dart';
 import '../form/base_text_field.dart';
+import '../overlay/overlay_button.dart';
 import '../overlay/overlay_decoration.dart';
 
 /// A text field widget with a dropdown menu overlay for selecting items.
@@ -16,10 +17,17 @@ class DropdownTextField<T> extends StatefulWidget {
   final String? title;
   final String hintText;
   final Widget? prefixIcon;
+
+  /// Whether to show the dropdown menu at the top of the text field or not.
+  final bool alignMenuAtTop;
+
+  /// Vertical space between target and follower.
+  final double verticalGap;
   final double menuMaxHeight;
   final double? menuMaxWidth;
 
-  /// Adjusts the height of the menu based on the children's size.
+  /// Adjusts the height of the dropdown based on the children's size.
+  /// Impacts performance if enabled for large number of items.
   final bool shrinkWrap;
   final DropdownItem<T>? selectedItem;
   final List<DropdownItem<T>> items;
@@ -30,12 +38,14 @@ class DropdownTextField<T> extends StatefulWidget {
     this.title,
     this.hintText = "Choose an option",
     this.prefixIcon,
+    this.alignMenuAtTop = false,
+    this.verticalGap = 4.0,
     this.menuMaxHeight = double.infinity,
     this.menuMaxWidth,
     this.shrinkWrap = true,
+    this.selectedItem,
     required this.items,
     required this.onChanged,
-    this.selectedItem,
   });
 
   @override
@@ -85,7 +95,7 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
                   ? Icons.keyboard_arrow_up
                   : Icons.keyboard_arrow_down,
               size: 24,
-              color: AppColors.black.withAlpha(222),
+              color: AppColors.black87,
             );
           },
         ),
@@ -97,24 +107,25 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 4,
-      children: [BaseText(widget.title!), child],
+      children: [BaseText.label(widget.title!), child],
     );
   }
 
   /// Show overlay entry if the items are not empty
   void _showOverlay() {
     if (_items.isEmpty) return;
-    if (_overlayEntry != null) {
-      _hideOverlay();
-      return;
-    }
+    if (_overlayEntry != null) return;
 
+    _menuVisibilityNotifier.value = true;
     _overlayEntry = _buildOverlay();
     Overlay.of(context).insert(_overlayEntry!);
   }
 
   /// Remove and dispose the overlay entry
-  void _hideOverlay() {
+  void _hideOverlay() async {
+    await Future.delayed(Duration(milliseconds: 50));
+
+    _menuVisibilityNotifier.value = false;
     _overlayEntry?.remove();
     _overlayEntry = null;
   }
@@ -130,20 +141,44 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
       return OverlayEntry(builder: (_) => SizedBox.shrink());
     }
 
-    final height = renderBox.size.height;
     final width = renderBox.size.width;
     final maxWidth = widget.menuMaxWidth?.clamp(width * .1, width) ?? width;
 
+    // targetAnchor and followerAnchor are combined with each-other to align
+    // follower with the target. Example: targetAnchor = bottomLeft
+    // and followerAnchor = topLeft means position the follower's top left side
+    // with the bottom left side of the target.
     return OverlayEntry(
       builder: (context) {
-        return Positioned(
-          width: maxWidth,
-          child: CompositedTransformFollower(
-            link: _layerLink,
-            showWhenUnlinked: false,
-            offset: Offset(0, height + 4),
-            child: _buildOverlayContainer(),
-          ),
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: Listener(
+                onPointerDown: (_) => _hideOverlay(),
+                behavior: HitTestBehavior.translucent,
+              ),
+            ),
+            Positioned(
+              width: maxWidth,
+              child: CompositedTransformFollower(
+                link: _layerLink,
+                showWhenUnlinked: false,
+                targetAnchor: widget.alignMenuAtTop
+                    ? Alignment.topLeft
+                    : Alignment.bottomLeft,
+                followerAnchor: widget.alignMenuAtTop
+                    ? Alignment.bottomLeft
+                    : Alignment.topLeft,
+                offset: Offset(
+                  0,
+                  widget.alignMenuAtTop
+                      ? -widget.verticalGap
+                      : widget.verticalGap,
+                ),
+                child: _buildOverlayContainer(),
+              ),
+            ),
+          ],
         );
       },
     );
@@ -163,12 +198,9 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
             separatorBuilder: (context, index) => UIHelpers.spaceV4,
             itemBuilder: (context, index) {
               final item = widget.items[index];
-              return InkWell(
+              return OverlayButton(
                 onTap: () => _onDropdownItemSelect(item),
-                child: Padding(
-                  padding: UIHelpers.paddingH16V12,
-                  child: BaseText(item.label),
-                ),
+                label: item.label,
               );
             },
           ),

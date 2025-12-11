@@ -16,11 +16,8 @@ class DropdownSearchField<T> extends StatefulWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
 
-  /// Whenever this list changes, the overlay will be updated.
-  /// Overlay will be shown only when the list is not empty.
-  final List<T> overlayItems;
-  final Widget Function(T) overlayItemWidget;
-  final Widget? overlayItemSeparatorWidget;
+  /// Whether to show the dropdown menu at the top of the text field or not.
+  final bool alignMenuAtTop;
 
   /// The gap between the overlay and the text field;
   final double overlayGap;
@@ -28,7 +25,14 @@ class DropdownSearchField<T> extends StatefulWidget {
   final EdgeInsets? overlayPadding;
 
   /// Adjusts the height of the overlay based on the children's size.
+  /// Impacts performance if enabled for large number of items.
   final bool shrinkWrap;
+
+  /// Whenever this list changes, the overlay will be updated.
+  /// Overlay will be shown only when the list is not empty.
+  final List<T> overlayItems;
+  final Widget Function(T) overlayItemWidget;
+  final Widget? overlayItemSeparatorWidget;
 
   const DropdownSearchField({
     super.key,
@@ -37,13 +41,14 @@ class DropdownSearchField<T> extends StatefulWidget {
     this.hintText = "",
     this.prefixIcon,
     this.suffixIcon,
-    required this.overlayItems,
-    required this.overlayItemWidget,
-    this.overlayItemSeparatorWidget,
+    this.alignMenuAtTop = false,
     this.overlayGap = 8,
     this.overlayMaxHeight = double.infinity,
     this.overlayPadding,
     this.shrinkWrap = true,
+    required this.overlayItems,
+    required this.overlayItemWidget,
+    this.overlayItemSeparatorWidget,
   });
 
   @override
@@ -131,16 +136,27 @@ class _DropdownSearchFieldState<T> extends State<DropdownSearchField<T>> {
       return OverlayEntry(builder: (_) => SizedBox.shrink());
     }
 
-    final size = renderBox.size;
-
+    // targetAnchor and followerAnchor are combined with each-other to align
+    // follower with the target. Example: targetAnchor = bottomLeft
+    // and followerAnchor = topLeft means position the follower's top left side
+    // with the bottom left side of the target.
     return OverlayEntry(
       builder: (context) {
         return Positioned(
-          width: size.width,
+          width: renderBox.size.width,
           child: CompositedTransformFollower(
             link: _layerLink,
             showWhenUnlinked: false,
-            offset: Offset(0, size.height + widget.overlayGap),
+            targetAnchor: widget.alignMenuAtTop
+                ? Alignment.topLeft
+                : Alignment.bottomLeft,
+            followerAnchor: widget.alignMenuAtTop
+                ? Alignment.bottomLeft
+                : Alignment.topLeft,
+            offset: Offset(
+              0,
+              widget.alignMenuAtTop ? -widget.overlayGap : widget.overlayGap,
+            ),
             child: _buildOverlayContainer(),
           ),
         );

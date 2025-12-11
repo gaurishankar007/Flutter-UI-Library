@@ -186,7 +186,7 @@ class CustomWidgetList extends StatelessWidget {
       _buildListTile(
         widget: OverlayMenu<String>(
           menuWidth: 230,
-          menuWidget: BaseText.button("Open Overlay Menu"),
+          targetWidget: BaseText.button("Open Overlay Menu"),
           menuItems: [
             OverlayMenuItem(value: "1", label: "Option A", onTap: (value) {}),
             OverlayMenuItem(value: "2", label: "Option B", onTap: (value) {}),

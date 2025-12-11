@@ -4,42 +4,32 @@ import '../../../utils/ui_helpers.dart';
 import 'overlay_button.dart';
 import 'overlay_decoration.dart';
 
-/// A widget that shows a popup menu overlay anchored to its child when tapped.
-///
-/// Displays [menuWidget] as the trigger. When tapped, an overlay menu with [menuItems] appears below, above, or beside it.
-/// The menu closes when an item is selected or the trigger is tapped again.
-/// Supports custom menu width and direction.
-///
-/// The [isLeftMenu] flag controls the horizontal direction in which the menu appears:
-/// - If false (default), the menu opens to the right of the trigger widget.
-/// - If true, the menu opens to the left of the trigger widget. This is useful when the trigger is near the right edge of the screen,
-///   preventing the overlay from overflowing off-screen.
-///
-/// The [isTopMenu] flag controls the vertical direction in which the menu appears:
-/// - If false (default), the menu opens below the trigger widget.
-/// - If true, the menu opens above the trigger widget. The overlay's vertical offset is calculated based on the number of menu items.
-///
-/// The [menuWidth] parameter allows specifying a custom width for the overlay menu.
-/// The [menuItemAlign] parameter allows customizing the alignment of the menu item labels.
-/// The [shrinkWrap] adjusts the height of the menu based on the children's size.
+/// A widget that shows a popup menu overlay anchored to its target widget when tapped.
 class OverlayMenu<T> extends StatefulWidget {
-  final Widget menuWidget;
-  final List<OverlayMenuItem<T>> menuItems;
+  final Widget targetWidget;
+  final Alignment targetAnchor;
+  final Alignment followerAnchor;
+
+  /// Vertical space between target and follower.
+  final double verticalGap;
   final double? menuWidth;
-  final bool isLeftMenu;
-  final bool isTopMenu;
-  final TextAlign? menuItemAlign;
+
+  /// Adjusts the height of the dropdown based on the children's size.
+  /// Impacts performance if enabled for large number of items.
   final bool shrinkWrap;
+  final TextAlign? menuItemAlign;
+  final List<OverlayMenuItem<T>> menuItems;
 
   const OverlayMenu({
     super.key,
-    required this.menuWidget,
-    required this.menuItems,
+    required this.targetWidget,
+    this.targetAnchor = Alignment.bottomRight,
+    this.followerAnchor = Alignment.topRight,
+    this.verticalGap = 8,
     this.menuWidth,
-    this.isLeftMenu = false,
-    this.isTopMenu = false,
-    this.menuItemAlign,
     this.shrinkWrap = true,
+    this.menuItemAlign,
+    required this.menuItems,
   });
 
   @override
@@ -63,9 +53,9 @@ class _OverlayMenuState<T> extends State<OverlayMenu<T>> {
       link: _layerLink,
       child: InkWell(
         key: _childKey,
-        onTap: () => _showOverlay(),
+        onTap: _showOverlay,
         splashFactory: NoSplash.splashFactory,
-        child: widget.menuWidget,
+        child: widget.targetWidget,
       ),
     );
   }
@@ -89,33 +79,11 @@ class _OverlayMenuState<T> extends State<OverlayMenu<T>> {
     _overlayEntry = null;
   }
 
-  /// Builds the popup overlay widget at the correct position with the provided items.
-  /// The position is determined by [isLeftMenu] and [isTopMenu] flags.
-  /// If [isTopMenu] is true, the overlay appears above the trigger widget,
-  /// otherwise it appears below.
+  // targetAnchor and followerAnchor are combined with each-other to align
+  // follower with the target. Example: targetAnchor = bottomLeft
+  // and followerAnchor = topLeft means position the follower's top left side
+  // with the bottom left side of the target.
   OverlayEntry _buildOverlay() {
-    final renderBox =
-        _childKey.currentContext?.findRenderObject() as RenderBox?;
-
-    // If the widget hasn't been laid out yet, return an empty overlay.
-    if (renderBox == null || !renderBox.hasSize) {
-      return OverlayEntry(builder: (_) => SizedBox.shrink());
-    }
-
-    // Get the size of the trigger widget.
-    final size = renderBox.size;
-    final menuWidth = widget.menuWidth ?? 250;
-
-    // Calculate menu offsets.
-    double menuYOffset = size.height + 8;
-    double menuXOffset = 0;
-    if (widget.isLeftMenu) menuXOffset = -(menuWidth - size.width);
-    if (widget.isTopMenu) {
-      final verticalPadding = 24;
-      // The overlay height is estimated as 55 per item plus padding.
-      menuYOffset = -(55 * widget.menuItems.length + verticalPadding) as double;
-    }
-
     return OverlayEntry(
       builder: (context) {
         return Stack(
@@ -131,7 +99,9 @@ class _OverlayMenuState<T> extends State<OverlayMenu<T>> {
               child: CompositedTransformFollower(
                 link: _layerLink,
                 showWhenUnlinked: false,
-                offset: Offset(menuXOffset, menuYOffset),
+                targetAnchor: widget.targetAnchor,
+                followerAnchor: widget.followerAnchor,
+                offset: Offset(0, widget.verticalGap),
                 child: _buildOverlayContainer(),
               ),
             ),
