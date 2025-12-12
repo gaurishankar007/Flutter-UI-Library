@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/ui_helpers.dart';
 import '../form/base_text_field.dart';
-import '../overlay/overlay_decoration.dart';
+import 'overlay_decoration.dart';
 
 /// A text field with a dropdown overlay for selecting items as you type.
 ///
 /// Shows a dropdown below the field when [overlayItems] is not empty. The overlay displays each item
 /// using [overlayItemWidget], and updates automatically when [overlayItems] changes. Supports custom
 /// icons, hint text, separators, padding, and max overlay height. Useful for searchable dropdowns and autocomplete.
-class DropdownSearchField<T> extends StatefulWidget {
+class TextFieldWithOverlay<T> extends StatefulWidget {
   final TextEditingController? controller;
   final Function(String?)? onChanged;
   final String hintText;
@@ -34,7 +34,7 @@ class DropdownSearchField<T> extends StatefulWidget {
   final Widget Function(T) overlayItemWidget;
   final Widget? overlayItemSeparatorWidget;
 
-  const DropdownSearchField({
+  const TextFieldWithOverlay({
     super.key,
     this.controller,
     this.onChanged,
@@ -52,10 +52,11 @@ class DropdownSearchField<T> extends StatefulWidget {
   });
 
   @override
-  State<DropdownSearchField<T>> createState() => _DropdownSearchFieldState<T>();
+  State<TextFieldWithOverlay<T>> createState() =>
+      _TextFieldWithOverlayState<T>();
 }
 
-class _DropdownSearchFieldState<T> extends State<DropdownSearchField<T>> {
+class _TextFieldWithOverlayState<T> extends State<TextFieldWithOverlay<T>> {
   final GlobalKey _textFieldKey = GlobalKey();
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
@@ -69,7 +70,7 @@ class _DropdownSearchFieldState<T> extends State<DropdownSearchField<T>> {
   }
 
   @override
-  void didUpdateWidget(covariant DropdownSearchField<T> oldWidget) {
+  void didUpdateWidget(covariant TextFieldWithOverlay<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     /// Update overlay if the items are changed

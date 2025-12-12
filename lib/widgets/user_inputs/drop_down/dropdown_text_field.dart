@@ -4,8 +4,8 @@ import '../../../../../core/constants/app_colors.dart';
 import '../../../utils/ui_helpers.dart';
 import '../../visual_layouts/base_text.dart';
 import '../form/base_text_field.dart';
-import '../overlay/overlay_button.dart';
-import '../overlay/overlay_decoration.dart';
+import '../overlays/overlay_button.dart';
+import '../overlays/overlay_decoration.dart';
 
 /// A text field widget with a dropdown menu overlay for selecting items.
 ///

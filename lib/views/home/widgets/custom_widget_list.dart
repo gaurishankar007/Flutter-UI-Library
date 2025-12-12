@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:ui_library/widgets/user_inputs/drop_down/drop_down_bottom_sheet.dart'
+import 'package:ui_library/widgets/user_inputs/drop_down/dropdown_bottom_sheet.dart'
     as db;
-import 'package:ui_library/widgets/user_inputs/drop_down/drop_down_button.dart';
-import 'package:ui_library/widgets/user_inputs/drop_down/drop_down_menu.dart';
-import 'package:ui_library/widgets/user_inputs/drop_down/dropdown_search_field.dart';
+import 'package:ui_library/widgets/user_inputs/drop_down/dropdown_button.dart';
+import 'package:ui_library/widgets/user_inputs/drop_down/dropdown_menu.dart';
 import 'package:ui_library/widgets/user_inputs/drop_down/dropdown_text_field.dart'
     as dtf;
 import 'package:ui_library/widgets/user_inputs/form/base_text_field.dart'
     as btf;
 import 'package:ui_library/widgets/user_inputs/form/otp_field.dart';
-import 'package:ui_library/widgets/user_inputs/overlay/overlay_menu.dart';
+import 'package:ui_library/widgets/user_inputs/overlays/overlay_menu.dart';
 import 'package:ui_library/widgets/visual_layouts/base_shimmer.dart';
 import 'package:ui_library/widgets/visual_layouts/dialog/generic_dialog.dart';
 import 'package:ui_library/widgets/visual_layouts/draggable/draggable_content.dart';
@@ -26,6 +25,7 @@ import '../../../widgets/user_inputs/bottom_sheet/bottom_sheet_body.dart';
 import '../../../widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
 import '../../../widgets/user_inputs/bottom_sheet/generic_bottom_sheet.dart';
 import '../../../widgets/user_inputs/button/secondary_button.dart';
+import '../../../widgets/user_inputs/overlays/text_field_with_overlay.dart';
 import '../../../widgets/visual_layouts/base_text.dart';
 import '../../widget_view.dart';
 
@@ -159,7 +159,7 @@ class CustomWidgetList extends StatelessWidget {
         title: "Dropdown Text Field",
       ),
       _buildListTile(
-        widget: DropdownSearchField<String>(
+        widget: TextFieldWithOverlay<String>(
           hintText: "Search something...",
           overlayItems: const ["Apple", "Banana", "Cherry"],
           overlayItemWidget: (item) {
@@ -169,7 +169,7 @@ class CustomWidgetList extends StatelessWidget {
             );
           },
         ),
-        title: "Dropdown Search Field",
+        title: "Text Field with Overlay",
       ),
       _buildListTile(
         widget: btf.BaseTextField(hintText: 'Base Text Field', title: 'Label'),

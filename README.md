@@ -78,10 +78,11 @@ Intuitive and interactive components for user input:
   - ✅ **Drop Down Bottom Sheet**: A dropdown that opens a modal bottom sheet for item selection, ideal for mobile-friendly lists.
   - ✅ **Drop Down Button**: A styled wrapper around Flutter's native `DropdownButton`.
   - ✅ **Drop Down Menu**: A modern dropdown based on `DropdownMenu` with built-in search and filtering capabilities.
-  - ✅ **Drop Down Search Field**: An autocomplete-style text field that shows a dropdown of suggestions as the user types.
+  - ✅ **Dropdown Multi Selection**: A dropdown that opens a bottom sheet to allow selecting multiple items from a list, complete with a 'Select All' feature.
   - ✅ **Drop Down Text Field**: A text field that, when tapped, reveals a dropdown overlay for item selection.
-- **Overlay**
+- **Overlays**
   - ✅ **Overlay Menu**: A widget that displays a customizable popup menu anchored to its child.
+  - ✅ **Text Field with Overlay**: An autocomplete-style text field that shows a dropdown of suggestions as the user types.
 - **Form**
   - ✅ **OTP Field**: A set of input fields for entering one-time passwords (OTP), using the `pinput` package.
   - ✅ **Text Field**: A highly customizable `TextFormField` with an optional title, icons, and validation support.
