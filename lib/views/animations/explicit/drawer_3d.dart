@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class Drawer3D extends StatelessWidget {
   const Drawer3D({super.key});
@@ -140,7 +141,9 @@ class _Drawer3DWidgetState extends State<Drawer3DWidget>
                   // Setting perspective for 3D effect
                   ..setEntry(3, 2, 0.001)
                   // Moving child towards x axis
-                  ..translate(xControllerForChild.value * maxDragWidth)
+                  ..translateByVector3(
+                    Vector3(xControllerForChild.value * maxDragWidth, 0.0, 0.0),
+                  )
                   // Rotating child based on y axis
                   ..rotateY(yRotationAnimationForChild.value),
                 child: widget.childBuilder(context),
@@ -150,8 +153,13 @@ class _Drawer3DWidgetState extends State<Drawer3DWidget>
                 transform: Matrix4.identity()
                   ..setEntry(3, 2, 0.001)
                   // `-screenWidth` sets start point towards the left side of the screen
-                  ..translate(
-                    -screenWidth + xControllerForDrawer.value * maxDragWidth,
+                  ..translateByVector3(
+                    Vector3(
+                      -screenWidth +
+                          (xControllerForDrawer.value * maxDragWidth),
+                      0.0,
+                      0.0,
+                    ),
                   )
                   ..rotateY(yRotationAnimationForDrawer.value),
                 child: widget.drawerBuilder(context),
