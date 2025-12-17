@@ -1,13 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import '../../../widgets/clippers/half_circle_clipper.dart';
-
+import 'package:ui_library/widgets/clippers/half_circle_clipper.dart';
 
 /// Extension for running the animation after a second
 extension on VoidCallback {
-  Future<void> delaySecond() => Future.delayed(const Duration(seconds: 1), this);
+  Future<void> delaySecond() =>
+      Future.delayed(const Duration(seconds: 1), this);
 }
 
 class TransformClipPath extends StatefulWidget {
@@ -16,7 +15,8 @@ class TransformClipPath extends StatefulWidget {
   State<TransformClipPath> createState() => _TransformClipPathState();
 }
 
-class _TransformClipPathState extends State<TransformClipPath> with TickerProviderStateMixin {
+class _TransformClipPathState extends State<TransformClipPath>
+    with TickerProviderStateMixin {
   late AnimationController counterClockwiseRotationController;
   late Animation<double> counterClockwiseAnimation;
 
@@ -33,10 +33,7 @@ class _TransformClipPathState extends State<TransformClipPath> with TickerProvid
       duration: const Duration(seconds: 2),
     );
 
-    counterClockwiseAnimation = Tween<double>(
-      begin: 0,
-      end: -pi / 2,
-    ).animate(
+    counterClockwiseAnimation = Tween<double>(begin: 0, end: -pi / 2).animate(
       CurvedAnimation(
         parent: counterClockwiseRotationController,
         curve: Curves.bounceOut,
@@ -52,26 +49,19 @@ class _TransformClipPathState extends State<TransformClipPath> with TickerProvid
     flipAnimation = Tween<double>(
       begin: 0,
       end: pi,
-    ).animate(
-      CurvedAnimation(
-        parent: flipController,
-        curve: Curves.bounceOut,
-      ),
-    );
+    ).animate(CurvedAnimation(parent: flipController, curve: Curves.bounceOut));
 
     /// Rotation Animation Status Listener
     counterClockwiseRotationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         /// Setting continuous flow of animation
-        flipAnimation = Tween<double>(
-          begin: flipAnimation.value,
-          end: flipAnimation.value + pi,
-        ).animate(
-          CurvedAnimation(
-            parent: flipController,
-            curve: Curves.bounceOut,
-          ),
-        );
+        flipAnimation =
+            Tween<double>(
+              begin: flipAnimation.value,
+              end: flipAnimation.value + pi,
+            ).animate(
+              CurvedAnimation(parent: flipController, curve: Curves.bounceOut),
+            );
 
         /// Reset flip animation
         flipController
@@ -84,15 +74,16 @@ class _TransformClipPathState extends State<TransformClipPath> with TickerProvid
     flipController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         /// Setting continuous flow of animation
-        counterClockwiseAnimation = Tween<double>(
-          begin: counterClockwiseAnimation.value,
-          end: counterClockwiseAnimation.value + -pi / 2,
-        ).animate(
-          CurvedAnimation(
-            parent: counterClockwiseRotationController,
-            curve: Curves.bounceOut,
-          ),
-        );
+        counterClockwiseAnimation =
+            Tween<double>(
+              begin: counterClockwiseAnimation.value,
+              end: counterClockwiseAnimation.value + -pi / 2,
+            ).animate(
+              CurvedAnimation(
+                parent: counterClockwiseRotationController,
+                curve: Curves.bounceOut,
+              ),
+            );
 
         /// Reset Counter clockWise animation
         counterClockwiseRotationController
@@ -137,7 +128,8 @@ class _TransformClipPathState extends State<TransformClipPath> with TickerProvid
               builder: (context, child) {
                 return Transform(
                   alignment: Alignment.center,
-                  transform: Matrix4.identity()..rotateZ(counterClockwiseAnimation.value),
+                  transform: Matrix4.identity()
+                    ..rotateZ(counterClockwiseAnimation.value),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -180,11 +172,7 @@ class _TransformClipPathState extends State<TransformClipPath> with TickerProvid
           transform: Matrix4.identity()..rotateY(flipAnimation.value),
           child: ClipPath(
             clipper: const HalfCircleClipper(side: CircleSide.right),
-            child: Container(
-              height: 100,
-              width: 100,
-              color: Colors.deepOrange,
-            ),
+            child: Container(height: 100, width: 100, color: Colors.deepOrange),
           ),
         );
       },
@@ -200,11 +188,7 @@ class _TransformClipPathState extends State<TransformClipPath> with TickerProvid
           transform: Matrix4.identity()..rotateY(flipAnimation.value),
           child: ClipPath(
             clipper: const HalfCircleClipper(side: CircleSide.left),
-            child: Container(
-              height: 100,
-              width: 100,
-              color: Colors.deepPurple,
-            ),
+            child: Container(height: 100, width: 100, color: Colors.deepPurple),
           ),
         );
       },

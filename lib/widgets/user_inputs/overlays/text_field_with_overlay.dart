@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../utils/ui_helpers.dart';
-import '../form/base_text_field.dart';
-import 'overlay_decoration.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/user_inputs/form/base_text_field.dart';
+import 'package:ui_library/widgets/user_inputs/overlays/overlay_decoration.dart';
 
 /// A text field with a dropdown overlay for selecting items as you type.
 ///

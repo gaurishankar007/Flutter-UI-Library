@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../../../core/constants/app_colors.dart';
-import '../../../utils/ui_helpers.dart';
-import '../../user_inputs/bottom_sheet/bottom_sheet_title.dart';
-import '../../user_inputs/bottom_sheet/generic_bottom_sheet.dart';
-import 'models/document_data.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/generic_bottom_sheet.dart';
+import 'package:ui_library/widgets/visual_layouts/document/models/document_data.dart';
 
 void showDocumentBottomSheet(
   BuildContext context, {

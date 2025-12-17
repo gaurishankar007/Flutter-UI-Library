@@ -2,8 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-
-import '../error_indicator.dart';
+import 'package:ui_library/widgets/visual_layouts/error_indicator.dart';
 
 class PDFMemory extends StatelessWidget {
   final Uint8List pdfData;

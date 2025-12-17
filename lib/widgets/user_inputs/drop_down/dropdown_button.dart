@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../visual_layouts/base_text.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 /// A dropdown button widget that allows users to select an item from a list of options.
 ///
@@ -41,17 +40,16 @@ class DropDownButton<T> extends StatelessWidget {
           onChanged: onChanged,
           dropdownColor: Colors.white,
           borderRadius: BorderRadius.circular(12),
-          items:
-              items.map<DropdownMenuItem<T>>((dropDownItem) {
-                return DropdownMenuItem<T>(
-                  value: dropDownItem.value,
-                  child: BaseText(
-                    dropDownItem.label,
-                    overflow: TextOverflow.ellipsis,
-                    fontWeight: FontWeight.w500,
-                  ),
-                );
-              }).toList(),
+          items: items.map<DropdownMenuItem<T>>((dropDownItem) {
+            return DropdownMenuItem<T>(
+              value: dropDownItem.value,
+              child: BaseText(
+                dropDownItem.label,
+                overflow: TextOverflow.ellipsis,
+                fontWeight: FontWeight.w500,
+              ),
+            );
+          }).toList(),
         ),
       ),
     );

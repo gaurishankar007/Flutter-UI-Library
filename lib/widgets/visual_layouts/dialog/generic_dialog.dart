@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../core/constants/app_colors.dart';
-import '../../../utils/screen_util/screen_util.dart';
-import '../../../utils/ui_helpers.dart';
-import '../../user_inputs/button/base_icon_button.dart';
-import '../base_text.dart';
-import '../divider/base_divider.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/screen_util/screen_util.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/user_inputs/button/base_icon_button.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
+import 'package:ui_library/widgets/visual_layouts/divider/base_divider.dart';
 
 Future<T?> showGenericDialog<T>(
   BuildContext context, {

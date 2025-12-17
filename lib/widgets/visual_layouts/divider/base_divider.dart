@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../core/constants/app_colors.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
 
 class BaseDivider extends StatelessWidget {
   final EdgeInsets? padding;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../visual_layouts/base_text.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class BottomSheetTitle extends StatelessWidget {
   final String title;

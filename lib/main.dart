@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-
-import 'core/themes/theme.dart';
-import 'utils/screen_util/screen_util.dart';
-import 'views/animations/explicit/animated_prompt.dart';
-import 'views/animations/explicit/animation_polygon.dart';
-import 'views/animations/explicit/bouncing_position.dart';
-import 'views/animations/explicit/bouncing_size.dart';
-import 'views/animations/explicit/cube_3d.dart';
-import 'views/animations/explicit/drawer_3d.dart';
-import 'views/animations/explicit/ticker_animation.dart';
-import 'views/animations/explicit/transform_clip_path.dart';
-import 'views/animations/explicit/transform_rotation.dart';
-import 'views/animations/explicit/transitions.dart';
-import 'views/animations/implicit/animated_list_view.dart';
-import 'views/animations/implicit/animated_widgets.dart';
-import 'views/animations/implicit/hero_animations.dart';
-import 'views/animations/implicit/tween_builders.dart';
-import 'views/home/home_view.dart';
+import 'package:ui_library/core/themes/theme.dart';
+import 'package:ui_library/utils/screen_util/screen_util.dart';
+import 'package:ui_library/views/animations/explicit/animated_prompt.dart';
+import 'package:ui_library/views/animations/explicit/animation_polygon.dart';
+import 'package:ui_library/views/animations/explicit/bouncing_position.dart';
+import 'package:ui_library/views/animations/explicit/bouncing_size.dart';
+import 'package:ui_library/views/animations/explicit/cube_3d.dart';
+import 'package:ui_library/views/animations/explicit/drawer_3d.dart';
+import 'package:ui_library/views/animations/explicit/ticker_animation.dart';
+import 'package:ui_library/views/animations/explicit/transform_clip_path.dart';
+import 'package:ui_library/views/animations/explicit/transform_rotation.dart';
+import 'package:ui_library/views/animations/explicit/transitions.dart';
+import 'package:ui_library/views/animations/implicit/animated_list_view.dart';
+import 'package:ui_library/views/animations/implicit/animated_widgets.dart';
+import 'package:ui_library/views/animations/implicit/hero_animations.dart';
+import 'package:ui_library/views/animations/implicit/tween_builders.dart';
+import 'package:ui_library/views/home/home_view.dart';
 
 void main() {
   runApp(const CustomUIComponents());

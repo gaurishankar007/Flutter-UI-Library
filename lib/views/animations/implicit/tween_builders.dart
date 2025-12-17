@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import '../../../widgets/clippers/circle_clipper.dart';
+import 'package:ui_library/widgets/clippers/circle_clipper.dart';
 
 Color getRandomColor() => Color(0xFF000000 + Random().nextInt(0x00FFFFFF));
 

@@ -2,8 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-
-import '../error_indicator.dart';
+import 'package:ui_library/widgets/visual_layouts/error_indicator.dart';
 
 class PDFFile extends StatelessWidget {
   final File file;

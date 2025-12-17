@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../main.dart';
-import '../../../utils/ui_helpers.dart';
-import '../../../widgets/visual_layouts/base_text.dart';
+import 'package:ui_library/main.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class AnimatedViewList extends StatelessWidget {
   const AnimatedViewList({super.key});

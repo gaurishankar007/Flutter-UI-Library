@@ -1,4 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:ui_library/main.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/views/widget_view.dart';
+import 'package:ui_library/widgets/animations/explicit/gradient_loading.dart';
+import 'package:ui_library/widgets/animations/implicit/resend_otp_button.dart';
+import 'package:ui_library/widgets/clippers/curve_container.dart';
+import 'package:ui_library/widgets/painters/dotted_circle.dart';
+import 'package:ui_library/widgets/painters/dotted_container.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_body.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/generic_bottom_sheet.dart';
+import 'package:ui_library/widgets/user_inputs/button/secondary_button.dart';
 import 'package:ui_library/widgets/user_inputs/drop_down/dropdown_bottom_sheet.dart'
     as db;
 import 'package:ui_library/widgets/user_inputs/drop_down/dropdown_button.dart';
@@ -9,25 +21,12 @@ import 'package:ui_library/widgets/user_inputs/form/base_text_field.dart'
     as btf;
 import 'package:ui_library/widgets/user_inputs/form/otp_field.dart';
 import 'package:ui_library/widgets/user_inputs/overlays/overlay_menu.dart';
+import 'package:ui_library/widgets/user_inputs/overlays/text_field_with_overlay.dart';
 import 'package:ui_library/widgets/visual_layouts/base_shimmer.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 import 'package:ui_library/widgets/visual_layouts/dialog/generic_dialog.dart';
 import 'package:ui_library/widgets/visual_layouts/draggable/draggable_content.dart';
 import 'package:ui_library/widgets/visual_layouts/stopwatch_timer.dart';
-
-import '../../../main.dart';
-import '../../../utils/ui_helpers.dart';
-import '../../../widgets/animations/explicit/gradient_loading.dart';
-import '../../../widgets/animations/implicit/resend_otp_button.dart';
-import '../../../widgets/clippers/curve_container.dart';
-import '../../../widgets/painters/dotted_circle.dart';
-import '../../../widgets/painters/dotted_container.dart';
-import '../../../widgets/user_inputs/bottom_sheet/bottom_sheet_body.dart';
-import '../../../widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
-import '../../../widgets/user_inputs/bottom_sheet/generic_bottom_sheet.dart';
-import '../../../widgets/user_inputs/button/secondary_button.dart';
-import '../../../widgets/user_inputs/overlays/text_field_with_overlay.dart';
-import '../../../widgets/visual_layouts/base_text.dart';
-import '../../widget_view.dart';
 
 class CustomWidgetList extends StatelessWidget {
   const CustomWidgetList({super.key});

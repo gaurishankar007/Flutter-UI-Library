@@ -1,9 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import '../../../widgets/painters/polygon_painter.dart';
-
+import 'package:ui_library/widgets/painters/polygon_painter.dart';
 
 class AnimationWithPolygon extends StatefulWidget {
   const AnimationWithPolygon({super.key});
@@ -11,7 +9,8 @@ class AnimationWithPolygon extends StatefulWidget {
   State<AnimationWithPolygon> createState() => _AnimationWithPolygonState();
 }
 
-class _AnimationWithPolygonState extends State<AnimationWithPolygon> with TickerProviderStateMixin {
+class _AnimationWithPolygonState extends State<AnimationWithPolygon>
+    with TickerProviderStateMixin {
   late AnimationController sideController;
   late AnimationController radiusController;
   late AnimationController rotationController;
@@ -36,30 +35,15 @@ class _AnimationWithPolygonState extends State<AnimationWithPolygon> with Ticker
       duration: const Duration(seconds: 3),
     );
 
-    sideAnimation = IntTween(
-      begin: 3,
-      end: 10,
-    ).animate(sideController);
+    sideAnimation = IntTween(begin: 3, end: 10).animate(sideController);
     radiusAnimation = Tween<double>(
       begin: 50,
       end: 300,
-    )
-        .chain(
-          CurveTween(
-            curve: Curves.bounceInOut,
-          ),
-        )
-        .animate(sideController);
+    ).chain(CurveTween(curve: Curves.bounceInOut)).animate(sideController);
     rotationAnimation = Tween<double>(
       begin: 0,
       end: pi * 2,
-    )
-        .chain(
-          CurveTween(
-            curve: Curves.easeInOut,
-          ),
-        )
-        .animate(rotationController);
+    ).chain(CurveTween(curve: Curves.easeInOut)).animate(rotationController);
   }
 
   @override
@@ -93,10 +77,7 @@ class _AnimationWithPolygonState extends State<AnimationWithPolygon> with Ticker
       body: SafeArea(
         child: Center(
           child: AnimatedBuilder(
-            animation: Listenable.merge([
-              sideController,
-              radiusController,
-            ]),
+            animation: Listenable.merge([sideController, radiusController]),
             builder: (context, child) {
               return Transform(
                 alignment: Alignment.center,

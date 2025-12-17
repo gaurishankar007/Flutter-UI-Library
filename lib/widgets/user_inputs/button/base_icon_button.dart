@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../utils/ui_helpers.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
 
 class BaseIconButton extends StatelessWidget {
   final Function() onPressed;

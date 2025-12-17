@@ -1,38 +1,50 @@
 import 'package:flutter/material.dart';
-
-import '../cupertino_loading.dart';
-import '../error_indicator.dart';
+import 'package:ui_library/utils/extensions/num_extension.dart';
+import 'package:ui_library/widgets/visual_layouts/cupertino_loading.dart';
+import 'package:ui_library/widgets/visual_layouts/error_icon.dart';
 
 class BaseAssetImage extends StatelessWidget {
-  final ImageProvider? imageProvider;
+  final String assetName;
   final double? width;
   final double? height;
   final BoxFit? fit;
   final BorderRadius? borderRadius;
   final bool circular;
+  final double? cacheHeight;
+  final double? cacheWidth;
+  final bool useLoadingIndicator;
 
   const BaseAssetImage({
     super.key,
-    this.imageProvider,
+    required this.assetName,
     this.width,
     this.height,
     this.fit,
     this.borderRadius,
     this.circular = false,
+    this.cacheHeight,
+    this.cacheWidth,
+    this.useLoadingIndicator = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    Widget child = Image(
+    Widget child = Image.asset(
+      assetName,
       width: width,
       height: height,
-      image: imageProvider!,
+      cacheHeight: cacheHeight?.scaledByDPR.toInt(),
+      cacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) return child;
-        return CupertinoLoading();
+      frameBuilder: (context, child, frame, bool wasSynchronouslyLoaded) {
+        if (frame != null) {
+          return child;
+        } else if (useLoadingIndicator) {
+          return CupertinoLoading(dimension: height);
+        }
+        return SizedBox.fromSize();
       },
-      errorBuilder: (context, error, stackTrace) => ErrorIndicator(),
+      errorBuilder: (c, e, s) => ErrorIcon(height: height, width: width),
     );
 
     if (circular) {
@@ -44,17 +56,25 @@ class BaseAssetImage extends StatelessWidget {
     return child;
   }
 
-  factory BaseAssetImage.circular({
-    required double diameter,
-    String imageUrl = "",
-    ImageProvider? imageProvider,
-  }) {
-    return BaseAssetImage(
-      height: diameter,
-      width: diameter,
-      fit: BoxFit.cover,
-      circular: true,
-      imageProvider: imageProvider,
-    );
-  }
+  factory BaseAssetImage.icon({required String assetName, double size = 24}) =>
+      BaseAssetImage(
+        assetName: assetName,
+        height: size,
+        width: size,
+        cacheWidth: size,
+        fit: BoxFit.contain,
+      );
+
+  factory BaseAssetImage.person({
+    required double size,
+    BoxFit fit = BoxFit.cover,
+    bool circular = true,
+  }) => BaseAssetImage(
+    assetName: "",
+    height: size,
+    width: size,
+    cacheWidth: size,
+    fit: fit,
+    circular: circular,
+  );
 }

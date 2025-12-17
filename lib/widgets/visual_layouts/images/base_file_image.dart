@@ -1,9 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
-import '../cupertino_loading.dart';
-import '../error_indicator.dart';
+import 'package:ui_library/widgets/visual_layouts/cupertino_loading.dart';
+import 'package:ui_library/widgets/visual_layouts/error_indicator.dart';
 
 class BaseFileImage extends StatelessWidget {
   final File file;

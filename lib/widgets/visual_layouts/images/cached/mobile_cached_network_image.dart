@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
@@ -5,18 +6,8 @@ import 'package:ui_library/widgets/visual_layouts/cupertino_loading.dart';
 import 'package:ui_library/widgets/visual_layouts/error_icon.dart';
 import 'package:ui_library/widgets/visual_layouts/images/base_asset_image.dart';
 
-class BaseNetworkImage extends StatelessWidget {
-  final String url;
-  final double? width;
-  final double? height;
-  final BoxFit? fit;
-  final BorderRadius? borderRadius;
-  final bool circular;
-  final double? cacheHeight;
-  final double? cacheWidth;
-  final Widget? fallbackWidget;
-
-  const BaseNetworkImage({
+class BaseCachedNetworkImage extends StatelessWidget {
+  const BaseCachedNetworkImage({
     super.key,
     required this.url,
     this.width,
@@ -29,22 +20,27 @@ class BaseNetworkImage extends StatelessWidget {
     this.fallbackWidget,
   });
 
+  final String url;
+  final double? width;
+  final double? height;
+  final BoxFit? fit;
+  final BorderRadius? borderRadius;
+  final bool circular;
+  final double? cacheHeight;
+  final double? cacheWidth;
+  final Widget? fallbackWidget;
+
   @override
   Widget build(BuildContext context) {
-    Widget child = Image.network(
-      url,
+    Widget child = CachedNetworkImage(
+      imageUrl: url,
       width: width,
       height: height,
-      cacheHeight: cacheHeight?.scaledByDPR.toInt(),
-      cacheWidth: cacheWidth?.scaledByDPR.toInt(),
+      memCacheHeight: cacheHeight?.scaledByDPR.toInt(),
+      memCacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
-      frameBuilder: (context, child, frame, bool wasSynchronouslyLoaded) {
-        if (frame != null) {
-          return child;
-        }
-        return CupertinoLoading(dimension: height);
-      },
-      errorBuilder: (context, error, stackTrace) {
+      placeholder: (context, url) => CupertinoLoading(dimension: height),
+      errorWidget: (context, error, stackTrace) {
         return fallbackWidget ?? ErrorIcon(height: height, width: width);
       },
     );
@@ -65,7 +61,7 @@ class BaseNetworkImage extends StatelessWidget {
     Widget? fallbackWidget,
     bool isBordered = false,
   }) {
-    Widget child = BaseNetworkImage(
+    Widget child = BaseCachedNetworkImage(
       key: key,
       url: url,
       width: diameter,

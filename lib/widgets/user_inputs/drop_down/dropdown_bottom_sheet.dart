@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../visual_layouts/base_text.dart';
-import '../bottom_sheet/bottom_sheet_title.dart';
-import '../bottom_sheet/generic_bottom_sheet.dart';
-import '../form/base_text_field.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/generic_bottom_sheet.dart';
+import 'package:ui_library/widgets/user_inputs/form/base_text_field.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 /// A customizable dropdown widget that displays a list of selectable items in a bottom sheet.
 ///

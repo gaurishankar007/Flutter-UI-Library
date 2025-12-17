@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-import '../../../../../core/constants/app_colors.dart';
-import '../../../utils/ui_helpers.dart';
-import '../../visual_layouts/base_text.dart';
-import '../../visual_layouts/loading_circle.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
+import 'package:ui_library/widgets/visual_layouts/loading_circle.dart';
 
 class PrimaryButton extends HookWidget {
   final Function()? onTap;

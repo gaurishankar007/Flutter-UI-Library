@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../../../utils/ui_helpers.dart';
-import '../../../user_inputs/bottom_sheet/bottom_sheet_title.dart';
-import '../models/document_type.dart';
-import 'upload_icon_container.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
+import 'package:ui_library/widgets/visual_layouts/document/models/document_type.dart';
+import 'package:ui_library/widgets/visual_layouts/document/upload/upload_icon_container.dart';
 
 class DocumentUploadBottomSheet extends StatelessWidget {
   final bool multiSelector;

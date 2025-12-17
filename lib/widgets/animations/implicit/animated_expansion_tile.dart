@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-import '../../../utils/screen_util/screen_util.dart';
-import '../../../utils/ui_helpers.dart';
-import '../../user_inputs/button/base_icon_button.dart';
-import '../../visual_layouts/base_text.dart';
+import 'package:ui_library/utils/screen_util/screen_util.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/user_inputs/button/base_icon_button.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class AnimatedExpansionTile extends HookWidget {
   final String title;

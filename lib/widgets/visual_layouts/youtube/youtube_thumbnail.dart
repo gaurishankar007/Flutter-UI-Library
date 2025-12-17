@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/widgets/visual_layouts/images/cached/base_cached_network_image.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-
-import '../../../../../core/constants/app_colors.dart';
-import '../images/base_cached_network_image.dart';
 
 class YoutubeThumbnail extends StatelessWidget {
   final Function()? onTap;
@@ -24,7 +23,7 @@ class YoutubeThumbnail extends StatelessWidget {
                 url: _getThumbnailUrl(),
                 height: constraints.maxHeight,
                 width: maxWidth,
-                cacheWidth: maxWidth.toInt(),
+                cacheWidth: maxWidth,
                 fit: BoxFit.cover,
               ),
               Icon(

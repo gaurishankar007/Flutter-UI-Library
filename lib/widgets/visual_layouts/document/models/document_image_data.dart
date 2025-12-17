@@ -11,7 +11,7 @@ class ImageNetworkData extends DocumentData {
     BorderRadius? borderRadius,
   }) {
     return BaseCachedNetworkImage(
-      url: url,
+      url: url ?? "",
       height: height,
       width: width,
       fit: fit,

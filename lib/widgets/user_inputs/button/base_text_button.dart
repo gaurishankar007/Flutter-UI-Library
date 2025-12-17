@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../animations/explicit/loading_circle.dart';
-import '../../visual_layouts/base_text.dart';
+import 'package:ui_library/widgets/animations/explicit/loading_circle.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class BaseTextButton extends StatelessWidget {
   final Function() onPressed;

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../core/constants/app_colors.dart';
-import '../../../utils/ui_helpers.dart';
-import '../../visual_layouts/base_text.dart';
-import '../form/base_text_field.dart';
-import '../overlays/overlay_button.dart';
-import '../overlays/overlay_decoration.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/user_inputs/form/base_text_field.dart';
+import 'package:ui_library/widgets/user_inputs/overlays/overlay_button.dart';
+import 'package:ui_library/widgets/user_inputs/overlays/overlay_decoration.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 /// A text field widget with a dropdown menu overlay for selecting items.
 ///

@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-
-import '../../../../../../../core/constants/app_colors.dart';
-import '../../../../../../../utils/extensions/duration_extension.dart';
-import '../../../base_text.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/extensions/duration_extension.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class MediaProgress extends StatelessWidget {
   final int positionInSeconds;

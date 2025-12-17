@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-import '../../utils/ui_helpers.dart';
-import '../../widgets/visual_layouts/base_tab_bar.dart';
-import 'widgets/animated_view_list.dart';
-import 'widgets/custom_widget_list.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/views/home/widgets/animated_view_list.dart';
+import 'package:ui_library/views/home/widgets/custom_widget_list.dart';
+import 'package:ui_library/widgets/visual_layouts/base_tab_bar.dart';
 
 class HomeView extends HookWidget {
   const HomeView({super.key});

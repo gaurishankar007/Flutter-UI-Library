@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-import '../../user_inputs/button/base_text_button.dart';
-import '../explicit/loading_circle.dart';
+import 'package:ui_library/widgets/animations/explicit/loading_circle.dart';
+import 'package:ui_library/widgets/user_inputs/button/base_text_button.dart';
 
 class ResendOTPButton extends HookWidget {
   final Function() onOTPSend;

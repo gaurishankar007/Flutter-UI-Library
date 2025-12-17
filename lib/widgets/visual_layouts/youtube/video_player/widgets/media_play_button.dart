@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-
-import '../../../../../../../core/constants/app_colors.dart';
-import '../../../../user_inputs/button/base_icon_button.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/widgets/user_inputs/button/base_icon_button.dart';
 
 class MediaPlayButton extends StatelessWidget {
   final ValueNotifier<bool> playingNotifier;

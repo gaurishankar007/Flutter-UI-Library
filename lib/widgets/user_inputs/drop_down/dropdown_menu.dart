@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../visual_layouts/base_text.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 /// A dropdown menu widget that provides a flexible and customizable way to select an item from a list.
 ///
@@ -68,15 +67,14 @@ class BaseDropdownMenu<T> extends StatelessWidget {
         ),
         filterCallback: filterCallback,
         searchCallback: searchCallback,
-        dropdownMenuEntries:
-            entries
-                .map<DropdownMenuEntry<T>>(
-                  (dropDownItem) => DropdownMenuEntry<T>(
-                    value: dropDownItem.value,
-                    label: dropDownItem.label,
-                  ),
-                )
-                .toList(),
+        dropdownMenuEntries: entries
+            .map<DropdownMenuEntry<T>>(
+              (dropDownItem) => DropdownMenuEntry<T>(
+                value: dropDownItem.value,
+                label: dropDownItem.label,
+              ),
+            )
+            .toList(),
       ),
     );
   }

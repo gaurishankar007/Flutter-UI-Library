@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ui_library/utils/debounce_time.dart';
+import 'package:ui_library/widgets/visual_layouts/error_icon.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/util/youtube_media_controller.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/youtube_video_controller.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/youtube_video_play_seek_controller.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-
-import '../../../../utils/debounce_time.dart';
-import '../../error_icon.dart';
-import 'util/youtube_media_controller.dart';
-import 'widgets/youtube_video_controller.dart';
-import 'widgets/youtube_video_play_seek_controller.dart';
 
 class YoutubeVideoPlayer extends StatefulWidget {
   final String videoUrl;

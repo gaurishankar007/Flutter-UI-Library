@@ -1,10 +1,9 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-
-import '../../../../core/constants/app_colors.dart';
-import '../../../utils/ui_helpers.dart';
-import '../../visual_layouts/base_text.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class GradientLoading extends StatefulWidget {
   final Color? progressColor;
@@ -85,11 +84,7 @@ class _GradientLoadingState extends State<GradientLoading>
     if (widget.includeLabel) {
       child = Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          child,
-          UIHelpers.spaceV24,
-          BaseText.heading2("Loading..."),
-        ],
+        children: [child, UIHelpers.spaceV24, BaseText.heading2("Loading...")],
       );
     }
     if (widget.centered) child = Center(child: child);
@@ -128,12 +123,11 @@ class _GradientCircularProgressPainter extends CustomPainter {
       ],
     );
 
-    final paint =
-        Paint()
-          ..shader = gradient.createShader(rect)
-          ..strokeWidth = strokeWidth
-          ..style = PaintingStyle.stroke
-          ..strokeCap = StrokeCap.round;
+    final paint = Paint()
+      ..shader = gradient.createShader(rect)
+      ..strokeWidth = strokeWidth
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
 
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
@@ -142,12 +136,11 @@ class _GradientCircularProgressPainter extends CustomPainter {
     );
 
     // Draw end cap for the circle
-    final endCapPaint =
-        Paint()
-          ..color = endCapColor
-          ..strokeWidth = strokeWidth
-          ..style = PaintingStyle.stroke
-          ..strokeCap = StrokeCap.round;
+    final endCapPaint = Paint()
+      ..color = endCapColor
+      ..strokeWidth = strokeWidth
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
 
     final endCapStartAngle = 2 * math.pi * .98;
     final endCapSweepAngle = 2 * math.pi * .02;

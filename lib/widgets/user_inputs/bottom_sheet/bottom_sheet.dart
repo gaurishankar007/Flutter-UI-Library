@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
-
-import 'bottom_sheet_body.dart';
-import 'bottom_sheet_title.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_body.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
 
 class BaseBottomSheet extends StatelessWidget {
   final String title;

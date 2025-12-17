@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-import '../../../../../core/constants/app_colors.dart';
-import '../../../utils/ui_helpers.dart';
-import '../../visual_layouts/base_text.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class Toggle extends HookWidget {
   final bool value;
   final Function(bool)? onChanged;
   final String? label;
 
-  const Toggle({
-    super.key,
-    this.value = false,
-    this.onChanged,
-    this.label,
-  });
+  const Toggle({super.key, this.value = false, this.onChanged, this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +41,9 @@ class Toggle extends HookWidget {
         UIHelpers.spaceH8,
         BaseText(
           label!,
-          color:
-              isDisabled
-                  ? AppColors.black.withAlpha(97)
-                  : AppColors.black.withAlpha(222),
+          color: isDisabled
+              ? AppColors.black.withAlpha(97)
+              : AppColors.black.withAlpha(222),
         ),
       ],
     );

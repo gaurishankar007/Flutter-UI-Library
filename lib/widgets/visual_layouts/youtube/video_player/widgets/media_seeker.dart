@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-
-import '../../../../../../../core/constants/app_colors.dart';
-import '../../../base_slider.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/widgets/visual_layouts/base_slider.dart';
 
 class MediaSeeker extends StatelessWidget {
   /// A stream of double between 0 to 1 of the current position of the media player.
@@ -35,10 +34,9 @@ class MediaSeeker extends StatelessWidget {
             return BaseSlider(
               value: buffered.clamp(0, 1),
               activeColor: AppColors.white.withAlpha(153),
-              inactiveColor:
-                  kIsWeb
-                      ? AppColors.white.withAlpha(97)
-                      : AppColors.black.withAlpha(97),
+              inactiveColor: kIsWeb
+                  ? AppColors.white.withAlpha(97)
+                  : AppColors.black.withAlpha(97),
               thumbRadius: 0,
               thumbColor: Colors.transparent,
             );

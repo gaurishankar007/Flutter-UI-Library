@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../../../core/constants/app_colors.dart';
-import '../../../utils/ui_helpers.dart';
-import '../../visual_layouts/base_text.dart';
-import '../bottom_sheet/generic_bottom_sheet.dart';
-import '../form/base_text_field.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/generic_bottom_sheet.dart';
+import 'package:ui_library/widgets/user_inputs/form/base_text_field.dart';
+import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 /// A generic data model for dropdown items, holding a [value] of type [T]
 /// and an optional [label] to display in the UI.

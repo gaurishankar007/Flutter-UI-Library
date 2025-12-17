@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../utils/ui_helpers.dart';
-import 'overlay_button.dart';
-import 'overlay_decoration.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/user_inputs/overlays/overlay_button.dart';
+import 'package:ui_library/widgets/user_inputs/overlays/overlay_decoration.dart';
 
 /// A widget that shows a popup menu overlay anchored to its target widget when tapped.
 class OverlayMenu<T> extends StatefulWidget {

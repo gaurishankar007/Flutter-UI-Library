@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-
-import '../../../core/constants/app_colors.dart';
-import '../../../utils/ui_helpers.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
 
 class OTPField extends StatelessWidget {
   final TextEditingController? controller;

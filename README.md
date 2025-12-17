@@ -101,11 +101,11 @@ Enhance your UI with foundational layout elements:
 - **Draggable**
   - ✅ **Draggable Content Widget**: A draggable bottom sheet that dynamically adjusts its size based on its content, with separate sections for always-visible and expandable content.
 - **Image**
-  - ✅ **Asset Image**: A wrapper for `Image.asset` that includes loading and error builders for a better user experience.
-  - ✅ **Cached Network Image**: Displays and caches network images, with support for placeholders and error widgets.
-  - ✅ **File Image**: Displays an image from a local `File`, including loading and error states.
-  - ✅ **Memory Image**: Renders an image from a `Uint8List` (byte data), useful for dynamically generated images.
-  - ✅ **Network Image**: A basic widget to display an image from a URL with loading and error builders.
+  - ✅ **Asset Image**: A robust wrapper for `Image.asset` that provides a seamless experience by including loading and error builders, ensuring your UI remains graceful even if an image fails to load.
+  - ✅ **Cached Network Image**: An advanced widget for displaying and caching network images with platform-specific logic. It dynamically provides separate caching mechanisms for mobile and web, ensuring optimal performance on both platforms while supporting custom placeholders and error widgets.
+  - ✅ **File Image**: A convenient widget for displaying an image from a local `File` object. It simplifies handling images selected from the device's gallery or camera by managing loading and error states.
+  - ✅ **Memory Image**: A specialized widget for rendering an image directly from a `Uint8List` in memory. This is particularly useful for displaying dynamically generated images or images received from an API as byte data.
+  - ✅ **Network Image**: A fundamental widget for displaying an image from a URL. It comes with built-in loading and error builders to handle different network states gracefully.
 - **PDF**
   - ✅ **File PDF**: A widget to render a PDF document from a local `File`.
   - ✅ **Memory PDF**: A widget to render a PDF document from a `Uint8List` in memory.

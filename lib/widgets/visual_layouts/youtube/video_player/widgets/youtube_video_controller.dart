@@ -2,15 +2,14 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-
-import '../../../../../../../core/constants/app_colors.dart';
-import '../../../../../utils/ui_helpers.dart';
-import '../util/youtube_media_controller.dart';
-import 'media_play_button.dart';
-import 'media_playback_speed.dart';
-import 'media_progress.dart';
-import 'media_seeker.dart';
-import 'media_volume_button.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/util/youtube_media_controller.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_play_button.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_playback_speed.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_progress.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_seeker.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_volume_button.dart';
 
 class YoutubeVideoController extends StatelessWidget {
   final YoutubeMediaController controller;
