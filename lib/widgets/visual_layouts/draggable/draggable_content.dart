@@ -1,9 +1,11 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/gestures.dart' show PointerDeviceKind;
+import 'dart:ui' show PointerDeviceKind;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/screen_util/screen_util.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_drag_handle.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 /// A flexible, reusable widget that displays a draggable bottom sheet with dynamic sizing.
@@ -15,6 +17,13 @@ import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 /// - The widget automatically calculates its minimum and maximum heights based on the content provided, ensuring a smooth UX.
 /// - The bottom copyright widget is always shown at the bottom of the sheet.
 class DraggableContent extends StatefulWidget {
+  const DraggableContent({
+    super.key,
+    required this.alwaysVisibleChildren,
+    required this.expandedOnlyChildren,
+    this.onContentMeasured,
+  });
+
   /// Widgets that are always visible in the sheet, regardless of expansion state.
   final List<Widget> alwaysVisibleChildren;
 
@@ -22,14 +31,7 @@ class DraggableContent extends StatefulWidget {
   final List<Widget> expandedOnlyChildren;
 
   /// Callback method for getting the minimum and maximum heights of the content.
-  final Function(double minHeight, double maxHeight)? onContentMeasured;
-
-  const DraggableContent({
-    super.key,
-    required this.alwaysVisibleChildren,
-    required this.expandedOnlyChildren,
-    this.onContentMeasured,
-  });
+  final void Function(double minHeight, double maxHeight)? onContentMeasured;
 
   @override
   State<DraggableContent> createState() => _DraggableContentState();
@@ -138,7 +140,7 @@ class _DraggableContentState extends State<DraggableContent> {
                   ),
                   child: ListView(
                     controller: scrollController,
-                    padding: UIHelpers.paddingH12,
+                    padding: UIHelpers.paddingH24,
                     children: [
                       Column(
                         key: _alwaysVisibleContentKey,
@@ -146,18 +148,7 @@ class _DraggableContentState extends State<DraggableContent> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           UIHelpers.spaceV8,
-                          Center(
-                            child: SizedBox(
-                              width: 96,
-                              height: 6,
-                              child: DecoratedBox(
-                                decoration: ShapeDecoration(
-                                  shape: StadiumBorder(),
-                                  color: AppColors.dashedBorder,
-                                ),
-                              ),
-                            ),
-                          ),
+                          Center(child: BottomSheetDragHandle()),
                           UIHelpers.spaceV24,
                           ...widget.alwaysVisibleChildren,
                         ],

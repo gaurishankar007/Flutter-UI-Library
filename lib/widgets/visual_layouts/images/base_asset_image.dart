@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
-import 'package:ui_library/widgets/visual_layouts/cupertino_loading.dart';
-import 'package:ui_library/widgets/visual_layouts/error_icon.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
+import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
 
 class BaseAssetImage extends StatelessWidget {
   final String assetName;
@@ -13,6 +13,7 @@ class BaseAssetImage extends StatelessWidget {
   final double? cacheHeight;
   final double? cacheWidth;
   final bool useLoadingIndicator;
+  final BoxFit? fallbackImageFit;
 
   const BaseAssetImage({
     super.key,
@@ -25,6 +26,7 @@ class BaseAssetImage extends StatelessWidget {
     this.cacheHeight,
     this.cacheWidth,
     this.useLoadingIndicator = true,
+    this.fallbackImageFit,
   });
 
   @override
@@ -44,7 +46,13 @@ class BaseAssetImage extends StatelessWidget {
         }
         return SizedBox.fromSize();
       },
-      errorBuilder: (c, e, s) => ErrorIcon(height: height, width: width),
+      errorBuilder: (c, e, s) => DefaultAssetImage(
+        width: width,
+        height: height,
+        cacheHeight: cacheHeight,
+        cacheWidth: cacheWidth,
+        fit: fallbackImageFit,
+      ),
     );
 
     if (circular) {

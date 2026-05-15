@@ -29,6 +29,7 @@ class UIHelpers {
   static final spaceH4 = SizedBox(width: Space.xxSmall.value);
   static final spaceH8 = SizedBox(width: Space.xSmall.value);
   static final spaceH12 = SizedBox(width: Space.small.value);
+  static final spaceH16 = SizedBox(width: Space.sMedium.value);
   static final spaceH20 = SizedBox(width: Space.medium.value);
   static final spaceH24 = SizedBox(width: Space.large.value);
   static final spaceH28 = SizedBox(width: Space.lMedium.value);
@@ -76,6 +77,7 @@ class UIHelpers {
   //<========== Vertical Padding ==========>
   static final paddingV1 = EdgeInsets.symmetric(vertical: Space.tiny.value);
   static final paddingV4 = EdgeInsets.symmetric(vertical: Space.xxSmall.value);
+  static final paddingV8 = EdgeInsets.symmetric(vertical: Space.xSmall.value);
   static final paddingV12 = EdgeInsets.symmetric(vertical: Space.small.value);
   static final paddingV16 = EdgeInsets.symmetric(vertical: Space.sMedium.value);
   static final paddingV20 = EdgeInsets.symmetric(vertical: Space.medium.value);
@@ -83,6 +85,10 @@ class UIHelpers {
   static final paddingV32 = EdgeInsets.symmetric(vertical: Space.xLarge.value);
 
   //<========== Symmetric Padding ==========>
+  static final paddingH16V4 = EdgeInsets.symmetric(
+    horizontal: Space.sMedium.value,
+    vertical: Space.xxSmall.value,
+  );
   static final paddingH16V8 = EdgeInsets.symmetric(
     horizontal: Space.sMedium.value,
     vertical: Space.xSmall.value,

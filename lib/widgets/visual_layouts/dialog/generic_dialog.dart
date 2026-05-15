@@ -26,7 +26,7 @@ Future<T?> showGenericDialog<T>(
       insetPadding: EdgeInsets.zero,
       content: SizedBox(
         height: dialogHeight,
-        width: ScreenUtil.I.getResponsiveValue(
+        width: ScreenUtil.I.responsiveValue(
           base: 45.widthPart(),
           screens: {
             {.compact, .phone}: 95.widthPart(),

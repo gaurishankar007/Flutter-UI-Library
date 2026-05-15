@@ -1,41 +1,34 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class MediaPlaybackSpeed extends StatelessWidget {
-  final ValueNotifier<double> playbackRateNotifier;
-  final Function(double value) onRateChanged;
-
   const MediaPlaybackSpeed({
     super.key,
     required this.playbackRateNotifier,
     required this.onRateChanged,
   });
+  final ValueNotifier<double> playbackRateNotifier;
+  final void Function(double value) onRateChanged;
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: playbackRateNotifier,
-      builder: (context, playbackRate, child) {
+      builder: (context, newRate, child) {
         return PopupMenuButton<double>(
           onSelected: onRateChanged,
-          padding: EdgeInsets.zero,
           menuPadding: EdgeInsets.zero,
-          icon: Icon(
-            Icons.speed_sharp,
-            size: kIsWeb ? 40 : 32,
-            color: AppColors.white,
-          ),
+          splashRadius: 0.1,
+          child: BaseText.button('${newRate}X', color: AppColors.white),
           itemBuilder: (context) {
-            return [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0].map((value) {
-              final text = value == 1.0 ? "Normal" : "$value";
-              final textColor = value == playbackRate
-                  ? AppColors.primary
-                  : AppColors.black.withAlpha(222);
+            return [0.5, 1.0, 1.25, 1.5, 2.0].map((rate) {
               return PopupMenuItem(
-                value: value,
-                child: BaseText(text, color: textColor),
+                value: rate,
+                child: BaseText(
+                  '${rate}X',
+                  color: rate == newRate ? AppColors.secondary : null,
+                ),
               );
             }).toList();
           },

@@ -26,21 +26,17 @@ class CustomUIComponents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        ScreenUtil.I.configureScreen(constraints.biggest);
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter UI Library',
-          theme: lightTheme,
-          navigatorKey: navigatorKey,
-          initialRoute: "/",
-          routes: {
-            "/": (context) => const HomeView(),
-            ...implicitAnimations,
-            ...explicitAnimations,
-          },
-        );
+    ScreenUtil.I.configureScreen();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter UI Library',
+      theme: lightTheme,
+      navigatorKey: navigatorKey,
+      initialRoute: "/",
+      routes: {
+        "/": (context) => const HomeView(),
+        ...implicitAnimations,
+        ...explicitAnimations,
       },
     );
   }

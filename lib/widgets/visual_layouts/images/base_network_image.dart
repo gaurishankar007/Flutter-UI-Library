@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
-import 'package:ui_library/widgets/visual_layouts/cupertino_loading.dart';
-import 'package:ui_library/widgets/visual_layouts/error_icon.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 import 'package:ui_library/widgets/visual_layouts/images/base_asset_image.dart';
+import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
 
 class BaseNetworkImage extends StatelessWidget {
   final String url;
@@ -14,6 +14,7 @@ class BaseNetworkImage extends StatelessWidget {
   final bool circular;
   final double? cacheHeight;
   final double? cacheWidth;
+  final BoxFit? fallbackImageFit;
   final Widget? fallbackWidget;
 
   const BaseNetworkImage({
@@ -26,6 +27,7 @@ class BaseNetworkImage extends StatelessWidget {
     this.circular = false,
     this.cacheHeight,
     this.cacheWidth,
+    this.fallbackImageFit,
     this.fallbackWidget,
   });
 
@@ -45,7 +47,14 @@ class BaseNetworkImage extends StatelessWidget {
         return CupertinoLoading(dimension: height);
       },
       errorBuilder: (context, error, stackTrace) {
-        return fallbackWidget ?? ErrorIcon(height: height, width: width);
+        return fallbackWidget ??
+            DefaultAssetImage(
+              width: width,
+              height: height,
+              cacheHeight: cacheHeight,
+              cacheWidth: cacheWidth,
+              fit: fallbackImageFit,
+            );
       },
     );
 

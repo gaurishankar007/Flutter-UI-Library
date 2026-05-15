@@ -1,34 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/debounce_time.dart';
-import 'package:ui_library/widgets/visual_layouts/error_icon.dart';
-import 'package:ui_library/widgets/visual_layouts/youtube/video_player/util/youtube_media_controller.dart';
-import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/youtube_video_controller.dart';
-import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/youtube_video_play_seek_controller.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/controller/youtube_web_media_controller.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/web/youtube_web_video_controller.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class YoutubeVideoPlayer extends StatefulWidget {
-  final String videoUrl;
-  final double aspectRatio;
-  final Function(YoutubeMediaController controller)? onInitialized;
-
   const YoutubeVideoPlayer({
     super.key,
     required this.videoUrl,
     this.aspectRatio = 16 / 9,
+    this.isExpandable = false,
+    this.isExpanded = false,
     this.onInitialized,
   });
+
+  final String videoUrl;
+  final double aspectRatio;
+  final bool isExpandable;
+  final bool isExpanded;
+  final void Function(YoutubeWebMediaController controller)? onInitialized;
 
   @override
   State<YoutubeVideoPlayer> createState() => _YoutubeVideoPlayerState();
 }
 
-class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
-  final _mediaController = YoutubeMediaController();
+class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer>
+    with AutomaticKeepAliveClientMixin {
+  final _mediaController = YoutubeWebMediaController();
   final _focusNode = FocusNode();
-  final _debounceTime = DebounceTime(delay: Duration(milliseconds: 3500));
-  final _visibilityNotifier = ValueNotifier(true);
+  final _debounceTime = DebounceTime(delay: const Duration(milliseconds: 4500));
+  final _visibilityNotifier = ValueNotifier(false);
   YoutubePlayerController? _controller;
 
   @override
@@ -37,11 +41,11 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
 
     // Initialize the controller with the video Id
     _controller = _mediaController.initializeController(widget.videoUrl);
-    if (_controller != null) _mediaController.listenControllerChanges();
+    if (_controller != null) {
+      _mediaController.listenControllerChanges();
+    }
     // Notify when the controller is ready
     widget.onInitialized?.call(_mediaController);
-    // Hide the controller after a delay
-    _hideController();
     // Request focus to capture keyboard events
     _focusNode.requestFocus();
   }
@@ -55,17 +59,30 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
-    if (_controller == null) return Center(child: ErrorIcon());
+    super.build(context);
+    if (_controller == null) {
+      return const Center(
+        child: Icon(
+          Icons.ondemand_video_rounded,
+          color: AppColors.gray,
+          size: 50,
+        ),
+      );
+    }
 
     return Focus(
       focusNode: _focusNode,
       autofocus: true,
       onKeyEvent: onKeyEvent,
       child: Stack(
+        alignment: Alignment.center,
         children: [
-          Align(
-            alignment: Alignment.center,
+          AspectRatio(
+            aspectRatio: widget.aspectRatio,
             child: YoutubePlayer(
               controller: _controller!,
               aspectRatio: widget.aspectRatio,
@@ -73,37 +90,40 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
           ),
           Positioned.fill(
             child: PointerInterceptor(
+              // The GestureDetector is required here for two reasons:
+              // 1. To capture taps on the video area when controls are hidden,
+              //    ensuring the controls become visible (_showController).
+              // 2. To request focus for the FocusNode, which enables the keyboard
+              //    shortcuts (Space, M, Arrows) to work. Without this, clicking
+              //    the iframe would shift focus to the browser's iframe context.
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
-                  if (!_focusNode.hasFocus) _focusNode.requestFocus();
+                  if (!_focusNode.hasFocus) {
+                    _focusNode.requestFocus();
+                  }
                   _showController();
                 },
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
+          AspectRatio(
+            aspectRatio: widget.aspectRatio,
             child: Listener(
               behavior: HitTestBehavior.translucent,
-              onPointerDown: (event) => _showController(),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: YoutubeVideoPlaySeekController(
-                      controller: _mediaController,
-                    ),
-                  ),
-                  ValueListenableBuilder(
-                    valueListenable: _visibilityNotifier,
-                    builder: (context, show, child) {
-                      if (!show) return SizedBox.shrink();
-                      return YoutubeVideoController(
-                        controller: _mediaController,
-                      );
-                    },
-                  ),
-                ],
+              onPointerDown: (_) => _showController(),
+              onPointerHover: (_) => _showController(),
+              child: ValueListenableBuilder(
+                valueListenable: _visibilityNotifier,
+                builder: (context, show, child) {
+                  return show
+                      ? YoutubeWebVideoController(
+                          controller: _mediaController,
+                          onExpansion: widget.isExpandable ? onExpansion : null,
+                          isExpanded: widget.isExpanded,
+                        )
+                      : const SizedBox.expand();
+                },
               ),
             ),
           ),
@@ -114,7 +134,9 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
 
   // Show the controller only if it is not shown
   void _showController() {
-    if (!_visibilityNotifier.value) _visibilityNotifier.value = true;
+    if (!_visibilityNotifier.value) {
+      _visibilityNotifier.value = true;
+    }
     _hideController();
   }
 
@@ -122,28 +144,24 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
       _debounceTime.run(() => _visibilityNotifier.value = false);
 
   KeyEventResult onKeyEvent(FocusNode node, KeyEvent event) {
-    if (event is! KeyDownEvent) return KeyEventResult.ignored;
+    if (event is! KeyDownEvent) {
+      return KeyEventResult.ignored;
+    }
 
-    bool handled = true;
+    var handled = true;
     switch (event.logicalKey) {
       case LogicalKeyboardKey.space:
         _mediaController.onPlayPause();
-        break;
       case LogicalKeyboardKey.keyM:
         _mediaController.onMuteUnmute();
-        break;
       case LogicalKeyboardKey.arrowLeft:
         _mediaController.onReplayForward(true);
-        break;
       case LogicalKeyboardKey.arrowRight:
         _mediaController.onReplayForward(false);
-        break;
       case LogicalKeyboardKey.arrowUp:
         _mediaController.onVolumeUpDown(true);
-        break;
       case LogicalKeyboardKey.arrowDown:
         _mediaController.onVolumeUpDown(false);
-        break;
       default:
         handled = false;
     }
@@ -154,4 +172,6 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
     }
     return KeyEventResult.ignored;
   }
+
+  void onExpansion() {}
 }

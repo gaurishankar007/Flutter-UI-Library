@@ -3,9 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/cache_manager_util.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
-import 'package:ui_library/widgets/visual_layouts/cupertino_loading.dart';
-import 'package:ui_library/widgets/visual_layouts/error_icon.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
+import 'package:ui_library/widgets/visual_layouts/icons/error_icon.dart';
 import 'package:ui_library/widgets/visual_layouts/images/base_asset_image.dart';
+import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
 
 class BaseCachedNetworkImage extends HookWidget {
   const BaseCachedNetworkImage({
@@ -18,6 +19,7 @@ class BaseCachedNetworkImage extends HookWidget {
     this.circular = false,
     this.cacheHeight,
     this.cacheWidth,
+    this.fallbackImageFit,
     this.fallbackWidget,
   });
 
@@ -29,6 +31,7 @@ class BaseCachedNetworkImage extends HookWidget {
   final bool circular;
   final double? cacheHeight;
   final double? cacheWidth;
+  final BoxFit? fallbackImageFit;
   final Widget? fallbackWidget;
 
   @override
@@ -42,7 +45,14 @@ class BaseCachedNetworkImage extends HookWidget {
     Widget child;
     Widget loadingIcon = CupertinoLoading(dimension: height);
     Widget errorWidget =
-        fallbackWidget ?? ErrorIcon(height: height, width: width);
+        fallbackWidget ??
+        DefaultAssetImage(
+          width: width,
+          height: height,
+          cacheHeight: cacheHeight,
+          cacheWidth: cacheWidth,
+          fit: fallbackImageFit,
+        );
 
     if (snapshot.connectionState == ConnectionState.waiting) {
       child = loadingIcon;

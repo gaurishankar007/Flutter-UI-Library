@@ -5,31 +5,22 @@ import 'package:ui_library/widgets/user_inputs/bottom_sheet/generic_bottom_sheet
 import 'package:ui_library/widgets/user_inputs/form/base_text_field.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
-/// A generic data model for dropdown items, holding a [value] of type [T]
-/// and an optional [label] to display in the UI.
-class DropdownData<T> {
-  final T value;
-  final String? label;
-
-  const DropdownData({required this.value, this.label});
-
-  @override
-  bool operator ==(covariant DropdownData<T> other) {
-    if (identical(this, other)) return true;
-
-    return other.value == value && other.label == label;
-  }
-
-  @override
-  int get hashCode => value.hashCode ^ label.hashCode;
-}
-
 /// A highly-reusable dropdown widget that supports multiple selections.
 ///
 /// This widget displays a text field that, when tapped, shows a bottom sheet
 /// containing a list of selectable items. It supports initial selections, a
-/// "Select All" option, and reports changes through the [onChanged] callback.
+/// 'Select All' option, and reports changes through the [onChanged] callback.
 class DropdownMultiSelection<T> extends StatefulWidget {
+  const DropdownMultiSelection({
+    super.key,
+    required this.title,
+    this.hintText,
+    required this.data,
+    this.selectedItems = const [],
+    required this.onChanged,
+    this.isOptional = false,
+  });
+
   /// The title of the dropdown, displayed above the text field and in the bottom sheet.
   final String title;
 
@@ -44,16 +35,11 @@ class DropdownMultiSelection<T> extends StatefulWidget {
 
   /// A callback function that is invoked whenever the selection changes.
   /// It returns a list of the selected values of type [T].
-  final Function(List<T> values) onChanged;
+  // ignore: unsafe_variance
+  final void Function(List<T> values) onChanged;
 
-  const DropdownMultiSelection({
-    super.key,
-    required this.title,
-    this.hintText,
-    required this.data,
-    this.selectedItems = const [],
-    required this.onChanged,
-  });
+  /// A flag to indicate if the dropdown is optional.
+  final bool isOptional;
 
   @override
   State<DropdownMultiSelection<T>> createState() =>
@@ -69,7 +55,7 @@ class _DropdownMultiSelectionState<T> extends State<DropdownMultiSelection<T>> {
   // `selectedItems` to prevent direct mutation of the widget's properties.
   late List<DropdownData<T>> _selectedValues;
 
-  // A boolean flag to track whether the "Select All" option is active.
+  // A boolean flag to track whether the 'Select All' option is active.
   late bool _isAllSelected;
 
   @override
@@ -109,7 +95,7 @@ class _DropdownMultiSelectionState<T> extends State<DropdownMultiSelection<T>> {
   Widget build(BuildContext context) {
     // The main UI is a read-only text field. Tapping it triggers the bottom sheet.
     return BaseTextField(
-      onTap: () => showGenericBottomSheet(
+      onTap: () => showGenericBottomSheet<dynamic>(
         context,
         enableDrag: true,
         isDismissible: true,
@@ -120,17 +106,19 @@ class _DropdownMultiSelectionState<T> extends State<DropdownMultiSelection<T>> {
       title: widget.title,
       hintText: widget.hintText,
       suffixIcon: const Icon(Icons.keyboard_arrow_down, color: AppColors.fade),
-      validator: (value) {
-        // Basic validation to ensure at least one item is selected if required.
-        if (_selectedValues.isEmpty) {
-          return "${widget.title} is required";
-        }
-        return null;
-      },
+      validator: widget.isOptional
+          ? null
+          : (value) {
+              // Basic validation to ensure at least one item is selected if required.
+              if (_selectedValues.isEmpty) {
+                return '${widget.title} is required';
+              }
+              return null;
+            },
     );
   }
 
-  /// Builds the content of the bottom sheet, including the item list and "Select All" option.
+  /// Builds the content of the bottom sheet, including the item list and 'Select All' option.
   Widget _buildDropdownItems() {
     // StatefulBuilder is used to manage the state of the bottom sheet's content
     // independently from the main widget's state.
@@ -140,9 +128,9 @@ class _DropdownMultiSelectionState<T> extends State<DropdownMultiSelection<T>> {
           mainAxisSize: MainAxisSize.min,
           children: [
             UIHelpers.spaceV16,
-            BaseText.heading5(widget.title, color: AppColors.base),
+            BaseText.heading5(widget.title),
             UIHelpers.spaceV16,
-            // Show "Select All" only if there are items to select.
+            // Show 'Select All' only if there are items to select.
             if (widget.data.isNotEmpty) ...[
               Padding(
                 padding: UIHelpers.paddingH12,
@@ -161,7 +149,7 @@ class _DropdownMultiSelectionState<T> extends State<DropdownMultiSelection<T>> {
                     _updateSelectedValues();
                   },
                   isSelected: _isAllSelected,
-                  label: "Select All",
+                  label: 'Select All',
                 ),
               ),
             ],
@@ -190,7 +178,7 @@ class _DropdownMultiSelectionState<T> extends State<DropdownMultiSelection<T>> {
                           _selectedValues.add(data);
                         }
 
-                        // Update the "Select All" status based on the current selection.
+                        // Update the 'Select All' status based on the current selection.
                         _isAllSelected =
                             widget.data.length == _selectedValues.length;
                       });
@@ -218,7 +206,7 @@ class _DropdownMultiSelectionState<T> extends State<DropdownMultiSelection<T>> {
         _controller.text = _selectedValues
             .map((e) => e.label)
             .where((l) => l != null)
-            .join(", ");
+            .join(', ');
       }
     });
   }
@@ -232,16 +220,15 @@ class _DropdownMultiSelectionState<T> extends State<DropdownMultiSelection<T>> {
 }
 
 class DropdownMultiSelectionItem extends StatelessWidget {
-  final String? label;
-  final bool isSelected;
-  final Function() onTap;
-
   const DropdownMultiSelectionItem({
     super.key,
     this.label,
     required this.isSelected,
     required this.onTap,
   });
+  final String? label;
+  final bool isSelected;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -258,7 +245,7 @@ class DropdownMultiSelectionItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(child: BaseText(label ?? "")),
+              Flexible(child: BaseText(label ?? '')),
               if (isSelected)
                 const Icon(Icons.check_box, color: AppColors.primary)
               else
@@ -272,4 +259,23 @@ class DropdownMultiSelectionItem extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A generic data model for dropdown items, holding a [value] of type [T]
+/// and an optional [label] to display in the UI.
+class DropdownData<T> {
+  const DropdownData({required this.value, this.label});
+  final T value;
+  final String? label;
+
+  @override
+  bool operator ==(covariant DropdownData<T> other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    return other.value == value && other.label == label;
+  }
+
+  @override
+  int get hashCode => value.hashCode ^ label.hashCode;
 }

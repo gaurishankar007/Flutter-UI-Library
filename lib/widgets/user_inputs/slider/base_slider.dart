@@ -2,33 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 
 class BaseSlider extends StatelessWidget {
+  const BaseSlider({
+    super.key,
+    this.value = 0.0,
+    this.trackHeight = 4.0,
+    this.trackShape,
+    this.thumbRadius = 6,
+    this.min = 0,
+    this.max = 1,
+    this.activeColor = AppColors.secondary,
+    this.inactiveColor = Colors.white38,
+    this.thumbColor = AppColors.secondary,
+    this.onChanged,
+    this.onChangeStart,
+    this.onChangeEnd,
+  });
+
   final double value;
   final double trackHeight;
+  final SliderTrackShape? trackShape;
   final double thumbRadius;
   final Color activeColor;
   final Color inactiveColor;
   final Color thumbColor;
   final double min;
   final double max;
-  final Function(double value)? onChanged;
-  final Function(double value)? onChangeStart;
-  final Function(double value)? onChangeEnd;
-
-  const BaseSlider({
-    super.key,
-    this.value = 0.0,
-    this.trackHeight = 2.5,
-    this.thumbRadius = 6,
-    this.min = 0,
-    this.max = 1,
-    this.activeColor = AppColors.primary,
-    this.inactiveColor = Colors.white38,
-    this.thumbColor = AppColors.primary,
-
-    this.onChanged,
-    this.onChangeStart,
-    this.onChangeEnd,
-  });
+  final void Function(double value)? onChanged;
+  final void Function(double value)? onChangeStart;
+  final void Function(double value)? onChangeEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,7 @@ class BaseSlider extends StatelessWidget {
           disabledThumbRadius: thumbRadius,
           elevation: 0,
         ),
+        trackShape: trackShape,
         trackHeight: trackHeight,
         thumbColor: activeColor,
         overlayColor: Colors.transparent,

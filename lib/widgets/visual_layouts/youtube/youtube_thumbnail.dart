@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
-import 'package:ui_library/widgets/visual_layouts/images/cached/base_cached_network_image.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:ui_library/utils/youtube_thumbnail/youtube_thumbnail_util.dart';
+import 'package:ui_library/widgets/visual_layouts/images/cached/mobile_cached_network_image.dart';
 
 class YoutubeThumbnail extends StatelessWidget {
-  final Function()? onTap;
-  final String videoUrl;
-
   const YoutubeThumbnail({super.key, this.onTap, required this.videoUrl});
+  final void Function()? onTap;
+  final String videoUrl;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
+      overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+      splashFactory: NoSplash.splashFactory,
       child: LayoutBuilder(
         builder: (context, constraints) {
           final maxWidth = constraints.maxWidth;
@@ -20,7 +21,7 @@ class YoutubeThumbnail extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               BaseCachedNetworkImage(
-                url: _getThumbnailUrl(),
+                url: YouTubeUtil.getThumbnailUrl(videoUrl),
                 height: constraints.maxHeight,
                 width: maxWidth,
                 cacheWidth: maxWidth,
@@ -28,7 +29,7 @@ class YoutubeThumbnail extends StatelessWidget {
               ),
               Icon(
                 Icons.play_arrow_rounded,
-                color: AppColors.white,
+                color: AppColors.white87,
                 size: maxWidth * .45,
               ),
             ],
@@ -36,14 +37,5 @@ class YoutubeThumbnail extends StatelessWidget {
         },
       ),
     );
-  }
-
-  String _getThumbnailUrl() {
-    try {
-      final videoId = YoutubePlayerController.convertUrlToId(videoUrl) ?? "";
-      return YoutubePlayerController.getThumbnail(videoId: videoId);
-    } catch (_) {
-      return "";
-    }
   }
 }

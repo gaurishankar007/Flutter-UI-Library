@@ -5,6 +5,18 @@ import 'package:ui_library/widgets/user_inputs/overlays/overlay_decoration.dart'
 
 /// A widget that shows a popup menu overlay anchored to its target widget when tapped.
 class OverlayMenu<T> extends StatefulWidget {
+  const OverlayMenu({
+    super.key,
+    required this.targetWidget,
+    this.targetAnchor = Alignment.bottomRight,
+    this.followerAnchor = Alignment.topRight,
+    this.verticalGap = 8,
+    this.menuWidth,
+    this.shrinkWrap = true,
+    this.menuItemAlign,
+    required this.menuItems,
+  });
+
   final Widget targetWidget;
   final Alignment targetAnchor;
   final Alignment followerAnchor;
@@ -18,18 +30,6 @@ class OverlayMenu<T> extends StatefulWidget {
   final bool shrinkWrap;
   final TextAlign? menuItemAlign;
   final List<OverlayMenuItem<T>> menuItems;
-
-  const OverlayMenu({
-    super.key,
-    required this.targetWidget,
-    this.targetAnchor = Alignment.bottomRight,
-    this.followerAnchor = Alignment.topRight,
-    this.verticalGap = 8,
-    this.menuWidth,
-    this.shrinkWrap = true,
-    this.menuItemAlign,
-    required this.menuItems,
-  });
 
   @override
   State<OverlayMenu<T>> createState() => _OverlayMenuState<T>();
@@ -62,17 +62,17 @@ class _OverlayMenuState<T> extends State<OverlayMenu<T>> {
   /// Shows the overlay entry if it is not already visible.
   /// If the overlay is already shown, it will be hidden.
   void _showOverlay() {
-    if (_overlayEntry != null) return;
-
-    _overlayEntry = _buildOverlay();
-    Overlay.of(context).insert(_overlayEntry!);
+    if (_overlayEntry == null) {
+      _overlayEntry = _buildOverlay();
+      Overlay.of(context).insert(_overlayEntry!);
+    }
   }
 
   /// Removes and disposes the overlay entry if it exists.
   /// A small delay is introduced to allow [_showOverlay] to complete its execution
   /// when the trigger widget [CompositedTransformTarget] is tapped, preventing immediate re-display of the overlay.
-  void _hideOverlay() async {
-    await Future.delayed(Duration(milliseconds: 50));
+  Future<void> _hideOverlay() async {
+    await Future<void>.delayed(const Duration(milliseconds: 50));
 
     _overlayEntry?.remove();
     _overlayEntry = null;
@@ -143,9 +143,11 @@ class _OverlayMenuState<T> extends State<OverlayMenu<T>> {
 /// [label] is the text displayed for the item.
 /// [onTap] is the callback invoked when the item is tapped.
 class OverlayMenuItem<T> {
+  const OverlayMenuItem({this.value, required this.label, required this.onTap});
   final T? value;
   final String label;
-  final Function(T? value) onTap;
-
-  const OverlayMenuItem({this.value, required this.label, required this.onTap});
+  // The onTap callback is intentionally covariant in T to allow flexibility
+  // when passing functions that accept supertypes of T.
+  // ignore: unsafe_variance
+  final void Function(T? value) onTap;
 }

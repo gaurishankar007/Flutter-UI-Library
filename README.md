@@ -8,11 +8,30 @@ A collection of reusable and customizable widgets for Flutter, designed to accel
   - [Table of Contents 📌](#table-of-contents-)
   - [Custom Widgets 📋](#custom-widgets-)
     - [Animation ✨](#animation-)
-    - [Async \& State ⚡️](#async--state-️)
+    - [Async & State ⚡️](#async--state-️)
     - [Clipper ✂️](#clipper-️)
     - [Painter 🎨](#painter-)
     - [User Inputs ✍️](#user-inputs-️)
+      - [Button](#button)
+      - [Checkbox](#checkbox)
+      - [Date Picker](#date-picker)
+      - [Dropdown](#dropdown)
+      - [Form](#form)
+      - [Overlays](#overlays)
+      - [Tabs](#tabs)
+      - [Toggle(Switch)](#toggleswitch)
+      - [Tooltip](#tooltip)
     - [Visual Layouts 🧱](#visual-layouts-)
+      - [Dialog](#dialog)
+      - [Divider](#divider)
+      - [Document](#document)
+      - [Draggable](#draggable)
+      - [Grid](#grid)
+      - [Icons](#icons)
+      - [Image](#image)
+      - [PDF](#pdf)
+      - [Tag](#tag)
+      - [Youtube](#youtube)
   - [Animation Views 🎬](#animation-views-)
     - [Explicit Animation Views](#explicit-animation-views)
     - [Implicit Animation Views](#implicit-animation-views)
@@ -28,6 +47,7 @@ Bring your UI to life with smooth animations:
   - ✅ **Gradient Loading Circle**: A rotating circular loader with a gradient effect, perfect for stylish loading states.
 - **Implicit Animations**
   - ✅ **Animated Indicator**: A customizable indicator for page views or step-by-step progress, with smooth transitions between active and inactive states.
+  - ✅ **Animated Expansion Tile**: A tile that expands and collapses with a smooth animation, useful for accordions or collapsible lists.
   - ✅ **Resend OTP Button**: A button that displays a countdown timer before allowing the user to resend an OTP, preventing spam.
   - ✅ **Tab Bar**: A styled `TabBar` for creating clean and modern tab-based navigation.
 
@@ -86,7 +106,14 @@ Intuitive and interactive components for user input:
 - **Form**
   - ✅ **OTP Field**: A set of input fields for entering one-time passwords (OTP), using the `pinput` package.
   - ✅ **Text Field**: A highly customizable `TextFormField` with an optional title, icons, and validation support.
+- **Date Picker**
+  - ✅ **Date Range Picker**: A modal or inline date range picker for selecting a start and end date using `syncfusion_flutter_datepicker`.
+  - ✅ **Date Timeline**: A horizontal timeline for selecting a specific date with customizable styling.
+- **Tabs**
+  - ✅ **Base Tab**: A customizable tab widget with support for icons and labels.
+  - ✅ **Base Tab List**: A horizontal list of `BaseTab` widgets with a scrollable area and an optional bottom divider.
 - ✅ **Toggle(Switch)**: A `Switch` with an optional label for simple on/off toggling.
+- ✅ **Tooltip**: A customizable tooltip that appears on long press or hover, providing additional context with optional icons.
 
 ---
 
@@ -94,12 +121,23 @@ Intuitive and interactive components for user input:
 
 Enhance your UI with foundational layout elements:
 
+- **Dialog**
+  - ✅ **Generic Dialog**: A highly customizable dialog wrapper for alerts, confirmations, and custom content with responsive sizing.
+- **Divider**
+  - ✅ **Base Divider**: A styled horizontal divider with customizable padding, color, and indents.
+  - ✅ **Base Vertical Divider**: A styled vertical divider for separating side-by-side content.
 - **Document**
   - ✅ **Document Upload**: A component that provides a UI for users to select and upload files (images, PDFs) from their device.
   - ✅ **Document List**: A `ListTile` styled widget for displaying a document item with an icon, title, and optional trailing widget.
   - ✅ **Document BottomSheet**: A function to display a selected document (image or PDF) within a modal bottom sheet for a quick preview.
 - **Draggable**
   - ✅ **Draggable Content Widget**: A draggable bottom sheet that dynamically adjusts its size based on its content, with separate sections for always-visible and expandable content.
+- **Grid**
+  - ✅ **Grid View Layout**: A responsive grid layout widget that adapts the number of columns based on screen size.
+  - ✅ **Sliver Grid View Layout**: A sliver-based grid layout for use within `CustomScrollView`.
+- **Icons**
+  - ✅ **Error Icon**: A standardized red error icon for indicating failures or errors.
+  - ✅ **Gradient Icon**: A versatile widget that applies a linear gradient to any icon.
 - **Image**
   - ✅ **Asset Image**: A robust wrapper for `Image.asset` that provides a seamless experience by including loading and error builders, ensuring your UI remains graceful even if an image fails to load.
   - ✅ **Cached Network Image**: An advanced widget for displaying and caching network images with platform-specific logic. It dynamically provides separate caching mechanisms for mobile and web, ensuring optimal performance on both platforms while supporting custom placeholders and error widgets.
@@ -109,11 +147,12 @@ Enhance your UI with foundational layout elements:
 - **PDF**
   - ✅ **File PDF**: A widget to render a PDF document from a local `File`.
   - ✅ **Memory PDF**: A widget to render a PDF document from a `Uint8List` in memory.
+- **Tag**
+  - ✅ **Base Tag**: A small, styled label widget for categories, status indicators, or chips, with optional icon support.
 - **Youtube**
   - ✅ **Youtube Video Player**: An embedded YouTube video player with custom controls for a seamless viewing experience.
   - ✅ **Youtube Thumbnail Image**: Displays a thumbnail for a YouTube video from its URL, with a play button overlay.
 - ✅ **Cupertino Loading**: A simple wrapper around `CupertinoActivityIndicator` for consistent iOS-style loading spinners.
-- ✅ **Error Icon**: A standardized red error icon for indicating failures or errors.
 - ✅ **Error Indicator**: A centered error icon, often used as a placeholder when content fails to load.
 - ✅ **Keyboard Space**: A dynamic `SizedBox` that adjusts its height to match the on-screen keyboard, preventing UI overlap.
 - ✅ **Loading Circle**: A versatile circular progress indicator with options for Material or Cupertino styles.

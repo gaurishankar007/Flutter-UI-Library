@@ -67,9 +67,9 @@ class AnimatedExpansionTile extends HookWidget {
           sizeFactor: sizeAnimation,
           axisAlignment: -1,
           child: Padding(
-            padding: ScreenUtil.I.getMobileValue(
+            padding: ScreenUtil.I.mobileValue(
               base: UIHelpers.paddingT32,
-              screen12: UIHelpers.paddingT24,
+              mobile: UIHelpers.paddingT24,
             ),
             child: child,
           ),

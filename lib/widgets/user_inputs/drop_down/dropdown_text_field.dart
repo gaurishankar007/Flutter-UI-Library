@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
+import 'package:ui_library/utils/validators.dart';
 import 'package:ui_library/widgets/user_inputs/form/base_text_field.dart';
 import 'package:ui_library/widgets/user_inputs/overlays/overlay_button.dart';
 import 'package:ui_library/widgets/user_inputs/overlays/overlay_decoration.dart';
@@ -13,6 +13,22 @@ import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 /// The selected item's label is shown in the text field, and a callback is triggered on selection.
 /// Supports custom title, hint text, prefix icon, max menu height/width, and item list.
 class DropdownTextField<T> extends StatefulWidget {
+  const DropdownTextField({
+    super.key,
+    this.title,
+    this.hintText = 'Choose an option',
+    this.prefixIcon,
+    this.alignMenuAtTop = false,
+    this.verticalGap = 4.0,
+    this.menuMaxHeight = double.infinity,
+    this.menuMaxWidth,
+    this.shrinkWrap = true,
+    this.selectedItem,
+    required this.items,
+    required this.onChanged,
+    this.isOptional = false,
+  });
+
   final String? title;
   final String hintText;
   final Widget? prefixIcon;
@@ -30,22 +46,14 @@ class DropdownTextField<T> extends StatefulWidget {
   final bool shrinkWrap;
   final DropdownItem<T>? selectedItem;
   final List<DropdownItem<T>> items;
-  final Function(T value) onChanged;
 
-  const DropdownTextField({
-    super.key,
-    this.title,
-    this.hintText = "Choose an option",
-    this.prefixIcon,
-    this.alignMenuAtTop = false,
-    this.verticalGap = 4.0,
-    this.menuMaxHeight = double.infinity,
-    this.menuMaxWidth,
-    this.shrinkWrap = true,
-    this.selectedItem,
-    required this.items,
-    required this.onChanged,
-  });
+  /// The onChanged callback is intentionally covariant in T to allow flexibility
+  /// when passing functions that accept supertypes of T.
+  // ignore: unsafe_variance
+  final void Function(T value) onChanged;
+
+  /// A flag to indicate if the dropdown is optional.
+  final bool isOptional;
 
   @override
   State<DropdownTextField<T>> createState() => _DropdownTextFieldState<T>();
@@ -77,7 +85,7 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = CompositedTransformTarget(
+    final Widget child = CompositedTransformTarget(
       link: _layerLink,
       child: BaseTextField(
         key: _textFieldKey,
@@ -88,20 +96,27 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
         prefixIcon: widget.prefixIcon,
         suffixIcon: ValueListenableBuilder(
           valueListenable: _menuVisibilityNotifier,
-          builder: (context, isMenuShowed, child) {
+          builder: (_, isMenuShowed, _) {
             return Icon(
               isMenuShowed
                   ? Icons.keyboard_arrow_up
                   : Icons.keyboard_arrow_down,
               size: 24,
-              color: AppColors.black87,
             );
           },
         ),
+        validator: widget.isOptional
+            ? null
+            : (value) => Validators.require(
+                value,
+                label: widget.title ?? 'this field',
+              ),
       ),
     );
 
-    if (widget.title == null) return child;
+    if (widget.title == null) {
+      return child;
+    }
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,17 +127,16 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
 
   /// Show overlay entry if the items are not empty
   void _showOverlay() {
-    if (_items.isEmpty) return;
-    if (_overlayEntry != null) return;
-
-    _menuVisibilityNotifier.value = true;
-    _overlayEntry = _buildOverlay();
-    Overlay.of(context).insert(_overlayEntry!);
+    if (_items.isNotEmpty && _overlayEntry == null) {
+      _menuVisibilityNotifier.value = true;
+      _overlayEntry = _buildOverlay();
+      Overlay.of(context).insert(_overlayEntry!);
+    }
   }
 
   /// Remove and dispose the overlay entry
-  void _hideOverlay() async {
-    await Future.delayed(Duration(milliseconds: 50));
+  Future<void> _hideOverlay() async {
+    await Future<void>.delayed(const Duration(milliseconds: 50));
 
     _menuVisibilityNotifier.value = false;
     _overlayEntry?.remove();
@@ -137,7 +151,7 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
     /// Check condition if widget hasn't been laid out yet or
     /// the layout might have completed yet and size is not available yet
     if (renderBox == null || !renderBox.hasSize) {
-      return OverlayEntry(builder: (_) => SizedBox.shrink());
+      return OverlayEntry(builder: (_) => const SizedBox.shrink());
     }
 
     final width = renderBox.size.width;
@@ -210,11 +224,13 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
 
   void _onDropdownItemSelect(DropdownItem<T> item) {
     _hideOverlay();
-    if (_selectedItem == item) return;
-
-    _controller.text = item.label;
-    _selectedItem = item;
-    if (item.value != null) widget.onChanged(item.value as T);
+    if (_selectedItem != item) {
+      _controller.text = item.label;
+      _selectedItem = item;
+      if (item.value != null) {
+        widget.onChanged(item.value as T);
+      }
+    }
   }
 }
 
@@ -222,17 +238,18 @@ class _DropdownTextFieldState<T> extends State<DropdownTextField<T>> {
 /// Value will be returned on changing dropdown item.
 /// [label] is the text which will be displayed.
 class DropdownItem<T> {
+  const DropdownItem({required this.value, required this.label});
   final T? value;
   final String label;
-
-  const DropdownItem({required this.value, required this.label});
 
   @override
   String toString() => 'DropDownItem(value: $value, label: $label)';
 
   @override
   bool operator ==(covariant DropdownItem<T> other) {
-    if (identical(this, other)) return true;
+    if (identical(this, other)) {
+      return true;
+    }
     return other.value == value && other.label == label;
   }
 

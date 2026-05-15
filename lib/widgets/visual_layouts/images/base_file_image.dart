@@ -1,18 +1,20 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ui_library/widgets/visual_layouts/cupertino_loading.dart';
-import 'package:ui_library/widgets/visual_layouts/error_indicator.dart';
+import 'package:ui_library/utils/extensions/num_extension.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
+import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
 
 class BaseFileImage extends StatelessWidget {
   final File file;
   final double? height;
   final double? width;
-  final int? cacheHeight;
-  final int? cacheWidth;
+  final double? cacheHeight;
+  final double? cacheWidth;
   final BoxFit? fit;
   final bool isCircular;
   final BorderRadius? borderRadius;
+  final BoxFit? fallbackImageFit;
 
   const BaseFileImage({
     super.key,
@@ -24,6 +26,7 @@ class BaseFileImage extends StatelessWidget {
     this.isCircular = false,
     this.fit,
     this.borderRadius,
+    this.fallbackImageFit,
   });
 
   @override
@@ -32,14 +35,20 @@ class BaseFileImage extends StatelessWidget {
       file,
       height: height,
       width: width,
-      cacheHeight: cacheHeight,
-      cacheWidth: cacheWidth,
+      cacheHeight: cacheHeight?.scaledByDPR.toInt(),
+      cacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
         if (frame != null) return child;
         return CupertinoLoading(dimension: height);
       },
-      errorBuilder: (_, _, _) => const ErrorIndicator(),
+      errorBuilder: (_, _, _) => DefaultAssetImage(
+        width: width,
+        height: height,
+        cacheHeight: cacheHeight,
+        cacheWidth: cacheWidth,
+        fit: fallbackImageFit,
+      ),
     );
 
     if (isCircular) {

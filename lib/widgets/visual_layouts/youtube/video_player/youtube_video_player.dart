@@ -1,2 +1,2 @@
-export 'youtube_video_mobile_player.dart'
-    if (dart.library.html) 'youtube_video_web_player.dart';
+export 'youtube_mobile_video_player.dart'
+    if (dart.library.html) 'youtube_web_video_player.dart';

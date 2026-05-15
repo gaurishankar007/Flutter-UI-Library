@@ -9,8 +9,24 @@ import 'package:ui_library/widgets/user_inputs/overlays/overlay_decoration.dart'
 /// using [overlayItemWidget], and updates automatically when [overlayItems] changes. Supports custom
 /// icons, hint text, separators, padding, and max overlay height. Useful for searchable dropdowns and autocomplete.
 class TextFieldWithOverlay<T> extends StatefulWidget {
+  const TextFieldWithOverlay({
+    super.key,
+    this.controller,
+    this.onChanged,
+    this.hintText = '',
+    this.prefixIcon,
+    this.suffixIcon,
+    this.alignMenuAtTop = false,
+    this.overlayGap = 8,
+    this.overlayMaxHeight = double.infinity,
+    this.overlayPadding,
+    this.shrinkWrap = true,
+    required this.overlayItems,
+    required this.overlayItemWidget,
+    this.overlayItemSeparatorWidget,
+  });
   final TextEditingController? controller;
-  final Function(String?)? onChanged;
+  final void Function(String?)? onChanged;
   final String hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -30,25 +46,11 @@ class TextFieldWithOverlay<T> extends StatefulWidget {
   /// Whenever this list changes, the overlay will be updated.
   /// Overlay will be shown only when the list is not empty.
   final List<T> overlayItems;
+  // The overlayItemWidget callback is intentionally covariant in T to allow flexibility
+  // when passing functions that accept supertypes of T.
+  // ignore: unsafe_variance
   final Widget Function(T) overlayItemWidget;
   final Widget? overlayItemSeparatorWidget;
-
-  const TextFieldWithOverlay({
-    super.key,
-    this.controller,
-    this.onChanged,
-    this.hintText = "",
-    this.prefixIcon,
-    this.suffixIcon,
-    this.alignMenuAtTop = false,
-    this.overlayGap = 8,
-    this.overlayMaxHeight = double.infinity,
-    this.overlayPadding,
-    this.shrinkWrap = true,
-    required this.overlayItems,
-    required this.overlayItemWidget,
-    this.overlayItemSeparatorWidget,
-  });
 
   @override
   State<TextFieldWithOverlay<T>> createState() =>
@@ -102,15 +104,19 @@ class _TextFieldWithOverlayState<T> extends State<TextFieldWithOverlay<T>> {
 
   /// Show overlay entry if the items are not empty
   void _showOverlay() {
-    if (_items.isEmpty) return;
-    _overlayEntry = _buildOverlay();
-    Overlay.of(context).insert(_overlayEntry!);
+    if (_items.isNotEmpty) {
+      _overlayEntry = _buildOverlay();
+      Overlay.of(context).insert(_overlayEntry!);
+    }
   }
 
   /// Update overlay entry if the items are changed
   void _updateOverlay() {
-    if (_items.isEmpty) return _hideOverlay();
-    if (_overlayEntry == null) return _showOverlay();
+    if (_items.isEmpty) {
+      return _hideOverlay();
+    } else if (_overlayEntry == null) {
+      return _showOverlay();
+    }
     _overlayEntry?.markNeedsBuild();
   }
 
@@ -121,7 +127,7 @@ class _TextFieldWithOverlayState<T> extends State<TextFieldWithOverlay<T>> {
   }
 
   /// This method is called only after the widget is laid out.
-  void safeCallback(Function() callback) {
+  void safeCallback(void Function() callback) {
     WidgetsBinding.instance.addPostFrameCallback((_) => callback.call());
   }
 
@@ -133,7 +139,7 @@ class _TextFieldWithOverlayState<T> extends State<TextFieldWithOverlay<T>> {
     /// Check condition if widget hasn't been laid out yet or
     /// the layout might have completed yet and size is not available yet
     if (renderBox == null || !renderBox.hasSize) {
-      return OverlayEntry(builder: (_) => SizedBox.shrink());
+      return OverlayEntry(builder: (_) => const SizedBox.shrink());
     }
 
     // targetAnchor and followerAnchor are combined with each-other to align
