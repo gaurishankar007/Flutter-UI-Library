@@ -24,7 +24,7 @@ class YoutubeThumbnail extends StatelessWidget {
                 url: YouTubeUtil.getThumbnailUrl(videoUrl),
                 height: constraints.maxHeight,
                 width: maxWidth,
-                cacheWidth: maxWidth,
+                cacheHeight: constraints.maxHeight,
                 fit: BoxFit.cover,
               ),
               Icon(

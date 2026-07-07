@@ -3,25 +3,28 @@ import 'package:flutter/services.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/debounce_time.dart';
-import 'package:ui_library/widgets/visual_layouts/youtube/video_player/controller/youtube_web_media_controller.dart';
-import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/web/youtube_web_video_controller.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/controller/youtube_player_controller_web.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/models/youtube_player_state.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/web/youtube_player_controls_web.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class YoutubeVideoPlayer extends StatefulWidget {
   const YoutubeVideoPlayer({
     super.key,
     required this.videoUrl,
-    this.aspectRatio = 16 / 9,
-    this.isExpandable = false,
-    this.isExpanded = false,
+    this.autoPlay = false,
+    this.videoStartAt,
+    this.isExpanded,
     this.onInitialized,
+    this.onStateChanged,
   });
 
   final String videoUrl;
-  final double aspectRatio;
-  final bool isExpandable;
-  final bool isExpanded;
-  final void Function(YoutubeWebMediaController controller)? onInitialized;
+  final bool autoPlay;
+  final double? videoStartAt;
+  final bool? isExpanded;
+  final void Function(YoutubePlayerControllerWeb controller)? onInitialized;
+  final void Function(YoutubePlayerState state)? onStateChanged;
 
   @override
   State<YoutubeVideoPlayer> createState() => _YoutubeVideoPlayerState();
@@ -29,7 +32,7 @@ class YoutubeVideoPlayer extends StatefulWidget {
 
 class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer>
     with AutomaticKeepAliveClientMixin {
-  final _mediaController = YoutubeWebMediaController();
+  final _mediaController = YoutubePlayerControllerWeb();
   final _focusNode = FocusNode();
   final _debounceTime = DebounceTime(delay: const Duration(milliseconds: 4500));
   final _visibilityNotifier = ValueNotifier(false);
@@ -40,9 +43,15 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer>
     super.initState();
 
     // Initialize the controller with the video Id
-    _controller = _mediaController.initializeController(widget.videoUrl);
+    _controller = _mediaController.initialize(
+      widget.videoUrl,
+      autoPlay: widget.autoPlay,
+      startsAt: widget.videoStartAt,
+    );
     if (_controller != null) {
-      _mediaController.listenControllerChanges();
+      _mediaController.listenControllerChanges(
+        onStateChanged: widget.onStateChanged,
+      );
     }
     // Notify when the controller is ready
     widget.onInitialized?.call(_mediaController);
@@ -51,10 +60,19 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer>
   }
 
   @override
+  void didUpdateWidget(covariant YoutubeVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.videoUrl != widget.videoUrl) {
+      _mediaController.loadNewVideo(widget.videoUrl);
+    }
+  }
+
+  @override
   void dispose() {
-    _mediaController.close();
-    _debounceTime.dispose();
+    _debounceTime.cancel();
     _focusNode.dispose();
+    _visibilityNotifier.dispose();
+    _mediaController.dispose();
     super.dispose();
   }
 
@@ -82,11 +100,8 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer>
         alignment: Alignment.center,
         children: [
           AspectRatio(
-            aspectRatio: widget.aspectRatio,
-            child: YoutubePlayer(
-              controller: _controller!,
-              aspectRatio: widget.aspectRatio,
-            ),
+            aspectRatio: 16 / 9,
+            child: YoutubePlayer(controller: _controller!),
           ),
           Positioned.fill(
             child: PointerInterceptor(
@@ -108,7 +123,7 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer>
             ),
           ),
           AspectRatio(
-            aspectRatio: widget.aspectRatio,
+            aspectRatio: 16 / 9,
             child: Listener(
               behavior: HitTestBehavior.translucent,
               onPointerDown: (_) => _showController(),
@@ -116,13 +131,14 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer>
               child: ValueListenableBuilder(
                 valueListenable: _visibilityNotifier,
                 builder: (context, show, child) {
-                  return show
-                      ? YoutubeWebVideoController(
-                          controller: _mediaController,
-                          onExpansion: widget.isExpandable ? onExpansion : null,
-                          isExpanded: widget.isExpanded,
-                        )
-                      : const SizedBox.expand();
+                  if (!show) {
+                    return const SizedBox.expand();
+                  }
+                  return YoutubePlayerControlsWeb(
+                    controller: _mediaController,
+                    onExpansion: widget.isExpanded != null ? onExpansion : null,
+                    isExpanded: widget.isExpanded,
+                  );
                 },
               ),
             ),
@@ -140,8 +156,11 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer>
     _hideController();
   }
 
-  void _hideController() =>
-      _debounceTime.run(() => _visibilityNotifier.value = false);
+  void _hideController() => _debounceTime.run(() {
+    if (mounted) {
+      _visibilityNotifier.value = false;
+    }
+  });
 
   KeyEventResult onKeyEvent(FocusNode node, KeyEvent event) {
     if (event is! KeyDownEvent) {

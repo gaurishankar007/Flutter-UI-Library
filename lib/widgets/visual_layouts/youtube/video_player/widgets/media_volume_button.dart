@@ -1,3 +1,12 @@
+// © 2026 vAIolin LLC. All rights reserved.
+//
+// This software and its associated materials are the intellectual
+// property of vAIolin LLC. Unauthorized copying, modification,
+// distribution, or use of this code, in whole or in part, without
+// express written permission from vAIolin LLC is strictly prohibited.
+//
+// For licensing inquiries, contact: snehesh@vaiolin.ai
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -5,11 +14,20 @@ import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/debounce_time.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/user_inputs/slider/base_slider.dart';
-import 'package:ui_library/widgets/visual_layouts/youtube/video_player/controller/youtube_web_media_controller.dart';
 
-class WebMediaVolumeButton extends HookWidget {
-  const WebMediaVolumeButton({super.key, required this.controller});
-  final YoutubeWebMediaController controller;
+class MediaVolumeButton extends HookWidget {
+  const MediaVolumeButton({
+    super.key,
+    required this.volumeNotifier,
+    required this.muteNotifier,
+    required this.onVolumeChanged,
+    required this.onMuteUnmute,
+  });
+
+  final ValueNotifier<int> volumeNotifier;
+  final ValueNotifier<bool> muteNotifier;
+  final void Function(double) onVolumeChanged;
+  final void Function() onMuteUnmute;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +35,8 @@ class WebMediaVolumeButton extends HookWidget {
       () => DebounceTime(delay: const Duration(seconds: 2)),
     );
     final volumeVisibility = useState(false);
-    final volume = useListenable(controller.volumeNotifier);
-    final isMuted = useListenable(controller.muteNotifier);
+    final volume = useListenable(volumeNotifier);
+    final isMuted = useListenable(muteNotifier);
     final showButton = useCallback(() {
       volumeVisibility.value = true;
       debounceTime.run(() {
@@ -53,14 +71,14 @@ class WebMediaVolumeButton extends HookWidget {
                   inactiveColor: kIsWeb ? AppColors.white38 : AppColors.black38,
                   trackHeight: 5,
                   thumbColor: AppColors.white,
-                  onChanged: controller.onVolumeChanged,
+                  onChanged: onVolumeChanged,
                 ),
               ),
             ),
             UIHelpers.spaceV8,
           ],
           InkWell(
-            onTap: kIsWeb ? controller.onMuteUnmute : null,
+            onTap: kIsWeb ? onMuteUnmute : null,
             child: Icon(icon, color: AppColors.white, size: 32),
           ),
         ],

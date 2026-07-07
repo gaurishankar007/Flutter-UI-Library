@@ -1,14 +1,24 @@
+// © 2026 vAIolin LLC. All rights reserved.
+//
+// This software and its associated materials are the intellectual
+// property of vAIolin LLC. Unauthorized copying, modification,
+// distribution, or use of this code, in whole or in part, without
+// express written permission from vAIolin LLC is strictly prohibited.
+//
+// For licensing inquiries, contact: snehesh@vaiolin.ai
+
 import 'dart:async' show Timer;
 
 import 'package:flutter/foundation.dart' show ValueNotifier;
 import 'package:ui_library/core/error_handler.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/models/youtube_player_state.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-class YoutubeWebMediaController {
+class YoutubePlayerControllerWeb {
   YoutubePlayerController? _controller;
   Timer? _updateTimer;
 
-  final playingNotifier = ValueNotifier<bool>(true);
+  final playingNotifier = ValueNotifier<bool>(false);
   final muteNotifier = ValueNotifier<bool>(false);
   final volumeNotifier = ValueNotifier<int>(100);
   final playbackRateNotifier = ValueNotifier<double>(1);
@@ -23,18 +33,11 @@ class YoutubeWebMediaController {
   double _duration = 0;
   double get duration => _duration;
 
-  void close() {
-    _updateTimer?.cancel();
-    playingNotifier.dispose();
-    volumeNotifier.dispose();
-    playbackRateNotifier.dispose();
-    positionNotifier.dispose();
-    bufferedNotifier.dispose();
-    _controller?.stopVideo();
-    _controller?.close();
-  }
-
-  YoutubePlayerController? initializeController(String videoUrl) {
+  YoutubePlayerController? initialize(
+    String videoUrl, {
+    bool autoPlay = false,
+    double? startsAt,
+  }) {
     return ErrorHandler.executeSafeReturnSync(() {
       final videoId = YoutubePlayerController.convertUrlToId(videoUrl);
       if (videoId == null) {
@@ -42,56 +45,66 @@ class YoutubeWebMediaController {
       }
 
       // Initialize the controller with the video Id
+      playingNotifier.value = autoPlay;
       _controller = YoutubePlayerController.fromVideoId(
         videoId: videoId,
         params: const YoutubePlayerParams(
-          loop: true,
-          showVideoAnnotations: false,
-          showControls: false,
           enableCaption: false,
-          pointerEvents: PointerEvents.none,
+          pointerEvents: .none,
+          color: 'black',
+          showControls: false,
+          showVideoAnnotations: false,
         ),
-        autoPlay: true,
+        autoPlay: autoPlay,
+        startSeconds: startsAt,
       );
 
       return _controller;
-    }, valueOnError: null);
+    }, onError: (_, _) => null);
   }
 
   /// Updates the player media values periodically
-  void listenControllerChanges() {
-    if (_controller != null) {
-      _updateTimer = Timer.periodic(const Duration(milliseconds: 500), (
-        _,
-      ) async {
+  Future<void> listenControllerChanges({
+    void Function(YoutubePlayerState state)? onStateChanged,
+  }) async {
+    if (_controller case final YoutubePlayerController controller) {
+      const updateInterval = Duration(milliseconds: 250);
+      _updateTimer = Timer.periodic(updateInterval, (_) async {
         await ErrorHandler.executeSafe(() async {
-          _duration = await _controller!.duration;
-          bufferedNotifier.value = await _controller!.videoLoadedFraction;
-          _currentTime = await _controller!.currentTime;
+          bufferedNotifier.value = await controller.videoLoadedFraction;
+          _duration = await controller.duration;
+          _currentTime = await controller.currentTime;
 
-          if (playingNotifier.value) {
-            _updatePosition();
+          if (_duration != 0 && _currentTime != 0) {
+            // A number between 0 and 1 that specifies the percentage of time elapsed.
+            final elapsedValue = (_currentTime / _duration)
+                .clamp(0, 1)
+                .toDouble();
+            positionNotifier.value = elapsedValue;
           }
+
+          // send the updated state
+          onStateChanged?.call(
+            YoutubePlayerState(
+              duration: _duration,
+              currentPosition: _currentTime,
+              bufferedPosition: bufferedNotifier.value,
+              isPlaying: playingNotifier.value,
+              volume: volumeNotifier.value,
+              playbackRate: playbackRateNotifier.value,
+              isMuted: muteNotifier.value,
+            ),
+          );
         });
       });
     }
   }
 
-  /// Updates elapsed time
-  void _updatePosition() {
-    if (_duration != 0 && _currentTime != 0) {
-      // A number between 0 and 1 that specifies the percentage of time elapsed.
-      final elapsedValue = (_currentTime / _duration).clamp(0, 1).toDouble();
-      positionNotifier.value = elapsedValue;
-    }
-  }
-
   /// Replace the video with new one and keep the previous position
   Future<void> loadNewVideo(String videoUrl) async {
-    await ErrorHandler.executeSafe(() async {
-      final videoId = YoutubePlayerController.convertUrlToId(videoUrl);
-      if (_controller != null && videoId != null) {
-        await _controller!.loadVideoById(
+    if (_controller case final YoutubePlayerController controller) {
+      await ErrorHandler.executeSafe(() async {
+        await controller.loadVideoById(
           videoId: YoutubePlayerController.convertUrlToId(videoUrl) ?? '',
           startSeconds: _currentTime,
         );
@@ -99,33 +112,31 @@ class YoutubeWebMediaController {
         // If it was paused, wait for the new video to start playing, then pause it.
         // This ensures the video thumbnail is visible.
         if (!playingNotifier.value) {
-          await _controller!.stream.firstWhere(
+          await controller.stream.firstWhere(
             (event) =>
                 event.playerState == PlayerState.playing ||
                 event.playerState == PlayerState.cued,
           );
-          await _controller!.pauseVideo();
+          await controller.pauseVideo();
         }
-      }
-    });
+      });
+    }
   }
 
   /// Seeks the player to the given position
   Future<void> onPositionChanged(double value) async {
-    if (_controller != null) {
+    if (_controller case final YoutubePlayerController controller) {
       await ErrorHandler.executeSafe(() async {
-        // Update slider value
-        positionNotifier.value = value;
         // Seek to the new position in YouTube Player
         final position = value * _duration;
-        await _controller!.seekTo(seconds: position, allowSeekAhead: true);
+        await controller.seekTo(seconds: position, allowSeekAhead: true);
       });
     }
   }
 
   // Seek to 5 seconds backward or  forward
   Future<void> onReplayForward(bool isReplay) async {
-    if (_controller != null) {
+    if (_controller case final YoutubePlayerController controller) {
       await ErrorHandler.executeSafe(() async {
         var seconds = 5;
         if (isReplay) {
@@ -138,45 +149,53 @@ class YoutubeWebMediaController {
             .toDouble();
         final seekPosition = (position / _duration).clamp(0, 1).toDouble();
         positionNotifier.value = seekPosition;
-        await _controller!.seekTo(seconds: position, allowSeekAhead: true);
+        await controller.seekTo(seconds: position, allowSeekAhead: true);
       });
     }
   }
 
   Future<void> onPlayPause() async {
-    if (_controller != null) {
+    if (_controller case final YoutubePlayerController controller) {
       await ErrorHandler.executeSafe(() async {
         playingNotifier.value
-            ? await _controller!.pauseVideo()
-            : await _controller!.playVideo();
+            ? await controller.pauseVideo()
+            : await controller.playVideo();
         playingNotifier.value = !playingNotifier.value;
       });
     }
   }
 
-  Future<void> onAppResumed() async {
-    await ErrorHandler.executeSafe(() async {
-      if (playingNotifier.value) {
-        await _controller!.playVideo();
-      }
-    });
+  Future<void> pause() async {
+    if (_controller case final YoutubePlayerController controller) {
+      await ErrorHandler.executeSafe(() async {
+        await controller.pauseVideo();
+        playingNotifier.value = false;
+      });
+    }
+  }
+
+  Future<void> play() async {
+    if (_controller case final YoutubePlayerController controller) {
+      await ErrorHandler.executeSafe(() async {
+        await controller.playVideo();
+        playingNotifier.value = true;
+      });
+    }
   }
 
   Future<void> onMuteUnmute() async {
-    if (_controller != null) {
+    if (_controller case final YoutubePlayerController controller) {
       await ErrorHandler.executeSafe(() async {
         if (muteNotifier.value) {
-          await _controller!.unMute();
-
+          await controller.unMute();
           // Volume
           volumeNotifier.value = 100;
-          await _controller!.setVolume(100);
+          await controller.setVolume(100);
         } else {
-          await _controller!.mute();
-
+          await controller.mute();
           // Volume
           volumeNotifier.value = 0;
-          await _controller!.setVolume(0);
+          await controller.setVolume(0);
         }
 
         muteNotifier.value = !muteNotifier.value;
@@ -185,18 +204,18 @@ class YoutubeWebMediaController {
   }
 
   Future<void> onVolumeChanged(double value) async {
-    if (_controller != null) {
+    if (_controller case final YoutubePlayerController controller) {
       await ErrorHandler.executeSafe(() async {
         final volume = value.round();
         volumeNotifier.value = volume;
-        await _controller!.setVolume(volume);
+        await controller.setVolume(volume);
 
         // Mute
         if (volume == 0) {
-          await _controller!.mute();
+          await controller.mute();
           muteNotifier.value = true;
         } else {
-          await _controller!.unMute();
+          await controller.unMute();
           muteNotifier.value = false;
         }
       });
@@ -219,11 +238,23 @@ class YoutubeWebMediaController {
   }
 
   Future<void> onPlaybackRateChanged(double playbackRate) async {
-    if (_controller != null) {
+    if (_controller case final YoutubePlayerController controller) {
       await ErrorHandler.executeSafe(() async {
         playbackRateNotifier.value = playbackRate;
-        await _controller!.setPlaybackRate(playbackRate);
+        await controller.setPlaybackRate(playbackRate);
       });
     }
+  }
+
+  void dispose() {
+    _updateTimer?.cancel();
+    playingNotifier.dispose();
+    muteNotifier.dispose();
+    volumeNotifier.dispose();
+    playbackRateNotifier.dispose();
+    positionNotifier.dispose();
+    bufferedNotifier.dispose();
+    _controller?.stopVideo();
+    _controller?.close();
   }
 }

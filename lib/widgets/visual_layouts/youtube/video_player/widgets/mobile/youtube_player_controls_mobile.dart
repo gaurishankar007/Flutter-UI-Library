@@ -1,28 +1,38 @@
+// © 2026 vAIolin LLC. All rights reserved.
+//
+// This software and its associated materials are the intellectual
+// property of vAIolin LLC. Unauthorized copying, modification,
+// distribution, or use of this code, in whole or in part, without
+// express written permission from vAIolin LLC is strictly prohibited.
+//
+// For licensing inquiries, contact: snehesh@vaiolin.ai
+
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
+import 'package:ui_library/utils/screen_util/screen_util.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
-import 'package:ui_library/widgets/visual_layouts/youtube/video_player/controller/youtube_mobile_media_controller.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/controller/youtube_player_controller_mobile.dart';
 import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_play_button.dart';
 import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_playback_speed.dart';
 import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_progress.dart';
 import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_replay_button.dart';
 import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_seeker.dart';
+import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_volume_button.dart';
 import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/media_zoom_button.dart';
-import 'package:ui_library/widgets/visual_layouts/youtube/video_player/widgets/mobile/mobile_media_volume_button.dart';
 
-class YoutubeMobileVideoController extends StatelessWidget {
-  const YoutubeMobileVideoController({
+class YoutubePlayerControlsMobile extends StatelessWidget {
+  const YoutubePlayerControlsMobile({
     super.key,
     required this.controller,
     this.onExpansion,
-    this.isExpanded = false,
+    this.isExpanded,
   });
 
-  final YoutubeMobileMediaController controller;
+  final YoutubePlayerControllerMobile controller;
   final void Function()? onExpansion;
-  final bool isExpanded;
+  final bool? isExpanded;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +51,7 @@ class YoutubeMobileVideoController extends StatelessWidget {
                 child: MediaReplayButton(
                   onTap: () => controller.onReplayForward(true),
                   isReplay: true,
+                  size: ScreenUtil.I.isWithinPhoneView ? 48 : 64,
                 ),
               ),
               Expanded(
@@ -54,6 +65,7 @@ class YoutubeMobileVideoController extends StatelessWidget {
                       child: MediaPlayButton.circular(
                         playingNotifier: controller.playingNotifier,
                         onPressed: controller.onPlayPause,
+                        size: ScreenUtil.I.isWithinPhoneView ? 48 : 64,
                       ),
                     ),
                   ],
@@ -64,6 +76,7 @@ class YoutubeMobileVideoController extends StatelessWidget {
                 child: MediaReplayButton(
                   onTap: () => controller.onReplayForward(false),
                   isReplay: false,
+                  size: ScreenUtil.I.isWithinPhoneView ? 48 : 64,
                 ),
               ),
             ],
@@ -84,9 +97,13 @@ class YoutubeMobileVideoController extends StatelessWidget {
                           valueListenable: controller.positionNotifier,
                           builder: (context, position, child) {
                             return MediaProgress(
-                              positionInSeconds:
-                                  (position * controller.duration).toInt(),
-                              durationInSeconds: controller.duration.toInt(),
+                              position: Duration(
+                                seconds: (position * controller.duration)
+                                    .toInt(),
+                              ),
+                              duration: Duration(
+                                seconds: controller.duration.toInt(),
+                              ),
                             );
                           },
                         ),
@@ -97,7 +114,12 @@ class YoutubeMobileVideoController extends StatelessWidget {
                         ),
                         if (Platform.isAndroid) ...[
                           UIHelpers.spaceH16,
-                          MobileMediaVolumeButton(controller: controller),
+                          MediaVolumeButton(
+                            volumeNotifier: controller.volumeNotifier,
+                            muteNotifier: controller.muteNotifier,
+                            onVolumeChanged: controller.onVolumeChanged,
+                            onMuteUnmute: controller.onMuteUnmute,
+                          ),
                         ],
                         // UIHelpers.spaceH16,
                         // const MediaDownloadButton(),
@@ -105,12 +127,13 @@ class YoutubeMobileVideoController extends StatelessWidget {
                           UIHelpers.spaceH16,
                           MediaZoomButton(
                             onTap: onExpansion!,
-                            isExpanded: isExpanded,
+                            isExpanded: isExpanded ?? false,
                           ),
                         ],
                       ],
                     ),
                   ),
+                  UIHelpers.spaceV8,
                   MediaSeeker(
                     positionNotifier: controller.positionNotifier,
                     bufferedNotifier: controller.bufferedNotifier,

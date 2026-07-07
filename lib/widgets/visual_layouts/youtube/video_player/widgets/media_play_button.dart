@@ -1,3 +1,12 @@
+// © 2026 vAIolin LLC. All rights reserved.
+//
+// This software and its associated materials are the intellectual
+// property of vAIolin LLC. Unauthorized copying, modification,
+// distribution, or use of this code, in whole or in part, without
+// express written permission from vAIolin LLC is strictly prohibited.
+//
+// For licensing inquiries, contact: snehesh@vaiolin.ai
+
 import 'package:flutter/material.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
@@ -8,12 +17,12 @@ class MediaPlayButton extends StatelessWidget {
     super.key,
     required this.playingNotifier,
     required this.onPressed,
-    this.iconSize = 32,
+    this.iconSize,
   });
 
   final ValueNotifier<bool> playingNotifier;
   final void Function() onPressed;
-  final double iconSize;
+  final double? iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +46,7 @@ class MediaPlayButton extends StatelessWidget {
   static Widget circular({
     required ValueNotifier<bool> playingNotifier,
     required void Function() onPressed,
+    double? size,
   }) => DecoratedBox(
     decoration: BoxDecoration(color: AppColors.black60, shape: BoxShape.circle),
     child: Padding(
@@ -44,7 +54,7 @@ class MediaPlayButton extends StatelessWidget {
       child: MediaPlayButton(
         playingNotifier: playingNotifier,
         onPressed: onPressed,
-        iconSize: 64,
+        iconSize: size,
       ),
     ),
   );
