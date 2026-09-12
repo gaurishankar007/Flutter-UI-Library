@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class Drawer3D extends StatelessWidget {
@@ -22,7 +22,7 @@ class Drawer3D extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(
-                    "Item ${index + 1}",
+                    'Item ${index + 1}',
                     style: const TextStyle(color: Colors.white),
                   ),
                 );
@@ -37,7 +37,7 @@ class Drawer3D extends StatelessWidget {
             backgroundColor: Colors.deepPurple,
             iconTheme: const IconThemeData(color: Colors.white),
             title: const Text(
-              "3D Drawer",
+              '3D Drawer',
               style: TextStyle(color: Colors.white),
             ),
             centerTitle: true,
@@ -50,14 +50,14 @@ class Drawer3D extends StatelessWidget {
 }
 
 class Drawer3DWidget extends StatefulWidget {
-  final WidgetBuilder drawerBuilder;
-  final WidgetBuilder childBuilder;
 
   const Drawer3DWidget({
     super.key,
     required this.drawerBuilder,
     required this.childBuilder,
   });
+  final WidgetBuilder drawerBuilder;
+  final WidgetBuilder childBuilder;
 
   @override
   State<Drawer3DWidget> createState() => _Drawer3DWidgetState();
@@ -142,7 +142,7 @@ class _Drawer3DWidgetState extends State<Drawer3DWidget>
                   ..setEntry(3, 2, 0.001)
                   // Moving child towards x axis
                   ..translateByVector3(
-                    Vector3(xControllerForChild.value * maxDragWidth, 0.0, 0.0),
+                    Vector3(xControllerForChild.value * maxDragWidth, 0, 0),
                   )
                   // Rotating child based on y axis
                   ..rotateY(yRotationAnimationForChild.value),
@@ -157,8 +157,8 @@ class _Drawer3DWidgetState extends State<Drawer3DWidget>
                     Vector3(
                       -screenWidth +
                           (xControllerForDrawer.value * maxDragWidth),
-                      0.0,
-                      0.0,
+                      0,
+                      0,
                     ),
                   )
                   ..rotateY(yRotationAnimationForDrawer.value),

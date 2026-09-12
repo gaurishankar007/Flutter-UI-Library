@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/cache_manager_util.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
-import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 import 'package:ui_library/widgets/visual_layouts/icons/error_icon.dart';
 import 'package:ui_library/widgets/visual_layouts/images/base_asset_image.dart';
 import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 
 class BaseCachedNetworkImage extends HookWidget {
   const BaseCachedNetworkImage({
@@ -43,8 +43,8 @@ class BaseCachedNetworkImage extends HookWidget {
     final snapshot = useFuture(imageFuture);
 
     Widget child;
-    Widget loadingIcon = CupertinoLoading(dimension: height);
-    Widget errorWidget =
+    final Widget loadingIcon = CupertinoLoading(dimension: height);
+    final Widget errorWidget =
         fallbackWidget ??
         DefaultAssetImage(
           width: width,
@@ -66,7 +66,7 @@ class BaseCachedNetworkImage extends HookWidget {
         fit: fit,
         cacheHeight: cacheHeight?.scaledByDPR.toInt(),
         cacheWidth: cacheWidth?.scaledByDPR.toInt(),
-        frameBuilder: (context, child, frame, bool wasSynchronouslyLoaded) {
+        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
           if (frame != null) {
             return child;
           }
@@ -94,7 +94,7 @@ class BaseCachedNetworkImage extends HookWidget {
     Widget? fallbackWidget,
     bool isBordered = false,
   }) {
-    Widget child = BaseCachedNetworkImage(
+    final Widget child = BaseCachedNetworkImage(
       key: key,
       url: url,
       width: diameter,
@@ -105,7 +105,9 @@ class BaseCachedNetworkImage extends HookWidget {
       fallbackWidget: fallbackWidget ?? BaseAssetImage.person(size: diameter),
     );
 
-    if (!isBordered) return child;
+    if (!isBordered) {
+      return child;
+    }
     return CircleAvatar(
       radius: (diameter / 2) + 1.5,
       backgroundColor: AppColors.fade,

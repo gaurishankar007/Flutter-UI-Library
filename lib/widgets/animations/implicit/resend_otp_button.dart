@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/animations/explicit/loading_circle.dart';
 import 'package:ui_library/widgets/user_inputs/button/base_text_button.dart';
 
 class ResendOTPButton extends HookWidget {
-  final Function() onOTPSend;
   const ResendOTPButton({super.key, required this.onOTPSend});
+  final void Function() onOTPSend;
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +28,16 @@ class ResendOTPButton extends HookWidget {
       onEnd: () => showTimer.value = false,
       builder: (context, duration, child) {
         return BaseTextButton(
-          onPressed: () async {
+          onPressed: () {
             loading.value = true;
-            await onOTPSend();
+            onOTPSend();
             loading.value = false;
             showTimer.value = true;
           },
           text: showTimer.value
-              ? "Resend OTP (${duration.inSeconds})"
-              : "Resend OTP",
+              ? 'Resend OTP (${duration.inSeconds})'
+              : 'Resend OTP',
           foregroundColor: Colors.black,
-          fontSize: 16,
           expanded: true,
           disabled: showTimer.value,
         );

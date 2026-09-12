@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/themes/theme.dart';
 import 'package:ui_library/utils/screen_util/screen_util.dart';
 import 'package:ui_library/views/animations/explicit/animated_prompt.dart';
@@ -32,9 +33,9 @@ class CustomUIComponents extends StatelessWidget {
       title: 'Flutter UI Library',
       theme: lightTheme,
       navigatorKey: navigatorKey,
-      initialRoute: "/",
+      initialRoute: '/',
       routes: {
-        "/": (context) => const HomeView(),
+        '/': (context) => const HomeView(),
         ...implicitAnimations,
         ...explicitAnimations,
       },
@@ -46,24 +47,24 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 Map<String, WidgetBuilder> get implicitAnimations {
   return {
-    "/Animated Widget": (context) => const AnimatedWidgets(),
-    "/Tween Builder": (context) => const TweenBuilders(),
-    "/Hero Animation": (context) => const HeroAnimation(),
-    "/Animated List View": (context) => const AnimatedListView(),
+    '/Animated Widget': (context) => const AnimatedWidgets(),
+    '/Tween Builder': (context) => const TweenBuilders(),
+    '/Hero Animation': (context) => const HeroAnimation(),
+    '/Animated List View': (context) => const AnimatedListView(),
   };
 }
 
 Map<String, WidgetBuilder> get explicitAnimations {
   return {
-    "/Ticker": (context) => const TickerAnimation(),
-    "/Transition Animation": (context) => const TransitionAnimation(),
-    "/Bouncing Position": (context) => const BouncingPosition(),
-    "/Bouncing Size": (context) => const BouncingSize(),
-    "/Transform Rotation": (context) => const TransformRotation(),
-    "/Transform Clip Path": (context) => const TransformClipPath(),
-    "/Cube 3D": (context) => const Cube3D(),
-    "/Animation With Polygon": (context) => const AnimationWithPolygon(),
-    "/Drawer 3D": (context) => const Drawer3D(),
-    "/Animated Prompt": (context) => const AnimatedPrompt(),
+    '/Ticker': (context) => const TickerAnimation(),
+    '/Transition Animation': (context) => const TransitionAnimation(),
+    '/Bouncing Position': (context) => const BouncingPosition(),
+    '/Bouncing Size': (context) => const BouncingSize(),
+    '/Transform Rotation': (context) => const TransformRotation(),
+    '/Transform Clip Path': (context) => const TransformClipPath(),
+    '/Cube 3D': (context) => const Cube3D(),
+    '/Animation With Polygon': (context) => const AnimationWithPolygon(),
+    '/Drawer 3D': (context) => const Drawer3D(),
+    '/Animated Prompt': (context) => const AnimatedPrompt(),
   };
 }

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 /// A dropdown button widget that allows users to select an item from a list of options.
@@ -7,9 +7,6 @@ import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 /// of the selected value, the list of items, and a callback function to handle changes.
 /// The widget is styled with a border and rounded corners for a polished appearance.
 class DropDownButton<T> extends StatelessWidget {
-  final T? selectedValue;
-  final List<DropdownItem<T>> items;
-  final Function(T?)? onChanged;
 
   const DropDownButton({
     super.key,
@@ -17,6 +14,11 @@ class DropDownButton<T> extends StatelessWidget {
     required this.items,
     required this.onChanged,
   });
+  final T? selectedValue;
+  final List<DropdownItem<T>> items;
+  // The onChanged callback accepts the generic type T selected from the dropdown.
+  // ignore: unsafe_variance
+  final ValueChanged<T?>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -60,17 +62,19 @@ class DropDownButton<T> extends StatelessWidget {
 /// Value will be returned on changing dropdown item.
 /// [label] is the text which will be displayed.
 class DropdownItem<T> {
-  final T? value;
-  final String label;
 
   const DropdownItem({required this.value, required this.label});
+  final T? value;
+  final String label;
 
   @override
   String toString() => 'DropDownItem(value: $value, label: $label)';
 
   @override
   bool operator ==(covariant DropdownItem<T> other) {
-    if (identical(this, other)) return true;
+    if (identical(this, other)) {
+      return true;
+    }
 
     return other.value == value && other.label == label;
   }

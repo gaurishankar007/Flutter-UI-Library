@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ErrorIndicator extends StatelessWidget {
+  const ErrorIndicator({super.key, this.dimension, this.iconSize});
   final double? dimension;
   final double? iconSize;
-  const ErrorIndicator({super.key, this.dimension, this.iconSize});
 
   @override
   Widget build(BuildContext context) {

@@ -1,22 +1,11 @@
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
-import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 
 class BaseMemoryImage extends StatelessWidget {
-  /// image bytes data
-  final Uint8List uint8List;
-  final double? height;
-  final double? width;
-  final double? cacheHeight;
-  final double? cacheWidth;
-  final bool isCircular;
-  final BoxFit? fit;
-  final BorderRadius? borderRadius;
-  final BoxFit? fallbackImageFit;
-
   const BaseMemoryImage({
     super.key,
     required this.uint8List,
@@ -30,11 +19,24 @@ class BaseMemoryImage extends StatelessWidget {
     this.fallbackImageFit,
   });
 
+  /// image bytes data
+  final Uint8List uint8List;
+  final double? height;
+  final double? width;
+  final double? cacheHeight;
+  final double? cacheWidth;
+  final bool isCircular;
+  final BoxFit? fit;
+  final BorderRadius? borderRadius;
+  final BoxFit? fallbackImageFit;
+
   @override
   Widget build(BuildContext context) {
-    if (uint8List.isEmpty) return SizedBox.shrink();
+    if (uint8List.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
-    Widget child = Image.memory(
+    final Widget child = Image.memory(
       uint8List,
       height: height,
       width: width,
@@ -42,7 +44,9 @@ class BaseMemoryImage extends StatelessWidget {
       cacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-        if (frame != null) return child;
+        if (frame != null) {
+          return child;
+        }
         return CupertinoLoading(dimension: height);
       },
       errorBuilder: (_, _, _) => DefaultAssetImage(

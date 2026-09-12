@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/user_inputs/bottom_sheet/generic_bottom_sheet.dart';
@@ -10,13 +10,6 @@ import 'package:ui_library/widgets/visual_layouts/document/upload/document_uploa
 import 'package:ui_library/widgets/visual_layouts/document/upload/upload_container.dart';
 
 class DocumentUpload extends StatelessWidget {
-  /// A callback functions for providing list of selected images
-  final Function(List<File> imageFiles) onSelection;
-  final bool multiSelector;
-  final int maxFileCount;
-
-  /// Allows to pick specific file types
-  final DocumentType documentType;
 
   const DocumentUpload({
     super.key,
@@ -25,6 +18,13 @@ class DocumentUpload extends StatelessWidget {
     required this.maxFileCount,
     required this.documentType,
   });
+  /// A callback functions for providing list of selected images
+  final void Function(List<File> imageFiles) onSelection;
+  final bool multiSelector;
+  final int maxFileCount;
+
+  /// Allows to pick specific file types
+  final DocumentType documentType;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class DocumentUpload extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         InkWell(
-          onTap: () => showGenericBottomSheet(
+          onTap: () => showGenericBottomSheet<void>(
             context,
             child: DocumentUploadBottomSheet(
               multiSelector: multiSelector,
@@ -47,7 +47,7 @@ class DocumentUpload extends StatelessWidget {
         ),
         UIHelpers.spaceV8,
         BaseText(
-          "Only support "
+          'Only support '
           "${documentType.allowedFileTypes.join(", ")} files.",
           color: AppColors.fade,
           fontSize: 12,

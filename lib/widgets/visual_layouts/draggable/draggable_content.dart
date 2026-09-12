@@ -1,7 +1,7 @@
 import 'dart:ui' show PointerDeviceKind;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/screen_util/screen_util.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
@@ -148,7 +148,7 @@ class _DraggableContentState extends State<DraggableContent> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           UIHelpers.spaceV8,
-                          Center(child: BottomSheetDragHandle()),
+                          const Center(child: BottomSheetDragHandle()),
                           UIHelpers.spaceV24,
                           ...widget.alwaysVisibleChildren,
                         ],
@@ -163,11 +163,11 @@ class _DraggableContentState extends State<DraggableContent> {
                   ),
                 ),
               ),
-              SafeArea(
+              const SafeArea(
                 top: false,
                 minimum: kIsWeb ? EdgeInsets.only(bottom: 16) : EdgeInsets.zero,
                 child: BaseText(
-                  "© UI Component 2025",
+                  '© UI Component 2025',
                   color: AppColors.black60,
                   fontSize: 12,
                   textAlign: TextAlign.center,

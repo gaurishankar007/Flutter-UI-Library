@@ -1,26 +1,26 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class Toggle extends HookWidget {
-  final bool value;
-  final Function(bool)? onChanged;
-  final String? label;
-
   const Toggle({super.key, this.value = false, this.onChanged, this.label});
+  final bool value;
+  final void Function(bool)? onChanged;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
     final switchState = useState(value);
-    final callback = useCallback((bool value) {
-      switchState.value = value;
-      onChanged?.call(value);
-    });
+    void handleChange(bool newValue) {
+      switchState.value = newValue;
+      onChanged?.call(newValue);
+    }
+    final callback = useCallback(handleChange);
     final isDisabled = onChanged == null;
 
-    Widget child = UnconstrainedBox(
+    final Widget child = UnconstrainedBox(
       child: SizedBox(
         width: 40,
         child: FittedBox(
@@ -33,9 +33,10 @@ class Toggle extends HookWidget {
       ),
     );
 
-    if (label == null) return child;
+    if (label == null) {
+      return child;
+    }
     return Row(
-      mainAxisSize: MainAxisSize.max,
       children: [
         child,
         UIHelpers.spaceH8,

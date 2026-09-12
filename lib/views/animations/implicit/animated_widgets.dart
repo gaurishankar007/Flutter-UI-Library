@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AnimatedWidgets extends StatefulWidget {
   const AnimatedWidgets({super.key});
@@ -18,7 +18,7 @@ class _AnimatedWidgetsState extends State<AnimatedWidgets> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          "Animated Widgets",
+          'Animated Widgets',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -27,7 +27,7 @@ class _AnimatedWidgetsState extends State<AnimatedWidgets> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Animated Container"),
+            const Text('Animated Container'),
             const SizedBox(height: 10, width: double.maxFinite),
             AnimatedContainer(
               duration: const Duration(seconds: 1),
@@ -48,7 +48,7 @@ class _AnimatedWidgetsState extends State<AnimatedWidgets> {
                   width = 200;
                 }
               }),
-              child: const Text("Animate Size"),
+              child: const Text('Animate Size'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -59,7 +59,7 @@ class _AnimatedWidgetsState extends State<AnimatedWidgets> {
                   color = Colors.deepOrange;
                 }
               }),
-              child: const Text("Animate Color"),
+              child: const Text('Animate Color'),
             ),
           ],
         ),

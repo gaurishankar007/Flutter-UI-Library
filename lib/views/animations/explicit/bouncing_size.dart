@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BouncingSize extends StatefulWidget {
   const BouncingSize({super.key});
@@ -7,7 +7,8 @@ class BouncingSize extends StatefulWidget {
   State<BouncingSize> createState() => _BouncingSizeState();
 }
 
-class _BouncingSizeState extends State<BouncingSize> with TickerProviderStateMixin {
+class _BouncingSizeState extends State<BouncingSize>
+    with TickerProviderStateMixin {
   late final AnimationController slideController;
   late final AnimationController colorSizeController;
   late final Animation<Offset> offsetAnimation;
@@ -18,26 +19,26 @@ class _BouncingSizeState extends State<BouncingSize> with TickerProviderStateMix
   void initState() {
     super.initState();
 
-    slideController = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
-    colorSizeController =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 1200));
+    slideController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    colorSizeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
 
     offsetAnimation = Tween(
       begin: const Offset(1, 0),
-      end: const Offset(0, 0),
+      end: Offset.zero,
     ).animate(slideController);
 
-    final sizeTween = TweenSequence<double>(
-      [
-        TweenSequenceItem(tween: Tween(begin: 40, end: 80), weight: 50),
-        TweenSequenceItem(tween: Tween(begin: 80, end: 40), weight: 50),
-      ],
-    );
+    final sizeTween = TweenSequence<double>([
+      TweenSequenceItem(tween: Tween(begin: 40, end: 80), weight: 50),
+      TweenSequenceItem(tween: Tween(begin: 80, end: 40), weight: 50),
+    ]);
     sizeAnimation = sizeTween.animate(
-      CurvedAnimation(
-        parent: colorSizeController,
-        curve: Curves.slowMiddle,
-      ),
+      CurvedAnimation(parent: colorSizeController, curve: Curves.slowMiddle),
     );
 
     final colorTween = ColorTween(begin: Colors.grey, end: Colors.red);
@@ -60,7 +61,7 @@ class _BouncingSizeState extends State<BouncingSize> with TickerProviderStateMix
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          "Bouncing Size",
+          'Bouncing Size',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -77,8 +78,12 @@ class _BouncingSizeState extends State<BouncingSize> with TickerProviderStateMix
                   children: [
                     IconButton(
                       onPressed: () {
-                        if (colorSizeController.isDismissed) colorSizeController.forward();
-                        if (colorSizeController.isCompleted) colorSizeController.reverse();
+                        if (colorSizeController.isDismissed) {
+                          colorSizeController.forward();
+                        }
+                        if (colorSizeController.isCompleted) {
+                          colorSizeController.reverse();
+                        }
                       },
                       icon: Icon(
                         Icons.favorite,

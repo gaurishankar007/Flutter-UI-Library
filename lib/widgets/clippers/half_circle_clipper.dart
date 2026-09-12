@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Defining clipper for clip path
 class HalfCircleClipper extends CustomClipper<Path> {
-  final CircleSide side;
   const HalfCircleClipper({required this.side});
+  final CircleSide side;
 
   @override
   Path getClip(Size size) => side.toPath(size);
@@ -13,10 +13,7 @@ class HalfCircleClipper extends CustomClipper<Path> {
 }
 
 /// It determines which half of the widget will be visible
-enum CircleSide {
-  left,
-  right,
-}
+enum CircleSide { left, right }
 
 /// Extension for getting the path of UI which will be shown based on the circle side
 extension on CircleSide {
@@ -35,7 +32,6 @@ extension on CircleSide {
         path.moveTo(size.width, 0);
         endOffset = Offset(size.width, size.height);
         clockwise = false;
-        break;
 
       /// path.moveTo(size.width, 0); → Moves the starting point to the top-right corner.
       /// endOffset = Offset(size.width, size.height); → Sets the end point to the bottom-right corner.
@@ -44,24 +40,23 @@ extension on CircleSide {
       case CircleSide.right:
         endOffset = Offset(0, size.height);
         clockwise = true;
-        break;
 
       /// The start point is implicitly at (0,0).
       /// endOffset = Offset(0, size.height); → The curve ends at the bottom-left corner.
       /// clockwise = true; → The curve is drawn clockwise, forming a right half-circle
     }
 
-    path.arcToPoint(
-      endOffset,
-      radius: Radius.elliptical(size.width / 2, size.height / 2),
-      clockwise: clockwise,
-    );
+    path
+      ..arcToPoint(
+        endOffset,
+        radius: Radius.elliptical(size.width / 2, size.height / 2),
+        clockwise: clockwise,
+      )
 
-    /// arcToPoint(endOffset, radius, clockwise) → Draws an arc from the start point to endOffset.
-    /// Radius.elliptical(size.width / 2, size.height / 2) → Creates a half-circle.
-    /// clockwise determines the arc direction.
-
-    path.close();
+      /// arcToPoint(endOffset, radius, clockwise) → Draws an arc from the start point to endOffset.
+      /// Radius.elliptical(size.width / 2, size.height / 2) → Creates a half-circle.
+      /// clockwise determines the arc direction.
+      ..close();
 
     return path;
   }

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The vertical space is increased and decreased based on the keyboard appearance.
 /// When the keyboard is not opened, the vertical space is zero,
@@ -8,7 +8,7 @@ class KeyboardSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double bottomPadding = MediaQuery.of(context).viewInsets.bottom;
+    final double bottomPadding = MediaQuery.of(context).viewInsets.bottom;
 
     return SizedBox(height: bottomPadding.positiveValue());
   }

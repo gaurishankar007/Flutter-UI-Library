@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/clippers/half_circle_clipper.dart';
 
 /// Extension for running the animation after a second
@@ -114,7 +114,7 @@ class _TransformClipPathState extends State<TransformClipPath>
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          "Transform And Clip Path",
+          'Transform And Clip Path',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,

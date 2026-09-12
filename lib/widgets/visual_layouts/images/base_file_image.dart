@@ -1,21 +1,11 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
-import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 
 class BaseFileImage extends StatelessWidget {
-  final File file;
-  final double? height;
-  final double? width;
-  final double? cacheHeight;
-  final double? cacheWidth;
-  final BoxFit? fit;
-  final bool isCircular;
-  final BorderRadius? borderRadius;
-  final BoxFit? fallbackImageFit;
-
   const BaseFileImage({
     super.key,
     required this.file,
@@ -28,10 +18,19 @@ class BaseFileImage extends StatelessWidget {
     this.borderRadius,
     this.fallbackImageFit,
   });
+  final File file;
+  final double? height;
+  final double? width;
+  final double? cacheHeight;
+  final double? cacheWidth;
+  final BoxFit? fit;
+  final bool isCircular;
+  final BorderRadius? borderRadius;
+  final BoxFit? fallbackImageFit;
 
   @override
   Widget build(BuildContext context) {
-    Widget child = Image.file(
+    final Widget child = Image.file(
       file,
       height: height,
       width: width,
@@ -39,7 +38,9 @@ class BaseFileImage extends StatelessWidget {
       cacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-        if (frame != null) return child;
+        if (frame != null) {
+          return child;
+        }
         return CupertinoLoading(dimension: height);
       },
       errorBuilder: (_, _, _) => DefaultAssetImage(

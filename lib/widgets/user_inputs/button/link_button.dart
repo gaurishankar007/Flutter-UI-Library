@@ -1,23 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class LinkButton extends HookWidget {
-  final Function() onTap;
-  final String? label;
-  final double textSize;
-  final Widget? icon;
-  final bool isPrefixIcon;
-  final double? height;
-  final double? width;
-  final EdgeInsets? padding;
-  final bool isLoadable;
-  final bool disabled;
-
-  /// Whether the button color should be changed or not based on the widget state.
-  final bool fixedColor;
-
   const LinkButton({
     super.key,
     required this.onTap,
@@ -32,6 +18,20 @@ class LinkButton extends HookWidget {
     this.isLoadable = false,
     this.disabled = false,
   });
+  
+  final void Function() onTap;
+  final String? label;
+  final double textSize;
+  final Widget? icon;
+  final bool isPrefixIcon;
+  final double? height;
+  final double? width;
+  final EdgeInsets? padding;
+  final bool isLoadable;
+  final bool disabled;
+
+  /// Whether the button color should be changed or not based on the widget state.
+  final bool fixedColor;
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +40,14 @@ class LinkButton extends HookWidget {
     return TextButton(
       onPressed: disabled ? null : onTap.call,
       style: ButtonStyle(
-        padding: WidgetStatePropertyAll(EdgeInsets.zero),
-        minimumSize: WidgetStatePropertyAll(Size.zero),
+        padding: const WidgetStatePropertyAll(EdgeInsets.zero),
+        minimumSize: const WidgetStatePropertyAll(Size.zero),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        overlayColor: WidgetStatePropertyAll(Colors.transparent),
+        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
-          if (fixedColor) return colorNotifier.value;
+          if (fixedColor) {
+            return colorNotifier.value;
+          }
           if (states.contains(WidgetState.disabled)) {
             colorNotifier.value = AppColors.black25;
           } else if (states.contains(WidgetState.pressed)) {
@@ -72,7 +74,9 @@ class LinkButton extends HookWidget {
     if (label != null) {
       final textWidget = BaseText(label!, decorationColor: decorationColor);
 
-      if (icon == null) return textWidget;
+      if (icon == null) {
+        return textWidget;
+      }
       return Row(
         mainAxisSize: MainAxisSize.min,
         spacing: 2,
@@ -84,6 +88,6 @@ class LinkButton extends HookWidget {
       );
     }
 
-    return icon ?? SizedBox.shrink();
+    return icon ?? const SizedBox.shrink();
   }
 }

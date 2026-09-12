@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 
 class OverlayDecoration extends StatelessWidget {
-  final Widget child;
-  final EdgeInsets? padding;
 
   const OverlayDecoration({super.key, required this.child, this.padding});
+  final Widget child;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class OverlayDecoration extends StatelessWidget {
         border: Border.all(color: AppColors.fade),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 1),
+            offset: const Offset(0, 1),
             blurRadius: 20,
             color: AppColors.black.withAlpha(25),
           ),

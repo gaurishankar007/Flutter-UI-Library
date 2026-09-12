@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class TransitionAnimation extends StatefulWidget {
   const TransitionAnimation({super.key});
@@ -25,23 +25,18 @@ class _TransitionAnimationState extends State<TransitionAnimation>
       duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
 
-    slideAnimation = Tween<Offset>(
-      begin: const Offset(1, 0),
-      end: const Offset(0, 0),
-    ).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Curves.slowMiddle,
-      ),
-    );
-    sizeAnimation = Tween<double>(
-      begin: .1,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Curves.easeInOut,
-      ),
+    slideAnimation =
+        Tween<Offset>(
+          begin: const Offset(1, 0),
+          end: Offset.zero,
+        ).animate(
+          CurvedAnimation(
+            parent: animationController,
+            curve: Curves.slowMiddle,
+          ),
+        );
+    sizeAnimation = Tween<double>(begin: .1, end: 1).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeInOut),
     );
     fadeAnimation = Tween<double>(
       begin: 0,
@@ -51,13 +46,9 @@ class _TransitionAnimationState extends State<TransitionAnimation>
       begin: .1,
       end: 1,
     ).animate(animationController);
-    rotationAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(
-      parent: animationController,
-      curve: Curves.bounceOut,
-    ));
+    rotationAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.bounceOut),
+    );
   }
 
   @override
@@ -74,26 +65,21 @@ class _TransitionAnimationState extends State<TransitionAnimation>
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
-        title: const Text(
-          "Transition",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: const Text('Transition', style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Slide Transition"),
+            const Text('Slide Transition'),
             const SizedBox(height: 5, width: double.maxFinite),
             SlideTransition(
               position: slideAnimation,
-              child: Row(
-                children: [getIcon()],
-              ),
+              child: Row(children: [getIcon()]),
             ),
             const SizedBox(height: 20),
-            const Text("Size Animation"),
+            const Text('Size Animation'),
             const SizedBox(height: 5),
             Container(
               color: Colors.amber,
@@ -104,26 +90,17 @@ class _TransitionAnimationState extends State<TransitionAnimation>
               ),
             ),
             const SizedBox(height: 20),
-            const Text("Fade Animation"),
+            const Text('Fade Animation'),
             const SizedBox(height: 5),
-            FadeTransition(
-              opacity: fadeAnimation,
-              child: getIcon(),
-            ),
+            FadeTransition(opacity: fadeAnimation, child: getIcon()),
             const SizedBox(height: 20),
-            const Text("Scale Animation"),
+            const Text('Scale Animation'),
             const SizedBox(height: 5),
-            ScaleTransition(
-              scale: scaleAnimation,
-              child: getIcon(),
-            ),
+            ScaleTransition(scale: scaleAnimation, child: getIcon()),
             const SizedBox(height: 20),
-            const Text("Rotation Animation"),
+            const Text('Rotation Animation'),
             const SizedBox(height: 5),
-            RotationTransition(
-              turns: rotationAnimation,
-              child: getIcon(),
-            ),
+            RotationTransition(turns: rotationAnimation, child: getIcon()),
           ],
         ),
       ),

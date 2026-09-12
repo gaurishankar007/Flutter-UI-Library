@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
@@ -7,11 +7,6 @@ import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 /// A customizable checkbox with optional label and tristate support.
 /// Disabled if [onChanged] is null. Scaled for better visibility.
 class BaseCheckbox extends HookWidget {
-  final bool? value;
-  final bool tristate;
-  final Function(bool?)? onChanged;
-  final String? label;
-
   const BaseCheckbox({
     super.key,
     this.value = false,
@@ -19,12 +14,16 @@ class BaseCheckbox extends HookWidget {
     this.onChanged,
     this.label,
   });
+  final bool? value;
+  final bool tristate;
+  final void Function(bool?)? onChanged;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
     final isDisabled = onChanged == null;
 
-    Widget child = UnconstrainedBox(
+    final Widget child = UnconstrainedBox(
       child: Transform.scale(
         scale: 1.3,
         child: Checkbox(
@@ -35,7 +34,9 @@ class BaseCheckbox extends HookWidget {
       ),
     );
 
-    if (label == null) return child;
+    if (label == null) {
+      return child;
+    }
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

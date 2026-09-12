@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/extensions/datetime_extension.dart';
@@ -56,7 +56,7 @@ class DateRangePicker extends HookWidget {
 
     /// Applies the selected date range by invoking the callback and closing dialog.
     /// Ensures single-day selections have matching end date.
-    final onApply = useCallback(() {
+    final Future<void> Function() onApply = useCallback(() {
       final range = controller.selectedRange;
       if (range case PickerDateRange newRange) {
         if (newRange.endDate == null) {
@@ -67,6 +67,7 @@ class DateRangePicker extends HookWidget {
         onApplied?.call(null);
       }
       Navigator.pop(context);
+      return Future.value();
     });
 
     useEffect(() {
@@ -146,7 +147,7 @@ class DateRangePicker extends HookWidget {
                           children: [
                             SecondaryButton(
                               label: 'Cancel',
-                              onTap: () => Navigator.pop(context),
+                              onTap: () async => Navigator.pop(context),
                             ),
                             PrimaryButton(label: 'Apply', onTap: onApply),
                           ],

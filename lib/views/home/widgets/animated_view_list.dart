@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/main.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
@@ -10,14 +10,14 @@ class AnimatedViewList extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(child: BaseText.heading5("Implicit Animations")),
+        SliverToBoxAdapter(child: BaseText.heading5('Implicit Animations')),
         SliverToBoxAdapter(child: UIHelpers.spaceV12),
         SliverList.separated(
           itemCount: implicitAnimations.length,
           separatorBuilder: (context, index) => UIHelpers.spaceV8,
           itemBuilder: (context, index) {
-            String path = implicitAnimations.keys.elementAt(index);
-            String title = path.split("/").last;
+            final String path = implicitAnimations.keys.elementAt(index);
+            final String title = path.split('/').last;
 
             return ListTile(
               onTap: () => Navigator.pushNamed(context, path),
@@ -28,14 +28,14 @@ class AnimatedViewList extends StatelessWidget {
           },
         ),
         SliverToBoxAdapter(child: UIHelpers.spaceV24),
-        SliverToBoxAdapter(child: BaseText.heading5("Explicit Animations")),
+        SliverToBoxAdapter(child: BaseText.heading5('Explicit Animations')),
         SliverToBoxAdapter(child: UIHelpers.spaceV12),
         SliverList.separated(
           itemCount: explicitAnimations.length,
           separatorBuilder: (context, index) => UIHelpers.spaceV8,
           itemBuilder: (context, index) {
-            String path = explicitAnimations.keys.elementAt(index);
-            String title = path.split("/").last;
+            final String path = explicitAnimations.keys.elementAt(index);
+            final String title = path.split('/').last;
 
             return ListTile(
               onTap: () => Navigator.pushNamed(context, path),

@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class OverlayButton extends StatelessWidget {
-  final String label;
-  final Function() onTap;
-  final TextAlign? labelAlignment;
 
   const OverlayButton({
     super.key,
@@ -13,6 +10,9 @@ class OverlayButton extends StatelessWidget {
     required this.onTap,
     this.labelAlignment,
   });
+  final String label;
+  final VoidCallback onTap;
+  final TextAlign? labelAlignment;
 
   @override
   Widget build(BuildContext context) {

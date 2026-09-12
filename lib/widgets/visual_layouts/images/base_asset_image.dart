@@ -1,19 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
-import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 
 class BaseAssetImage extends StatelessWidget {
-  final String assetName;
-  final double? width;
-  final double? height;
-  final BoxFit? fit;
-  final BorderRadius? borderRadius;
-  final bool circular;
-  final double? cacheHeight;
-  final double? cacheWidth;
-  final bool useLoadingIndicator;
-  final BoxFit? fallbackImageFit;
 
   const BaseAssetImage({
     super.key,
@@ -29,6 +19,38 @@ class BaseAssetImage extends StatelessWidget {
     this.fallbackImageFit,
   });
 
+  factory BaseAssetImage.icon({required String assetName, double size = 24}) =>
+      BaseAssetImage(
+        assetName: assetName,
+        height: size,
+        width: size,
+        cacheWidth: size,
+        fit: BoxFit.contain,
+      );
+
+  factory BaseAssetImage.person({
+    required double size,
+    BoxFit fit = BoxFit.cover,
+    bool circular = true,
+  }) => BaseAssetImage(
+    assetName: '',
+    height: size,
+    width: size,
+    cacheWidth: size,
+    fit: fit,
+    circular: circular,
+  );
+  final String assetName;
+  final double? width;
+  final double? height;
+  final BoxFit? fit;
+  final BorderRadius? borderRadius;
+  final bool circular;
+  final double? cacheHeight;
+  final double? cacheWidth;
+  final bool useLoadingIndicator;
+  final BoxFit? fallbackImageFit;
+
   @override
   Widget build(BuildContext context) {
     Widget child = Image.asset(
@@ -38,7 +60,7 @@ class BaseAssetImage extends StatelessWidget {
       cacheHeight: cacheHeight?.scaledByDPR.toInt(),
       cacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
-      frameBuilder: (context, child, frame, bool wasSynchronouslyLoaded) {
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
         if (frame != null) {
           return child;
         } else if (useLoadingIndicator) {
@@ -63,26 +85,4 @@ class BaseAssetImage extends StatelessWidget {
 
     return child;
   }
-
-  factory BaseAssetImage.icon({required String assetName, double size = 24}) =>
-      BaseAssetImage(
-        assetName: assetName,
-        height: size,
-        width: size,
-        cacheWidth: size,
-        fit: BoxFit.contain,
-      );
-
-  factory BaseAssetImage.person({
-    required double size,
-    BoxFit fit = BoxFit.cover,
-    bool circular = true,
-  }) => BaseAssetImage(
-    assetName: "",
-    height: size,
-    width: size,
-    cacheWidth: size,
-    fit: fit,
-    circular: circular,
-  );
 }

@@ -1,14 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/utils/screen_util/screen_util.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/user_inputs/button/base_icon_button.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class AnimatedExpansionTile extends HookWidget {
-  final String title;
-  final Widget child;
-  final int animationTimeInMilliseconds;
 
   const AnimatedExpansionTile({
     super.key,
@@ -16,6 +13,9 @@ class AnimatedExpansionTile extends HookWidget {
     required this.child,
     this.animationTimeInMilliseconds = 350,
   });
+  final String title;
+  final Widget child;
+  final int animationTimeInMilliseconds;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +27,11 @@ class AnimatedExpansionTile extends HookWidget {
       reverseDuration: animationDuration,
       initialValue: 1,
       lowerBound: .5,
-      upperBound: 1,
     );
     final sizeAnimation = useAnimationController(
       duration: animationDuration,
       reverseDuration: animationDuration,
       initialValue: 1,
-      lowerBound: 0,
-      upperBound: 1,
     );
     final onRotateTap = useCallback(() {
       if (rotationAnimation.isCompleted) {
@@ -65,7 +62,7 @@ class AnimatedExpansionTile extends HookWidget {
         ),
         SizeTransition(
           sizeFactor: sizeAnimation,
-          axisAlignment: -1,
+          alignment: Alignment.topLeft,
           child: Padding(
             padding: ScreenUtil.I.mobileValue(
               base: UIHelpers.paddingT32,

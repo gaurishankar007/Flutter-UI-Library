@@ -7,7 +7,7 @@
 //
 // For licensing inquiries, contact: snehesh@vaiolin.ai
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/user_inputs/button/base_icon_button.dart';
@@ -48,7 +48,7 @@ class MediaPlayButton extends StatelessWidget {
     required void Function() onPressed,
     double? size,
   }) => DecoratedBox(
-    decoration: BoxDecoration(color: AppColors.black60, shape: BoxShape.circle),
+    decoration: const BoxDecoration(color: AppColors.black60, shape: BoxShape.circle),
     child: Padding(
       padding: UIHelpers.paddingA16,
       child: MediaPlayButton(

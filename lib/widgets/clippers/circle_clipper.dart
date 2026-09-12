@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CircleClipper extends CustomClipper<Path> {
   const CircleClipper();
@@ -7,10 +7,7 @@ class CircleClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     final path = Path();
     final rect = Rect.fromCircle(
-      center: Offset(
-        size.width / 2,
-        size.width / 2,
-      ),
+      center: Offset(size.width / 2, size.width / 2),
       radius: size.width / 2,
     );
 

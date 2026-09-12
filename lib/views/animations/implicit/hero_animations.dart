@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class EmojiPerson {
-  final String name;
-  final String emoji;
-  final String age;
-
   const EmojiPerson({
     required this.name,
     required this.emoji,
     required this.age,
   });
+  final String name;
+  final String emoji;
+  final String age;
 }
 
 class HeroAnimation extends StatefulWidget {
@@ -20,9 +19,13 @@ class HeroAnimation extends StatefulWidget {
 
 class _HeroAnimationState extends State<HeroAnimation> {
   final List<EmojiPerson> people = const [
-    EmojiPerson(name: "John", emoji: "👨‍🏭", age: "25"),
-    EmojiPerson(name: "Jane", emoji: """
-👩‍🏭""", age: "22"),
+    EmojiPerson(name: 'John', emoji: '👨‍🏭', age: '25'),
+    EmojiPerson(
+      name: 'Jane',
+      emoji: '''
+👩‍🏭''',
+      age: '22',
+    ),
   ];
 
   @override
@@ -32,7 +35,7 @@ class _HeroAnimationState extends State<HeroAnimation> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          "Hero Animation",
+          'Hero Animation',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -62,17 +65,14 @@ class _HeroAnimationState extends State<HeroAnimation> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<dynamic>(
             builder: (context) => HeroDetail(person: person),
           ),
         );
       },
       leading: Hero(
         tag: person.name,
-        child: Text(
-          person.emoji,
-          style: const TextStyle(fontSize: 50),
-        ),
+        child: Text(person.emoji, style: const TextStyle(fontSize: 50)),
       ),
       title: Text(person.name),
       subtitle: Text(person.age),
@@ -81,27 +81,18 @@ class _HeroAnimationState extends State<HeroAnimation> {
 }
 
 class HeroDetail extends StatelessWidget {
-  final EmojiPerson person;
   const HeroDetail({super.key, required this.person});
+  final EmojiPerson person;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: heroAnimation(),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: heroAnimation(), centerTitle: true),
       body: Column(
         children: [
-          Text(
-            person.name,
-            style: const TextStyle(fontSize: 20),
-          ),
+          Text(person.name, style: const TextStyle(fontSize: 20)),
           const SizedBox(height: 20, width: double.maxFinite),
-          Text(
-            "${person.age} years old",
-            style: const TextStyle(fontSize: 20),
-          ),
+          Text('${person.age} years old', style: const TextStyle(fontSize: 20)),
         ],
       ),
     );
@@ -110,43 +101,39 @@ class HeroDetail extends StatelessWidget {
   Hero heroAnimation() {
     return Hero(
       /// Enables modification on the flying widget
-      flightShuttleBuilder: (
-        flightContext,
-        animation,
-        flightDirection,
-        fromHeroContext,
-        toHeroContext,
-      ) {
-        switch (flightDirection) {
-          case HeroFlightDirection.push:
-            return Material(
-              color: Colors.transparent,
-              child: ScaleTransition(
-                scale: animation.drive(
-                  Tween<double>(
-                    begin: 0,
-                    end: 1,
-                  ).chain(
-                    CurveTween(curve: Curves.fastOutSlowIn),
+      flightShuttleBuilder:
+          (
+            flightContext,
+            animation,
+            flightDirection,
+            fromHeroContext,
+            toHeroContext,
+          ) {
+            switch (flightDirection) {
+              case HeroFlightDirection.push:
+                return Material(
+                  color: Colors.transparent,
+                  child: ScaleTransition(
+                    scale: animation.drive(
+                      Tween<double>(
+                        begin: 0,
+                        end: 1,
+                      ).chain(CurveTween(curve: Curves.fastOutSlowIn)),
+                    ),
+                    child: toHeroContext.widget,
                   ),
-                ),
-                child: toHeroContext.widget,
-              ),
-            );
-          case HeroFlightDirection.pop:
-            return Material(
-              color: Colors.transparent,
-              child: fromHeroContext.widget,
-            );
-        }
-      },
+                );
+              case HeroFlightDirection.pop:
+                return Material(
+                  color: Colors.transparent,
+                  child: fromHeroContext.widget,
+                );
+            }
+          },
       tag: person.name,
       child: Material(
         color: Colors.transparent,
-        child: Text(
-          person.emoji,
-          style: const TextStyle(fontSize: 50),
-        ),
+        child: Text(person.emoji, style: const TextStyle(fontSize: 50)),
       ),
     );
   }

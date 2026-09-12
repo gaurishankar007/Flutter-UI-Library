@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AnimatedPrompt extends StatelessWidget {
   const AnimatedPrompt({super.key});
@@ -10,7 +10,7 @@ class AnimatedPrompt extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          "Animated Prompt",
+          'Animated Prompt',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -18,12 +18,9 @@ class AnimatedPrompt extends StatelessWidget {
       body: const SafeArea(
         child: Center(
           child: AnimatedPromptWidget(
-            title: "Thank you for your order!",
-            subTitle: "Your order will be delivered in 2 days. Enjoy!",
-            icon: Icon(
-              Icons.check,
-              color: Colors.white,
-            ),
+            title: 'Thank you for your order!',
+            subTitle: 'Your order will be delivered in 2 days. Enjoy!',
+            icon: Icon(Icons.check, color: Colors.white),
             iconContainerColor: Colors.green,
           ),
         ),
@@ -33,11 +30,6 @@ class AnimatedPrompt extends StatelessWidget {
 }
 
 class AnimatedPromptWidget extends StatefulWidget {
-  final String title;
-  final String subTitle;
-  final Icon icon;
-  final Color iconContainerColor;
-
   const AnimatedPromptWidget({
     super.key,
     required this.title,
@@ -45,6 +37,10 @@ class AnimatedPromptWidget extends StatefulWidget {
     required this.icon,
     required this.iconContainerColor,
   });
+  final String title;
+  final String subTitle;
+  final Icon icon;
+  final Color iconContainerColor;
 
   @override
   State<AnimatedPromptWidget> createState() => _AnimatedPromptWidgetState();
@@ -65,34 +61,17 @@ class _AnimatedPromptWidgetState extends State<AnimatedPromptWidget>
       duration: const Duration(seconds: 2),
     );
 
-    containerOffsetAnimation = Tween<Offset>(
-      begin: const Offset(0, 0),
-      end: const Offset(0, -.25),
-    ).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Curves.easeInOut,
-      ),
+    containerOffsetAnimation =
+        Tween<Offset>(begin: Offset.zero, end: const Offset(0, -.25)).animate(
+          CurvedAnimation(parent: animationController, curve: Curves.easeInOut),
+        );
+
+    iconScaleAnimation = Tween<double>(begin: 7, end: 6).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeInOut),
     );
 
-    iconScaleAnimation = Tween<double>(
-      begin: 7,
-      end: 6,
-    ).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Curves.easeInOut,
-      ),
-    );
-
-    containerScaleAnimation = Tween<double>(
-      begin: 2,
-      end: .4,
-    ).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Curves.bounceOut,
-      ),
+    containerScaleAnimation = Tween<double>(begin: 2, end: .4).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.bounceOut),
     );
   }
 

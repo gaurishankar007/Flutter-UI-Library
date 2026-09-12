@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BaseStreamBuilder<T> extends StatelessWidget {
-  final Stream<T> stream;
-  final Widget Function(T data) builder;
-  final Widget? Function(Object? error)? errorBuilder;
-  final Widget? loadingWidget;
 
   const BaseStreamBuilder({
     super.key,
@@ -13,13 +9,19 @@ class BaseStreamBuilder<T> extends StatelessWidget {
     this.errorBuilder,
     this.loadingWidget,
   });
+  final Stream<T> stream;
+  // The builder callback needs to accept the generic type T emitted by the stream.
+  // ignore: unsafe_variance
+  final Widget Function(T data) builder;
+  final Widget? Function(Object? error)? errorBuilder;
+  final Widget? loadingWidget;
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<T>(
       stream: stream,
       builder: (context, snapshot) {
-        final emptyWidget = SizedBox.shrink();
+        const emptyWidget = SizedBox.shrink();
 
         if (snapshot.hasData) {
           final data = snapshot.data;

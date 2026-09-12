@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:material_ui/material_ui.dart';
 
 class TickerAnimation extends StatefulWidget {
   const TickerAnimation({super.key});
@@ -16,7 +16,7 @@ class _TickerAnimationState extends State<TickerAnimation> with SingleTickerProv
   void initState() {
     super.initState();
     _ticker = Ticker(
-      (Duration elapsed) {
+      (elapsed) {
         // This is callback which would get called on every new frame
         // with fresh new instance of elapsed duration since when the _ticker.start() has been invoked
         setState(() {
@@ -46,7 +46,7 @@ class _TickerAnimationState extends State<TickerAnimation> with SingleTickerProv
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          "Ticker Animation",
+          'Ticker Animation',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -56,7 +56,7 @@ class _TickerAnimationState extends State<TickerAnimation> with SingleTickerProv
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "Tickers are scheduled to tick on every frame when started",
+              'Tickers are scheduled to tick on every frame when started',
             ),
             const SizedBox(width: double.maxFinite, height: 20),
             Text(

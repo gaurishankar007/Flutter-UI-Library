@@ -1,24 +1,12 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 import 'package:ui_library/widgets/visual_layouts/loading/loading_circle.dart';
 
 class SecondaryButton extends HookWidget {
-  final Function()? onTap;
-  final String? label;
-  final FontWeight? textWeight;
-  final Widget? icon;
-  final bool isPrefixIcon;
-  final double? height;
-  final double? width;
-  final double? spacing;
-  final bool expandWidth;
-  final bool isLoadable;
-  final bool disabled;
-
   const SecondaryButton({
     super.key,
     this.onTap,
@@ -33,20 +21,37 @@ class SecondaryButton extends HookWidget {
     this.isLoadable = false,
     this.disabled = false,
   });
+  final Future<void> Function()? onTap;
+  final String? label;
+  final FontWeight? textWeight;
+  final Widget? icon;
+  final bool isPrefixIcon;
+  final double? height;
+  final double? width;
+  final double? spacing;
+  final bool expandWidth;
+  final bool isLoadable;
+  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
     final loadingNotifier = useValueNotifier(false);
     final onPressed = useCallback(() async {
       /// If the button is loading, discard the task
-      if (loadingNotifier.value) return;
+      if (loadingNotifier.value) {
+        return;
+      }
       // If the button is not loadable
-      if (!isLoadable) return onTap?.call();
+      if (!isLoadable) {
+        return await onTap?.call();
+      }
 
       loadingNotifier.value = true;
       await onTap?.call();
       // If the widget is disposed, don't update value
-      if (context.mounted) loadingNotifier.value = false;
+      if (context.mounted) {
+        loadingNotifier.value = false;
+      }
     });
 
     return SizedBox(
@@ -56,8 +61,8 @@ class SecondaryButton extends HookWidget {
         onPressed: disabled ? null : onPressed.call,
         style: ButtonStyle(
           padding: WidgetStatePropertyAll(_getPadding()),
-          minimumSize: WidgetStatePropertyAll(Size.zero),
-          overlayColor: WidgetStatePropertyAll(Colors.transparent),
+          minimumSize: const WidgetStatePropertyAll(Size.zero),
+          overlayColor: const WidgetStatePropertyAll(Colors.transparent),
           foregroundColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) {
               return AppColors.primary;
@@ -70,15 +75,15 @@ class SecondaryButton extends HookWidget {
           }),
           side: WidgetStateBorderSide.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) {
-              return BorderSide(color: AppColors.primary, width: 1.5);
+              return const BorderSide(color: AppColors.primary, width: 1.5);
             } else if (states.contains(WidgetState.pressed)) {
               // Always check for pressed before hovered, because hovered is also included inside pressed
               // So it might reflect hovered state instead of pressed state
-              return BorderSide(color: AppColors.primary, width: 1.5);
+              return const BorderSide(color: AppColors.primary, width: 1.5);
             } else if (states.contains(WidgetState.hovered)) {
-              return BorderSide(color: AppColors.primary, width: 1.5);
+              return const BorderSide(color: AppColors.primary, width: 1.5);
             }
-            return BorderSide(color: AppColors.primary, width: 1.5);
+            return const BorderSide(color: AppColors.primary, width: 1.5);
           }),
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(borderRadius: UIHelpers.radiusC8),
@@ -93,13 +98,16 @@ class SecondaryButton extends HookWidget {
   }
 
   EdgeInsets _getPadding() {
-    double verticalPadding = kIsWeb ? 20 : 16;
+    const double verticalPadding = kIsWeb ? 20 : 16;
     if (label == null && icon != null) {
-      return EdgeInsets.symmetric(vertical: verticalPadding, horizontal: 16);
+      return const EdgeInsets.symmetric(
+        vertical: verticalPadding,
+        horizontal: 16,
+      );
     }
 
-    double leftPadding = isPrefixIcon && icon != null ? 16 : 24;
-    double rightPadding = !isPrefixIcon && icon != null ? 16 : 24;
+    final double leftPadding = isPrefixIcon && icon != null ? 16 : 24;
+    final double rightPadding = !isPrefixIcon && icon != null ? 16 : 24;
     return EdgeInsets.only(
       top: verticalPadding,
       bottom: verticalPadding,
@@ -109,12 +117,16 @@ class SecondaryButton extends HookWidget {
   }
 
   Widget _buildChild(bool loading) {
-    if (loading) return LoadingCircle.small(AppColors.primary);
+    if (loading) {
+      return LoadingCircle.small(AppColors.primary);
+    }
 
     if (label != null) {
       final textWidget = BaseText(label!, textAlign: TextAlign.center);
 
-      if (icon == null) return textWidget;
+      if (icon == null) {
+        return textWidget;
+      }
       return Row(
         mainAxisSize: MainAxisSize.min,
         spacing: spacing ?? 4,
@@ -126,6 +138,6 @@ class SecondaryButton extends HookWidget {
       );
     }
 
-    return icon ?? SizedBox.shrink();
+    return icon ?? const SizedBox.shrink();
   }
 }

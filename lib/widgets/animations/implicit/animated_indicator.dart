@@ -1,8 +1,46 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AnimatedIndicator extends StatefulWidget {
+
+  const AnimatedIndicator({
+    super.key,
+    required this.length,
+    this.activeIndex = 0,
+    this.height = 6,
+    this.width = 12,
+    this.activeWidth = 24,
+    this.activeHeight = 6,
+    this.activeColor,
+    this.inactiveColor,
+    this.inActiveBorderRadius,
+    this.activeBorderRadius,
+    this.spacing = 5,
+    this.isProgressIndicator = false,
+  });
+
+  factory AnimatedIndicator.circular({
+    required int length,
+    int activeIndex = 0,
+    double diameter = 8,
+    double activeDiameter = 12,
+    Color? activeColor,
+    Color? inactiveColor,
+    double spacing = 5,
+  }) => AnimatedIndicator(
+    length: length,
+    activeIndex: activeIndex,
+    height: diameter,
+    width: diameter,
+    activeWidth: activeDiameter,
+    activeHeight: activeDiameter,
+    activeColor: activeColor,
+    inactiveColor: inactiveColor,
+    inActiveBorderRadius: BorderRadius.circular(diameter),
+    activeBorderRadius: BorderRadius.circular(activeDiameter),
+    spacing: spacing,
+  );
   /// The number of indicators
   final int length;
 
@@ -39,46 +77,8 @@ class AnimatedIndicator extends StatefulWidget {
   /// Makes the style of previous and current index same
   final bool isProgressIndicator;
 
-  const AnimatedIndicator({
-    super.key,
-    required this.length,
-    this.activeIndex = 0,
-    this.height = 6,
-    this.width = 12,
-    this.activeWidth = 24,
-    this.activeHeight = 6,
-    this.activeColor,
-    this.inactiveColor,
-    this.inActiveBorderRadius,
-    this.activeBorderRadius,
-    this.spacing = 5,
-    this.isProgressIndicator = false,
-  });
-
   @override
   State<AnimatedIndicator> createState() => _AnimatedIndicatorState();
-
-  factory AnimatedIndicator.circular({
-    required int length,
-    int activeIndex = 0,
-    double diameter = 8,
-    double activeDiameter = 12,
-    Color? activeColor,
-    Color? inactiveColor,
-    double spacing = 5,
-  }) => AnimatedIndicator(
-    length: length,
-    activeIndex: activeIndex,
-    height: diameter,
-    width: diameter,
-    activeWidth: activeDiameter,
-    activeHeight: activeDiameter,
-    activeColor: activeColor,
-    inactiveColor: inactiveColor,
-    inActiveBorderRadius: BorderRadius.circular(diameter),
-    activeBorderRadius: BorderRadius.circular(activeDiameter),
-    spacing: spacing,
-  );
 }
 
 class _AnimatedIndicatorState extends State<AnimatedIndicator> {
@@ -114,20 +114,18 @@ class _AnimatedIndicatorState extends State<AnimatedIndicator> {
         itemCount: widget.length,
         separatorBuilder: (context, index) => SizedBox(width: widget.spacing),
         itemBuilder: (context, index) {
-          bool isActive =
-              widget.isProgressIndicator
-                  ? index <= selectedIndex
-                  : index == selectedIndex;
+          final bool isActive = widget.isProgressIndicator
+              ? index <= selectedIndex
+              : index == selectedIndex;
 
-          Color color = isActive ? activeColor : inActiveColor;
-          double? newWidth = isActive ? widget.activeWidth : widget.width;
-          double? newHeight = isActive ? widget.activeHeight : widget.height;
-          BorderRadius? borderRadius =
-              isActive
-                  ? (widget.activeBorderRadius ??
-                      BorderRadius.circular(widget.activeHeight))
-                  : (widget.inActiveBorderRadius ??
-                      BorderRadius.circular(widget.height));
+          final color = isActive ? activeColor : inActiveColor;
+          final double newWidth = isActive ? widget.activeWidth : widget.width;
+          final double newHeight = isActive ? widget.activeHeight : widget.height;
+          final BorderRadius borderRadius = isActive
+              ? (widget.activeBorderRadius ??
+                    BorderRadius.circular(widget.activeHeight))
+              : (widget.inActiveBorderRadius ??
+                    BorderRadius.circular(widget.height));
 
           return Center(
             child: AnimatedContainer(

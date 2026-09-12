@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ErrorIcon extends StatelessWidget {
-  final double? height;
-  final double? width;
 
   const ErrorIcon({super.key, this.height, this.width});
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {

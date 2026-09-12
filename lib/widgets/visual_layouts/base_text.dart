@@ -1,16 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BaseText extends StatelessWidget {
-  final String text;
-  final TextAlign? textAlign;
-  final TextOverflow? overflow;
-  final int? maxLines;
-  final Color? color;
-  final String? fontFamily;
-  final double? fontSize;
-  final FontWeight fontWeight;
-  final TextDecoration? decoration;
-  final Color? decorationColor;
 
   const BaseText(
     this.text, {
@@ -25,23 +15,6 @@ class BaseText extends StatelessWidget {
     this.decoration,
     this.decorationColor,
   });
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      textAlign: textAlign,
-      overflow: overflow,
-      style: TextStyle(
-        color: color,
-        fontFamily: fontFamily,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        decoration: decoration,
-        decorationColor: decorationColor,
-      ),
-    );
-  }
 
   factory BaseText.overline(
     String text, {
@@ -137,7 +110,7 @@ class BaseText extends StatelessWidget {
     maxLines: maxLines,
     color: color,
     fontSize: 17,
-    fontFamily: "Lexend",
+    fontFamily: 'Lexend',
     fontWeight: FontWeight.w600,
     decoration: textDecoration,
     decorationColor: decorationColor,
@@ -158,7 +131,7 @@ class BaseText extends StatelessWidget {
     maxLines: maxLines,
     color: color,
     fontSize: 20,
-    fontFamily: "Lexend",
+    fontFamily: 'Lexend',
     fontWeight: FontWeight.w600,
     decoration: textDecoration,
     decorationColor: decorationColor,
@@ -179,7 +152,7 @@ class BaseText extends StatelessWidget {
     maxLines: maxLines,
     color: color,
     fontSize: 24,
-    fontFamily: "Lexend",
+    fontFamily: 'Lexend',
     fontWeight: FontWeight.w600,
     decoration: textDecoration,
     decorationColor: decorationColor,
@@ -200,7 +173,7 @@ class BaseText extends StatelessWidget {
     maxLines: maxLines,
     color: color,
     fontSize: 32,
-    fontFamily: "Lexend",
+    fontFamily: 'Lexend',
     fontWeight: FontWeight.w600,
     decoration: textDecoration,
     decorationColor: decorationColor,
@@ -221,9 +194,36 @@ class BaseText extends StatelessWidget {
     maxLines: maxLines,
     color: color,
     fontSize: 40,
-    fontFamily: "Lexend",
+    fontFamily: 'Lexend',
     fontWeight: FontWeight.w600,
     decoration: textDecoration,
     decorationColor: decorationColor,
   );
+  final String text;
+  final TextAlign? textAlign;
+  final TextOverflow? overflow;
+  final int? maxLines;
+  final Color? color;
+  final String? fontFamily;
+  final double? fontSize;
+  final FontWeight fontWeight;
+  final TextDecoration? decoration;
+  final Color? decorationColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: textAlign,
+      overflow: overflow,
+      style: TextStyle(
+        color: color,
+        fontFamily: fontFamily,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        decoration: decoration,
+        decorationColor: decorationColor,
+      ),
+    );
+  }
 }

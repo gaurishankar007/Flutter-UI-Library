@@ -3,9 +3,6 @@ import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_body.da
 import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
 
 class BaseBottomSheet extends StatelessWidget {
-  final String title;
-  final Alignment titleAlignment;
-  final List<Widget> children;
 
   const BaseBottomSheet({
     super.key,
@@ -13,6 +10,9 @@ class BaseBottomSheet extends StatelessWidget {
     this.titleAlignment = Alignment.centerLeft,
     required this.children,
   });
+  final String title;
+  final Alignment titleAlignment;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {

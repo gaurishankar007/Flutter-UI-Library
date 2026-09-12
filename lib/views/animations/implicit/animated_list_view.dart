@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AnimatedListView extends StatefulWidget {
   const AnimatedListView({super.key});
@@ -12,16 +12,16 @@ class _AnimatedListViewState extends State<AnimatedListView> {
 
   Tween<Offset> tween = Tween<Offset>(
     begin: const Offset(1, 0),
-    end: const Offset(0, 0),
+    end:  Offset.zero,
   );
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      for (int i = 0; i < 5; i++) {
+      for (var i = 0; i < 5; i++) {
         key.currentState?.insertItem(i);
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
       }
     });
   }
@@ -33,7 +33,7 @@ class _AnimatedListViewState extends State<AnimatedListView> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          "Animated List View",
+          'Animated List View',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -42,7 +42,6 @@ class _AnimatedListViewState extends State<AnimatedListView> {
         child: AnimatedList(
           key: key,
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          initialItemCount: 0,
           itemBuilder: (context, index, animation) {
             return SlideTransition(
               position: animation.drive(tween),
@@ -52,7 +51,7 @@ class _AnimatedListViewState extends State<AnimatedListView> {
                 horizontalTitleGap: 10,
                 minVerticalPadding: 0,
                 leading: Icon(Icons.image),
-                title: Text("Animation List Item"),
+                title: Text('Animation List Item'),
                 trailing: Icon(Icons.circle_notifications),
               ),
             );

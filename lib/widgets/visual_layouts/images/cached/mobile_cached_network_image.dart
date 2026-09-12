@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
-import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 import 'package:ui_library/widgets/visual_layouts/images/base_asset_image.dart';
 import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 
 class BaseCachedNetworkImage extends StatelessWidget {
   const BaseCachedNetworkImage({
@@ -70,7 +70,7 @@ class BaseCachedNetworkImage extends StatelessWidget {
     Widget? fallbackWidget,
     bool isBordered = false,
   }) {
-    Widget child = BaseCachedNetworkImage(
+    final Widget child = BaseCachedNetworkImage(
       key: key,
       url: url,
       width: diameter,
@@ -81,7 +81,9 @@ class BaseCachedNetworkImage extends StatelessWidget {
       fallbackWidget: fallbackWidget ?? BaseAssetImage.person(size: diameter),
     );
 
-    if (!isBordered) return child;
+    if (!isBordered) {
+      return child;
+    }
     return CircleAvatar(
       radius: (diameter / 2) + 1.5,
       backgroundColor: AppColors.fade,

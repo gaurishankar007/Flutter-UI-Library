@@ -1,13 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shimmer/shimmer.dart';
 
 class BaseShimmer extends StatelessWidget {
-  final Color? baseColor;
-  final Color? highlightColor;
-  final Color? containerColor;
-  final double height;
-  final double width;
-  final BorderRadius? borderRadius;
 
   const BaseShimmer({
     super.key,
@@ -18,6 +12,12 @@ class BaseShimmer extends StatelessWidget {
     required this.width,
     this.borderRadius,
   });
+  final Color? baseColor;
+  final Color? highlightColor;
+  final Color? containerColor;
+  final double height;
+  final double width;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {

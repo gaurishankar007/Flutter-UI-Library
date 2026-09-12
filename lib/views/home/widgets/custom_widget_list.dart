@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/main.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/views/widget_view.dart';
@@ -35,30 +35,30 @@ class CustomWidgetList extends StatelessWidget {
   Widget build(BuildContext context) {
     final widgets = [
       _buildListTile(
-        widget: Column(
+        widget: const Column(
           mainAxisSize: MainAxisSize.min,
           spacing: 24,
           children: [GradientLoading(), GradientLoading.small()],
         ),
-        title: "Gradient Loading",
+        title: 'Gradient Loading',
       ),
       _buildListTile(
         widget: ResendOTPButton(
           onOTPSend: () async {
-            await Future.delayed(Duration(seconds: 1));
+            await Future<void>.delayed(const Duration(seconds: 1));
           },
         ),
-        title: "Resend OTP",
+        title: 'Resend OTP',
       ),
 
       _buildListTile(
-        widget: CurveContainer(
+        widget: const CurveContainer(
           height: 200,
           width: 200,
           curveSide: CurveSide.top,
           curvePercentage: 30,
         ),
-        title: "Curve Container",
+        title: 'Curve Container',
       ),
       _buildListTile(
         widget: DottedContainer(
@@ -67,10 +67,10 @@ class CustomWidgetList extends StatelessWidget {
           child: const SizedBox(
             height: 100,
             width: 200,
-            child: Center(child: Text("Dotted Container")),
+            child: Center(child: Text('Dotted Container')),
           ),
         ),
-        title: "Dotted Container",
+        title: 'Dotted Container',
       ),
       _buildListTile(
         widget: const DottedCircle(
@@ -78,50 +78,50 @@ class CustomWidgetList extends StatelessWidget {
           color: Colors.red,
           dotsNumber: 12,
         ),
-        title: "Dotted Circle",
+        title: 'Dotted Circle',
       ),
       _buildListTile(
         widget: SecondaryButton(
-          label: "Show Generic Bottom Sheet",
-          onTap: () => showGenericBottomSheet(
+          label: 'Show Generic Bottom Sheet',
+          onTap: () => showGenericBottomSheet<void>(
             navigatorKey.currentContext!,
             child: const Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                BottomSheetTitle(title: "Generic Bottom Sheet"),
+                BottomSheetTitle(title: 'Generic Bottom Sheet'),
                 BottomSheetBody(
-                  children: [BaseText("This is a generic bottom sheet")],
+                  children: [BaseText('This is a generic bottom sheet')],
                 ),
               ],
             ),
           ),
         ),
-        title: "Generic Bottom Sheet",
+        title: 'Generic Bottom Sheet',
       ),
       _buildListTile(
         widget: SecondaryButton(
-          label: "Show Generic Dialog",
-          onTap: () => showGenericDialog(
+          label: 'Show Generic Dialog',
+          onTap: () => showGenericDialog<void>(
             navigatorKey.currentContext!,
-            title: "Generic Dialog",
+            title: 'Generic Dialog',
             children: [
-              const BaseText("This is the content of the generic dialog."),
+              const BaseText('This is the content of the generic dialog.'),
             ],
           ),
         ),
-        title: "Generic Dialog",
+        title: 'Generic Dialog',
       ),
       _buildListTile(
         widget: BaseDropdownMenu<String>(
-          label: "Dropdown Menu",
-          hintText: "Select an option",
+          label: 'Dropdown Menu',
+          hintText: 'Select an option',
           onSelected: (value) {},
           entries: const [
-            DropdownMenuEntry(value: "1", label: "Option 1"),
-            DropdownMenuEntry(value: "2", label: "Option 2"),
+            DropdownMenuEntry(value: '1', label: 'Option 1'),
+            DropdownMenuEntry(value: '2', label: 'Option 2'),
           ],
         ),
-        title: "Dropdown Menu",
+        title: 'Dropdown Menu',
       ),
       _buildListTile(
         widget: DropDownButton<String>(
@@ -133,80 +133,81 @@ class CustomWidgetList extends StatelessWidget {
           ],
           onChanged: (value) {},
         ),
-        title: "Dropdown Button",
+        title: 'Dropdown Button',
       ),
       _buildListTile(
         widget: db.DropdownBottomSheet<String>(
-          title: "Select an option",
+          title: 'Select an option',
           items: const [
-            db.DropdownItem(value: "1", label: "Option 1"),
-            db.DropdownItem(value: "2", label: "Option 2"),
+            db.DropdownItem(value: '1', label: 'Option 1'),
+            db.DropdownItem(value: '2', label: 'Option 2'),
           ],
           onChanged: (value) {},
         ),
-        title: "Dropdown Bottom Sheet",
+        title: 'Dropdown Bottom Sheet',
       ),
       _buildListTile(
         widget: dtf.DropdownTextField<String>(
-          hintText: "Choose an option",
           items: const [
-            dtf.DropdownItem(value: "1", label: "Option 1"),
-            dtf.DropdownItem(value: "2", label: "Option 2"),
+            dtf.DropdownItem(value: '1', label: 'Option 1'),
+            dtf.DropdownItem(value: '2', label: 'Option 2'),
           ],
           onChanged: (value) {},
         ),
-        title: "Dropdown Text Field",
+        title: 'Dropdown Text Field',
       ),
       _buildListTile(
         widget: TextFieldWithOverlay<String>(
-          hintText: "Search something...",
-          overlayItems: const ["Apple", "Banana", "Cherry"],
+          hintText: 'Search something...',
+          overlayItems: const ['Apple', 'Banana', 'Cherry'],
           overlayItemWidget: (item) {
             return Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8),
               child: BaseText(item),
             );
           },
         ),
-        title: "Text Field with Overlay",
+        title: 'Text Field with Overlay',
       ),
       _buildListTile(
-        widget: btf.BaseTextField(hintText: 'Base Text Field', title: 'Label'),
-        title: "Base Text Field (Form)",
+        widget: const btf.BaseTextField(
+          hintText: 'Base Text Field',
+          title: 'Label',
+        ),
+        title: 'Base Text Field (Form)',
       ),
       _buildListTile(
         widget: OTPField(
           controller: TextEditingController(),
           onChanged: (value) {},
-          hasError: false,
         ),
-        title: "OTP Field",
+        title: 'OTP Field',
       ),
       _buildListTile(
         widget: OverlayMenu<String>(
           menuWidth: 230,
-          targetWidget: BaseText.button("Open Overlay Menu"),
+          targetWidget: BaseText.button('Open Overlay Menu'),
           menuItems: [
-            OverlayMenuItem(value: "1", label: "Option A", onTap: (value) {}),
-            OverlayMenuItem(value: "2", label: "Option B", onTap: (value) {}),
+            OverlayMenuItem(value: '1', label: 'Option A', onTap: (value) {}),
+            OverlayMenuItem(value: '2', label: 'Option B', onTap: (value) {}),
           ],
         ),
-        title: "Overlay Menu",
+        title: 'Overlay Menu',
       ),
       _buildListTile(
         widget: DraggableContent(
           alwaysVisibleChildren: [
-            BaseText.heading5("Always Visible"),
-            BaseText("This content is always visible."),
+            BaseText.heading5('Always Visible'),
+            const BaseText('This content is always visible.'),
           ],
           expandedOnlyChildren: [
-            BaseText.heading5("Expanded Only"),
-            BaseText("This content appears when expanded."),
-            SizedBox(height: 200),
-            BaseText("More content..."),
+            BaseText.heading5('Expanded Only'),
+            const BaseText('This content appears when expanded.'),
+            const SizedBox(height: 200),
+            const BaseText('More content...'),
           ],
         ),
-        title: "Draggable Content",
+        title: 'Draggable Content',
       ),
       _buildListTile(
         widget: BaseShimmer(
@@ -214,7 +215,7 @@ class CustomWidgetList extends StatelessWidget {
           width: 200,
           borderRadius: BorderRadius.circular(12),
         ),
-        title: "Base Shimmer",
+        title: 'Base Shimmer',
       ),
       _buildListTile(
         widget: StatefulBuilder(
@@ -226,14 +227,14 @@ class CustomWidgetList extends StatelessWidget {
                 StopwatchTimer(stopwatch: stopwatch),
                 UIHelpers.spaceV12,
                 SecondaryButton(
-                  label: "Restart",
-                  onTap: () => setState(() => stopwatch.reset()),
+                  label: 'Restart',
+                  onTap: () async => setState(stopwatch.reset),
                 ),
               ],
             );
           },
         ),
-        title: "Stopwatch Timer",
+        title: 'Stopwatch Timer',
       ),
     ];
 
@@ -248,7 +249,7 @@ class CustomWidgetList extends StatelessWidget {
     return ListTile(
       onTap: () {
         navigatorKey.currentState?.push(
-          MaterialPageRoute(
+          MaterialPageRoute<dynamic>(
             builder: (builder) => WidgetView(title: title, widget: widget),
           ),
         );

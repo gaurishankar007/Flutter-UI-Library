@@ -1,12 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class LoadingCircle extends StatefulWidget {
-  final double strokeWidth;
-  final double height;
-  final double width;
-  final Color? color;
-  final bool centered;
-
   const LoadingCircle({
     super.key,
     this.strokeWidth = 4,
@@ -16,9 +10,6 @@ class LoadingCircle extends StatefulWidget {
     this.centered = true,
   });
 
-  @override
-  State<LoadingCircle> createState() => _LoadingCircleState();
-
   factory LoadingCircle.small({Color? color, bool centered = true}) =>
       LoadingCircle(
         strokeWidth: 2,
@@ -27,17 +18,27 @@ class LoadingCircle extends StatefulWidget {
         color: color,
         centered: centered,
       );
+  final double strokeWidth;
+  final double height;
+  final double width;
+  final Color? color;
+  final bool centered;
+
+  @override
+  State<LoadingCircle> createState() => _LoadingCircleState();
 }
 
 class _LoadingCircleState extends State<LoadingCircle>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
-  late Animation colorAnimation;
+  late Animation<Color?> colorAnimation;
 
   @override
   void initState() {
     super.initState();
-    if (widget.color != null) return;
+    if (widget.color != null) {
+      return;
+    }
 
     controller = AnimationController(
       vsync: this,
@@ -68,7 +69,9 @@ class _LoadingCircleState extends State<LoadingCircle>
   void dispose() {
     // Dispose animation controller only if it is initialized
     // The animation controller is initialized only when the color is null
-    if (widget.color == null) controller.dispose();
+    if (widget.color == null) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -95,7 +98,9 @@ class _LoadingCircleState extends State<LoadingCircle>
 
     child = SizedBox(height: widget.height, width: widget.width, child: child);
 
-    if (widget.centered) return Center(child: child);
+    if (widget.centered) {
+      return Center(child: child);
+    }
     return child;
   }
 }

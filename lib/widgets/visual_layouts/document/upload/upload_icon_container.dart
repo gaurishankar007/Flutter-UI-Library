@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class UploadIconContainer extends StatelessWidget {
-  final IconData iconData;
-  final String text;
-  final VoidCallback onTap;
 
   const UploadIconContainer({
     super.key,
@@ -14,6 +11,9 @@ class UploadIconContainer extends StatelessWidget {
     required this.text,
     required this.onTap,
   });
+  final IconData iconData;
+  final String text;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {

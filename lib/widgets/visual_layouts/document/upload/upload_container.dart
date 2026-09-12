@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/painters/dotted_container.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class UploadContainer extends StatelessWidget {
-  final int maxFileCount;
   const UploadContainer({super.key, required this.maxFileCount});
+  final int maxFileCount;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,9 @@ class UploadContainer extends StatelessWidget {
               color: AppColors.primary,
               size: 32,
             ),
-            const BaseText("Click here to add files", color: AppColors.black),
+            const BaseText('Click here to add files', color: AppColors.black),
             BaseText(
-              "Max $maxFileCount "
+              'Max $maxFileCount '
               "${maxFileCount > 1 ? "files are" : "file is"} allowed",
               color: AppColors.fade,
               fontSize: 12,

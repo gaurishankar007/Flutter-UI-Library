@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class BottomSheetTitle extends StatelessWidget {
-  final String title;
-  final Alignment titleAlignment;
-  final Color? titleColor;
 
   const BottomSheetTitle({
     super.key,
@@ -12,6 +9,9 @@ class BottomSheetTitle extends StatelessWidget {
     this.titleAlignment = Alignment.centerLeft,
     this.titleColor,
   });
+  final String title;
+  final Alignment titleAlignment;
+  final Color? titleColor;
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
 import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 

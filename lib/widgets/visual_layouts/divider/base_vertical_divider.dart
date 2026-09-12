@@ -1,13 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 
 class BaseVerticalDivider extends StatelessWidget {
-  final EdgeInsets? padding;
-  final Color? color;
-  final double? indent;
-  final double? endIndent;
-
   const BaseVerticalDivider({
     super.key,
     this.padding,
@@ -15,10 +10,14 @@ class BaseVerticalDivider extends StatelessWidget {
     this.indent,
     this.endIndent,
   });
+  final EdgeInsets? padding;
+  final Color? color;
+  final double? indent;
+  final double? endIndent;
 
   @override
   Widget build(BuildContext context) {
-    Widget child = VerticalDivider(
+    final Widget child = VerticalDivider(
       width: 2,
       thickness: 2,
       color: color ?? AppColors.black70,
@@ -26,7 +25,9 @@ class BaseVerticalDivider extends StatelessWidget {
       endIndent: endIndent,
       radius: UIHelpers.radiusC4,
     );
-    if (padding == null) return child;
+    if (padding == null) {
+      return child;
+    }
     return Padding(padding: padding!, child: child);
   }
 }

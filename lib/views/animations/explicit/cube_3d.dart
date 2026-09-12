@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class Cube3D extends StatefulWidget {
@@ -66,7 +66,7 @@ class _Cube3DState extends State<Cube3D> with TickerProviderStateMixin {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
-        title: const Text("3D Cube", style: TextStyle(color: Colors.white)),
+        title: const Text('3D Cube', style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -105,7 +105,7 @@ class _Cube3DState extends State<Cube3D> with TickerProviderStateMixin {
                           height: size,
                           alignment: Alignment.center,
                           child: const Text(
-                            "BACK",
+                            'BACK',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -121,7 +121,7 @@ class _Cube3DState extends State<Cube3D> with TickerProviderStateMixin {
                           height: size,
                           alignment: Alignment.center,
                           child: const Text(
-                            "LEFT",
+                            'LEFT',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -137,7 +137,7 @@ class _Cube3DState extends State<Cube3D> with TickerProviderStateMixin {
                           height: size,
                           alignment: Alignment.center,
                           child: const Text(
-                            "RIGHT",
+                            'RIGHT',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -150,7 +150,7 @@ class _Cube3DState extends State<Cube3D> with TickerProviderStateMixin {
                         height: size,
                         alignment: Alignment.center,
                         child: const Text(
-                          "Front",
+                          'Front',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -165,7 +165,7 @@ class _Cube3DState extends State<Cube3D> with TickerProviderStateMixin {
                           height: size,
                           alignment: Alignment.center,
                           child: const Text(
-                            "TOP",
+                            'TOP',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -181,7 +181,7 @@ class _Cube3DState extends State<Cube3D> with TickerProviderStateMixin {
                           height: size,
                           alignment: Alignment.center,
                           child: const Text(
-                            "BOTTOM",
+                            'BOTTOM',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),

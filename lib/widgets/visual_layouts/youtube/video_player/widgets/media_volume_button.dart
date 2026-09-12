@@ -8,8 +8,8 @@
 // For licensing inquiries, contact: snehesh@vaiolin.ai
 
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/debounce_time.dart';
 import 'package:ui_library/utils/ui_helpers.dart';

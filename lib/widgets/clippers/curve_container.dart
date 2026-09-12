@@ -1,21 +1,9 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 
 class CurveContainer extends StatelessWidget {
-  final double? height;
-  final double? width;
-  final Color curvedColor;
-  final Color unCurvedColor;
-
-  final CurveSide curveSide;
-
-  /// How much the curve should be drawn base the height of the give side.
-  ///
-  /// 80% [curvePercentage] will draw a curvature of height 80 if the
-  /// total height is 100.
-  final double curvePercentage;
 
   const CurveContainer({
     super.key,
@@ -36,6 +24,18 @@ class CurveContainer extends StatelessWidget {
     this.curveSide = CurveSide.top,
     this.curvePercentage = 70,
   });
+  final double? height;
+  final double? width;
+  final Color curvedColor;
+  final Color unCurvedColor;
+
+  final CurveSide curveSide;
+
+  /// How much the curve should be drawn base the height of the give side.
+  ///
+  /// 80% [curvePercentage] will draw a curvature of height 80 if the
+  /// total height is 100.
+  final double curvePercentage;
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +64,10 @@ class CurveContainer extends StatelessWidget {
 
 /// Defining clipper for clip path
 class CurveClipper extends CustomClipper<Path> {
-  final CurveSide curveSide;
-  final double curvePercentage;
 
   const CurveClipper({required this.curveSide, required this.curvePercentage});
+  final CurveSide curveSide;
+  final double curvePercentage;
 
   @override
   Path getClip(Size size) {
@@ -85,7 +85,6 @@ class CurveClipper extends CustomClipper<Path> {
           size.height / 2,
         );
         clockwise = false;
-        break;
 
       case CurveSide.right:
         endOffset = Offset(0, size.height);
@@ -94,7 +93,6 @@ class CurveClipper extends CustomClipper<Path> {
           size.height / 2,
         );
         clockwise = true;
-        break;
 
       case CurveSide.top:
         endOffset = Offset(size.width, 0);
@@ -103,7 +101,6 @@ class CurveClipper extends CustomClipper<Path> {
           size.height * (min(curvePercentage, 100) / 100),
         );
         clockwise = false;
-        break;
 
       case CurveSide.bottom:
         path.moveTo(0, size.height);
@@ -113,12 +110,11 @@ class CurveClipper extends CustomClipper<Path> {
           size.height * (min(curvePercentage, 100) / 100),
         );
         clockwise = true;
-        break;
     }
 
-    path.arcToPoint(endOffset, radius: radius, clockwise: clockwise);
-
-    path.close();
+    path
+      ..arcToPoint(endOffset, radius: radius, clockwise: clockwise)
+      ..close();
 
     return path;
   }

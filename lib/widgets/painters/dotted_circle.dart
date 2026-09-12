@@ -1,11 +1,8 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DottedCircle extends StatelessWidget {
-  final double radius;
-  final Color color;
-  final int dotsNumber;
 
   const DottedCircle({
     super.key,
@@ -13,6 +10,9 @@ class DottedCircle extends StatelessWidget {
     required this.color,
     required this.dotsNumber,
   });
+  final double radius;
+  final Color color;
+  final int dotsNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -31,35 +31,35 @@ class DottedCircle extends StatelessWidget {
 }
 
 class DottedCirclePainter extends CustomPainter {
-  Color strokeColor;
-  double strokeWidth;
-  int dotsNumber;
 
   DottedCirclePainter({
     required this.strokeColor,
     required this.strokeWidth,
     required this.dotsNumber,
   });
+  Color strokeColor;
+  double strokeWidth;
+  int dotsNumber;
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
+    final paint = Paint()
       ..color = strokeColor
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
 
-    Offset center = Offset(size.width / 2, size.height / 2);
-    double radius = min(size.width / 2, size.height / 2);
+    final center = Offset(size.width / 2, size.height / 2);
+    final double radius = min(size.width / 2, size.height / 2);
 
     /// If dotsNumber is 4,
     /// base angle = 360 / dotsNumber, sweep angle = 360 / (dotsNumber * 2)
     /// so that the length of dot and gap will be same
-    double baseAngle = pi / (dotsNumber / 2);
-    double sweepAngle = pi / dotsNumber;
+    final double baseAngle = pi / (dotsNumber / 2);
+    final double sweepAngle = pi / dotsNumber;
 
     for (var i = 0; i < dotsNumber; i++) {
-      var startAngle = baseAngle * i;
+      final startAngle = baseAngle * i;
 
       canvas.drawArc(
         Rect.fromCircle(center: center, radius: radius),

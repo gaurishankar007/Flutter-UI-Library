@@ -1,24 +1,23 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
 import 'package:ui_library/widgets/visual_layouts/document/models/document_type.dart';
 import 'package:ui_library/widgets/visual_layouts/document/upload/upload_icon_container.dart';
 
 class DocumentUploadBottomSheet extends StatelessWidget {
-  final bool multiSelector;
-  final Function(List<File> imageFiles) onSelection;
-  final DocumentType documentType;
-
   const DocumentUploadBottomSheet({
     super.key,
     this.multiSelector = true,
     required this.onSelection,
     required this.documentType,
   });
+  final bool multiSelector;
+  final void Function(List<File> imageFiles) onSelection;
+  final DocumentType documentType;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class DocumentUploadBottomSheet extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const BottomSheetTitle(
-          title: "Select Option",
+          title: 'Select Option',
           titleAlignment: Alignment.center,
         ),
         UIHelpers.spaceV16,
@@ -35,7 +34,7 @@ class DocumentUploadBottomSheet extends StatelessWidget {
           children: [
             UploadIconContainer(
               iconData: Icons.cloud_upload,
-              text: "Upload Image",
+              text: 'Upload Image',
               onTap: () async {
                 if (documentType == DocumentType.images) {
                   await pickUpImages(ImageSource.gallery);
@@ -46,7 +45,7 @@ class DocumentUploadBottomSheet extends StatelessWidget {
             ),
             UploadIconContainer(
               iconData: Icons.add_a_photo_outlined,
-              text: "Take Photo",
+              text: 'Take Photo',
               onTap: () async => await pickUpImages(ImageSource.camera),
             ),
           ],
@@ -62,21 +61,35 @@ class DocumentUploadBottomSheet extends StatelessWidget {
       xFiles = await ImagePicker().pickMultiImage();
     } else {
       final xFile = await ImagePicker().pickImage(source: source);
-      if (xFile != null) xFiles.add(xFile);
+      if (xFile != null) {
+        xFiles.add(xFile);
+      }
     }
 
-    if (xFiles.isEmpty) return;
+    if (xFiles.isEmpty) {
+      return;
+    }
     onSelection.call(xFiles.map((e) => File(e.path)).toList());
   }
 
   Future<void> pickUpFiles() async {
-    final filePicker = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: documentType.allowedFileTypes,
-    );
+    final List<PlatformFile> files;
+    if (multiSelector) {
+      files = await FilePicker.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: documentType.allowedFileTypes,
+      );
+    } else {
+      final file = await FilePicker.pickFile(
+        type: FileType.custom,
+        allowedExtensions: documentType.allowedFileTypes,
+      );
+      files = file != null ? [file] : [];
+    }
 
-    if (filePicker == null) return;
-    onSelection.call(filePicker.files.map((e) => File(e.xFile.path)).toList());
+    if (files.isEmpty) {
+      return;
+    }
+    onSelection.call(files.map((e) => File(e.xFile.path)).toList());
   }
 }

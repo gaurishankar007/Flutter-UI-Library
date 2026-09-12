@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
 import 'package:ui_library/widgets/user_inputs/bottom_sheet/generic_bottom_sheet.dart';
 import 'package:ui_library/widgets/user_inputs/form/base_text_field.dart';
@@ -11,22 +11,23 @@ import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 /// the selected value. The selected item is visually highlighted, and the widget updates its state
 /// accordingly when an item is selected.
 class DropdownBottomSheet<T> extends StatefulWidget {
+  const DropdownBottomSheet({
+    super.key,
+    required this.title,
+    this.labelText,
+    this.hintText = 'Select',
+    required this.items,
+    required this.onChanged,
+    this.selectedItem,
+  });
   final String title;
   final String? labelText;
   final String? hintText;
   final DropdownItem<T>? selectedItem;
   final List<DropdownItem<T>> items;
-  final Function(T value) onChanged;
-
-  const DropdownBottomSheet({
-    super.key,
-    required this.title,
-    this.labelText,
-    this.hintText = "Select",
-    required this.items,
-    required this.onChanged,
-    this.selectedItem,
-  });
+  // The onChanged callback accepts the generic type T chosen from the dropdown.
+  // ignore: unsafe_variance
+  final void Function(T value) onChanged;
 
   @override
   State<DropdownBottomSheet<T>> createState() => _DropdownBottomSheetState();
@@ -53,7 +54,7 @@ class _DropdownBottomSheetState<T> extends State<DropdownBottomSheet<T>> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () =>
-          showGenericBottomSheet(context, child: _buildDropdownItems()),
+          showGenericBottomSheet<void>(context, child: _buildDropdownItems()),
       child: ListenableBuilder(
         listenable: controller,
         builder: (context, child) {
@@ -110,15 +111,16 @@ class _DropdownBottomSheetState<T> extends State<DropdownBottomSheet<T>> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           BaseText(dropDownData.label),
-                          _selectedItem?.value == dropDownData.value
-                              ? const Icon(
-                                  Icons.radio_button_checked,
-                                  color: Colors.blue,
-                                )
-                              : const Icon(
-                                  Icons.radio_button_off,
-                                  color: Colors.grey,
-                                ),
+                          if (_selectedItem?.value == dropDownData.value)
+                            const Icon(
+                              Icons.radio_button_checked,
+                              color: Colors.blue,
+                            )
+                          else
+                            const Icon(
+                              Icons.radio_button_off,
+                              color: Colors.grey,
+                            ),
                         ],
                       ),
                     ),
@@ -134,14 +136,15 @@ class _DropdownBottomSheetState<T> extends State<DropdownBottomSheet<T>> {
 }
 
 class DropdownItem<T> {
+  const DropdownItem({required this.value, required this.label});
   final T value;
   final String label;
 
-  const DropdownItem({required this.value, required this.label});
-
   @override
   bool operator ==(covariant DropdownItem<T> other) {
-    if (identical(this, other)) return true;
+    if (identical(this, other)) {
+      return true;
+    }
 
     return other.value == value && other.label == label;
   }

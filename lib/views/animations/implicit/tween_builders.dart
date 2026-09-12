@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/clippers/circle_clipper.dart';
 
 Color getRandomColor() => Color(0xFF000000 + Random().nextInt(0x00FFFFFF));
@@ -23,7 +23,7 @@ class _TweenBuildersState extends State<TweenBuilders> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          "Tween Builders",
+          'Tween Builders',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -42,7 +42,7 @@ class _TweenBuildersState extends State<TweenBuilders> {
                 );
               },
               child: const Text(
-                "Hello world!",
+                'Hello world!',
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
               ),
             ),
@@ -56,7 +56,7 @@ class _TweenBuildersState extends State<TweenBuilders> {
               onEnd: () {
                 debugPrint('Timer ended');
               },
-              builder: (BuildContext context, Duration value, Widget? child) {
+              builder: (context, value, child) {
                 final minutes = value.inMinutes;
                 final seconds = value.inSeconds % 60;
                 return Padding(

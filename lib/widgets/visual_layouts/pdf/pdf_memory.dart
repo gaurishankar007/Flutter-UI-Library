@@ -1,15 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/visual_layouts/error_indicator.dart';
 
 class PDFMemory extends StatelessWidget {
-  final Uint8List pdfData;
-  final double? height;
-  final double? width;
-  final bool? swipeHorizontal;
-  final bool? pageFling;
 
   const PDFMemory({
     super.key,
@@ -19,6 +14,11 @@ class PDFMemory extends StatelessWidget {
     this.swipeHorizontal,
     this.pageFling,
   });
+  final Uint8List pdfData;
+  final double? height;
+  final double? width;
+  final bool? swipeHorizontal;
+  final bool? pageFling;
 
   @override
   Widget build(BuildContext context) {

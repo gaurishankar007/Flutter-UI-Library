@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/painters/polygon_painter.dart';
 
 class AnimationWithPolygon extends StatefulWidget {
@@ -69,7 +69,7 @@ class _AnimationWithPolygonState extends State<AnimationWithPolygon>
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          "Animated Polygon",
+          'Animated Polygon',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,

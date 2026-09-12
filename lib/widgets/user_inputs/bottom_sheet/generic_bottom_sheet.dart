@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 Future<T?> showGenericBottomSheet<T>(
   BuildContext context, {
@@ -13,7 +13,6 @@ Future<T?> showGenericBottomSheet<T>(
     backgroundColor: Colors.white,
     barrierColor: const Color(0XFF1D1B20).withAlpha(153),
     useSafeArea: true,
-    isScrollControlled: false,
     isDismissible: isDismissible,
     enableDrag: enableDrag,
     scrollControlDisabledMaxHeightRatio: scrollControlDisabledMaxHeightRatio,

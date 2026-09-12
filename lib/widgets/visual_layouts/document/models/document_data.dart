@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/visual_layouts/error_indicator.dart';
 import 'package:ui_library/widgets/visual_layouts/images/base_file_image.dart';
 import 'package:ui_library/widgets/visual_layouts/images/base_memory_image.dart';
@@ -15,6 +15,8 @@ part 'document_pdf_data.dart';
 
 /// Holds document data sources
 abstract class DocumentData {
+
+  DocumentData({this.url, this.uint8List, this.file}) : id = const Uuid().v4();
   final String id;
 
   /// document url
@@ -25,8 +27,6 @@ abstract class DocumentData {
 
   /// document file
   final File? file;
-
-  DocumentData({this.url, this.uint8List, this.file}) : id = const Uuid().v4();
 
   Widget build({
     double? height,

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class BottomSheetBody extends StatelessWidget {
-  final List<Widget> children;
   const BottomSheetBody({super.key, required this.children});
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {

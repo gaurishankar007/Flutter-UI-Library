@@ -1,19 +1,18 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PolygonPainter extends CustomPainter {
-  final int sides;
   const PolygonPainter({required this.sides});
+  final int sides;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint =
-        Paint()
-          ..color = Colors.deepPurple
-          ..style = PaintingStyle.stroke
-          ..strokeCap = StrokeCap.round
-          ..strokeWidth = 3;
+    final paint = Paint()
+      ..color = Colors.deepPurple
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = 3;
 
     final path = Path();
     final center = Offset(size.width / 2, size.height / 2);
@@ -36,7 +35,9 @@ class PolygonPainter extends CustomPainter {
     path.moveTo(center.dx + xPoint(radius, 0), center.dy + yPoint(radius, 0));
 
     for (final angle in angles) {
-      if (angle == 0) continue;
+      if (angle == 0) {
+        continue;
+      }
       path.lineTo(
         center.dx + xPoint(radius, angle),
         center.dy + yPoint(radius, angle),

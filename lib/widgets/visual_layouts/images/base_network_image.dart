@@ -1,22 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
-import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 import 'package:ui_library/widgets/visual_layouts/images/base_asset_image.dart';
 import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
 
 class BaseNetworkImage extends StatelessWidget {
-  final String url;
-  final double? width;
-  final double? height;
-  final BoxFit? fit;
-  final BorderRadius? borderRadius;
-  final bool circular;
-  final double? cacheHeight;
-  final double? cacheWidth;
-  final BoxFit? fallbackImageFit;
-  final Widget? fallbackWidget;
-
   const BaseNetworkImage({
     super.key,
     required this.url,
@@ -30,6 +19,16 @@ class BaseNetworkImage extends StatelessWidget {
     this.fallbackImageFit,
     this.fallbackWidget,
   });
+  final String url;
+  final double? width;
+  final double? height;
+  final BoxFit? fit;
+  final BorderRadius? borderRadius;
+  final bool circular;
+  final double? cacheHeight;
+  final double? cacheWidth;
+  final BoxFit? fallbackImageFit;
+  final Widget? fallbackWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class BaseNetworkImage extends StatelessWidget {
       cacheHeight: cacheHeight?.scaledByDPR.toInt(),
       cacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
-      frameBuilder: (context, child, frame, bool wasSynchronouslyLoaded) {
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
         if (frame != null) {
           return child;
         }
@@ -74,7 +73,7 @@ class BaseNetworkImage extends StatelessWidget {
     Widget? fallbackWidget,
     bool isBordered = false,
   }) {
-    Widget child = BaseNetworkImage(
+    final Widget child = BaseNetworkImage(
       key: key,
       url: url,
       width: diameter,
@@ -85,7 +84,9 @@ class BaseNetworkImage extends StatelessWidget {
       fallbackWidget: fallbackWidget ?? BaseAssetImage.person(size: diameter),
     );
 
-    if (!isBordered) return child;
+    if (!isBordered) {
+      return child;
+    }
     return CircleAvatar(
       radius: (diameter / 2) + 1.5,
       backgroundColor: AppColors.fade,

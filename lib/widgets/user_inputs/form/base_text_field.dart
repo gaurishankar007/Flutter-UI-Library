@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
@@ -67,7 +67,7 @@ class BaseTextField extends HookWidget {
       focusNode: focusNode,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(color: AppColors.black38, fontSize: 17),
+        hintStyle: const TextStyle(color: AppColors.black38, fontSize: 17),
         errorStyle: const TextStyle(
           color: AppColors.error,
           fontSize: 17,

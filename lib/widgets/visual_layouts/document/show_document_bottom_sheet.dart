@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
 import 'package:ui_library/widgets/user_inputs/bottom_sheet/bottom_sheet_title.dart';
@@ -11,12 +11,12 @@ void showDocumentBottomSheet(
   String? title,
   double? height,
   double? width,
-}) => showGenericBottomSheet(
+}) => showGenericBottomSheet<void>(
   context,
   child: Column(
     mainAxisSize: MainAxisSize.min,
     children: [
-      BottomSheetTitle(title: title ?? "Document"),
+      BottomSheetTitle(title: title ?? 'Document'),
       Container(
         width: double.maxFinite,
         padding: UIHelpers.paddingA16,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 /// A dropdown menu widget that provides a flexible and customizable way to select an item from a list.
@@ -8,17 +8,6 @@ import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 /// the dropdown menu determines the width of the popup container, and it supports callbacks for
 /// selection, filtering, and searching.
 class BaseDropdownMenu<T> extends StatelessWidget {
-  final double? width;
-  final String? label;
-  final String? hintText;
-  final bool enableFilter;
-  final bool enableSearch;
-  final TextEditingController? controller;
-  final T? initialSelection;
-  final Function(T?)? onSelected;
-  final FilterCallback<T>? filterCallback;
-  final SearchCallback<T>? searchCallback;
-  final List<DropdownMenuEntry<T>> entries;
 
   const BaseDropdownMenu({
     super.key,
@@ -34,6 +23,23 @@ class BaseDropdownMenu<T> extends StatelessWidget {
     this.searchCallback,
     required this.entries,
   });
+  final double? width;
+  final String? label;
+  final String? hintText;
+  final bool enableFilter;
+  final bool enableSearch;
+  final TextEditingController? controller;
+  final T? initialSelection;
+  // The onSelected callback accepts the generic type T chosen from the dropdown menu.
+  // ignore: unsafe_variance
+  final ValueChanged<T?>? onSelected;
+  // The filter callback operates on entries parameterized by generic type T.
+  // ignore: unsafe_variance
+  final FilterCallback<T>? filterCallback;
+  // The search callback operates on entries parameterized by generic type T.
+  // ignore: unsafe_variance
+  final SearchCallback<T>? searchCallback;
+  final List<DropdownMenuEntry<T>> entries;
 
   @override
   Widget build(BuildContext context) {

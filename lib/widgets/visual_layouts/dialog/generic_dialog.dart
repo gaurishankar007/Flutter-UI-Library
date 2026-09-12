@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/screen_util/screen_util.dart';
 import 'package:ui_library/utils/ui_helpers.dart';
@@ -12,8 +12,8 @@ Future<T?> showGenericDialog<T>(
   double? dialogHeight,
 
   /// This method lets you access the dialog context.
-  Function(BuildContext dialogContext)? onDialogShown,
-  Function()? onDialogDismissed,
+  void Function(BuildContext dialogContext)? onDialogShown,
+  VoidCallback? onDialogDismissed,
   required List<Widget> children,
 }) => showDialog(
   context: context,
@@ -55,7 +55,7 @@ Future<T?> showGenericDialog<T>(
                   Navigator.pop(builderContext);
                   onDialogDismissed?.call();
                 },
-                icon: Icon(Icons.close, size: 32),
+                icon: const Icon(Icons.close, size: 32),
                 padding: EdgeInsets.zero,
                 disableSplash: true,
               ),

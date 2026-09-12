@@ -1,20 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/widgets/animations/explicit/loading_circle.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class BaseTextButton extends StatelessWidget {
-  final Function() onPressed;
-  final String text;
-  final Color foregroundColor;
-  final double fontSize;
-  final FontWeight textFontWeight;
-  final EdgeInsets? padding;
-  final VisualDensity? visualDensity;
-  final double? elevation;
-  final bool expanded;
-  final bool disabled;
-  final bool loading;
-
   const BaseTextButton({
     super.key,
     required this.onPressed,
@@ -29,6 +17,17 @@ class BaseTextButton extends StatelessWidget {
     this.disabled = false,
     this.loading = false,
   });
+  final void Function() onPressed;
+  final String text;
+  final Color foregroundColor;
+  final double fontSize;
+  final FontWeight textFontWeight;
+  final EdgeInsets? padding;
+  final VisualDensity? visualDensity;
+  final double? elevation;
+  final bool expanded;
+  final bool disabled;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,9 @@ class BaseTextButton extends StatelessWidget {
       child: BaseText(text, fontSize: fontSize, fontWeight: textFontWeight),
     );
 
-    if (loading) child = LoadingCircle.small(color: Colors.white);
+    if (loading) {
+      child = LoadingCircle.small(color: Colors.white);
+    }
 
     if (expanded) {
       child = SizedBox(height: 50, width: double.maxFinite, child: child);
