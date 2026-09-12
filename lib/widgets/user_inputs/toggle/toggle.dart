@@ -21,13 +21,16 @@ class Toggle extends HookWidget {
     final isDisabled = onChanged == null;
 
     final Widget child = UnconstrainedBox(
-      child: SizedBox(
-        width: 40,
-        child: FittedBox(
-          fit: BoxFit.fitWidth,
-          child: Switch(
-            value: switchState.value,
-            onChanged: isDisabled ? null : callback,
+      child: Padding(
+        padding: UIHelpers.paddingA2,
+        child: SizedBox(
+          width: 40,
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Switch(
+              value: switchState.value,
+              onChanged: isDisabled ? null : callback,
+            ),
           ),
         ),
       ),
@@ -37,10 +40,11 @@ class Toggle extends HookWidget {
       return child;
     }
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         child,
         UIHelpers.spaceH8,
-        BaseText(
+        BaseText.body(
           label!,
           color: isDisabled
               ? AppColors.black.withAlpha(97)

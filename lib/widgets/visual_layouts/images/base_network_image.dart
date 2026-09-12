@@ -18,6 +18,7 @@ class BaseNetworkImage extends StatelessWidget {
     this.cacheWidth,
     this.fallbackImageFit,
     this.fallbackWidget,
+    this.alignment = Alignment.center,
   });
   final String url;
   final double? width;
@@ -29,6 +30,7 @@ class BaseNetworkImage extends StatelessWidget {
   final double? cacheWidth;
   final BoxFit? fallbackImageFit;
   final Widget? fallbackWidget;
+  final AlignmentGeometry alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class BaseNetworkImage extends StatelessWidget {
       cacheHeight: cacheHeight?.scaledByDPR.toInt(),
       cacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
+      alignment: alignment,
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
         if (frame != null) {
           return child;
@@ -53,8 +56,12 @@ class BaseNetworkImage extends StatelessWidget {
               cacheHeight: cacheHeight,
               cacheWidth: cacheWidth,
               fit: fallbackImageFit,
+              alignment: alignment,
             );
       },
+      // Renders via an HTML <img> element when the platform decoder can't
+      // load the bytes directly (e.g. CORS-less hosts on Flutter web).
+      webHtmlElementStrategy: WebHtmlElementStrategy.fallback,
     );
 
     if (circular) {

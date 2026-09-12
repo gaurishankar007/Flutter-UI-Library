@@ -9,8 +9,8 @@ abstract final class CacheManagerUtil {
   static Future<File> getFile(String url) async =>
       await _cacheManager.getSingleFile(url);
 
-  static Future<Uint8List> getFileBytes(String fileUrl) async {
-    final file = await _cacheManager.getSingleFile(fileUrl);
+  static Future<Uint8List> getFileBytes(String fileUrl, {String? cacheKey}) async {
+    final file = await _cacheManager.getSingleFile(fileUrl, key: cacheKey);
     return await file.readAsBytes();
   }
 

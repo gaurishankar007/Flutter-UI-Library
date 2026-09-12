@@ -17,6 +17,7 @@ class BaseAssetImage extends StatelessWidget {
     this.cacheWidth,
     this.useLoadingIndicator = true,
     this.fallbackImageFit,
+    this.alignment = Alignment.center,
   });
 
   factory BaseAssetImage.icon({required String assetName, double size = 24}) =>
@@ -50,6 +51,7 @@ class BaseAssetImage extends StatelessWidget {
   final double? cacheWidth;
   final bool useLoadingIndicator;
   final BoxFit? fallbackImageFit;
+  final AlignmentGeometry alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +62,7 @@ class BaseAssetImage extends StatelessWidget {
       cacheHeight: cacheHeight?.scaledByDPR.toInt(),
       cacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
+      alignment: alignment,
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
         if (frame != null) {
           return child;
@@ -74,6 +77,7 @@ class BaseAssetImage extends StatelessWidget {
         cacheHeight: cacheHeight,
         cacheWidth: cacheWidth,
         fit: fallbackImageFit,
+        alignment: alignment,
       ),
     );
 

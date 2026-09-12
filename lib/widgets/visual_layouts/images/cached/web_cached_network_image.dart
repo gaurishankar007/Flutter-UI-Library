@@ -3,7 +3,6 @@ import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/utils/cache_manager_util.dart';
 import 'package:ui_library/utils/extensions/num_extension.dart';
-import 'package:ui_library/widgets/visual_layouts/icons/error_icon.dart';
 import 'package:ui_library/widgets/visual_layouts/images/base_asset_image.dart';
 import 'package:ui_library/widgets/visual_layouts/images/default_asset_image.dart';
 import 'package:ui_library/widgets/visual_layouts/loading/cupertino_loading.dart';
@@ -12,6 +11,7 @@ class BaseCachedNetworkImage extends HookWidget {
   const BaseCachedNetworkImage({
     super.key,
     required this.url,
+    this.cacheKey,
     this.width,
     this.height,
     this.fit,
@@ -21,9 +21,11 @@ class BaseCachedNetworkImage extends HookWidget {
     this.cacheWidth,
     this.fallbackImageFit,
     this.fallbackWidget,
+    this.alignment = Alignment.center,
   });
 
   final String url;
+  final String? cacheKey;
   final double? width;
   final double? height;
   final BoxFit? fit;
@@ -33,12 +35,13 @@ class BaseCachedNetworkImage extends HookWidget {
   final double? cacheWidth;
   final BoxFit? fallbackImageFit;
   final Widget? fallbackWidget;
+  final AlignmentGeometry alignment;
 
   @override
   Widget build(BuildContext context) {
     final imageFuture = useMemoized(
-      () async => await CacheManagerUtil.getFileBytes(url),
-      [url],
+      () async => await CacheManagerUtil.getFileBytes(url, cacheKey: cacheKey),
+      [url, cacheKey],
     );
     final snapshot = useFuture(imageFuture);
 
@@ -52,6 +55,7 @@ class BaseCachedNetworkImage extends HookWidget {
           cacheHeight: cacheHeight,
           cacheWidth: cacheWidth,
           fit: fallbackImageFit,
+          alignment: alignment,
         );
 
     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -64,6 +68,7 @@ class BaseCachedNetworkImage extends HookWidget {
         width: width,
         height: height,
         fit: fit,
+        alignment: alignment,
         cacheHeight: cacheHeight?.scaledByDPR.toInt(),
         cacheWidth: cacheWidth?.scaledByDPR.toInt(),
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -73,7 +78,7 @@ class BaseCachedNetworkImage extends HookWidget {
           return loadingIcon;
         },
         errorBuilder: (context, error, stackTrace) {
-          return fallbackWidget ?? ErrorIcon(height: height, width: width);
+          return errorWidget;
         },
       );
     }
@@ -90,6 +95,7 @@ class BaseCachedNetworkImage extends HookWidget {
   static Widget avatar({
     Key? key,
     required String url,
+    String? cacheKey,
     required double diameter,
     Widget? fallbackWidget,
     bool isBordered = false,
@@ -97,6 +103,7 @@ class BaseCachedNetworkImage extends HookWidget {
     final Widget child = BaseCachedNetworkImage(
       key: key,
       url: url,
+      cacheKey: cacheKey,
       width: diameter,
       height: diameter,
       cacheWidth: diameter,

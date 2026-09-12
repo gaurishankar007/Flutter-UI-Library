@@ -65,25 +65,25 @@ class SecondaryButton extends HookWidget {
           overlayColor: const WidgetStatePropertyAll(Colors.transparent),
           foregroundColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) {
-              return AppColors.primary;
+              return AppColors.primary250;
             } else if (states.contains(WidgetState.pressed)) {
-              return AppColors.primary;
+              return AppColors.primary900;
             } else if (states.contains(WidgetState.hovered)) {
-              return AppColors.primary;
+              return AppColors.primary700;
             }
-            return AppColors.black;
+            return AppColors.black87;
           }),
           side: WidgetStateBorderSide.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) {
-              return const BorderSide(color: AppColors.primary, width: 1.5);
+              return const BorderSide(color: AppColors.primary250, width: 1.5);
             } else if (states.contains(WidgetState.pressed)) {
               // Always check for pressed before hovered, because hovered is also included inside pressed
               // So it might reflect hovered state instead of pressed state
-              return const BorderSide(color: AppColors.primary, width: 1.5);
+              return const BorderSide(color: AppColors.primary900, width: 1.5);
             } else if (states.contains(WidgetState.hovered)) {
-              return const BorderSide(color: AppColors.primary, width: 1.5);
+              return const BorderSide(color: AppColors.primary700, width: 1.5);
             }
-            return const BorderSide(color: AppColors.primary, width: 1.5);
+            return const BorderSide(color: AppColors.primary500, width: 1.5);
           }),
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(borderRadius: UIHelpers.radiusC8),
@@ -122,7 +122,7 @@ class SecondaryButton extends HookWidget {
     }
 
     if (label != null) {
-      final textWidget = BaseText(label!, textAlign: TextAlign.center);
+      final textWidget = BaseText.button(label!, textAlign: TextAlign.center);
 
       if (icon == null) {
         return textWidget;

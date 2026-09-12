@@ -63,20 +63,20 @@ class PrimaryButton extends HookWidget {
           padding: WidgetStatePropertyAll(_getPadding()),
           backgroundColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) {
-              return AppColors.primary;
+              return AppColors.primary250;
             } else if (states.contains(WidgetState.pressed)) {
-              return AppColors.primary;
+              return AppColors.primary900;
             } else if (states.contains(WidgetState.hovered)) {
-              return AppColors.primary;
+              return AppColors.primary700;
             }
             return AppColors.primary;
           }),
           minimumSize: const WidgetStatePropertyAll(Size.zero),
           foregroundColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) {
-              return AppColors.white;
+              return AppColors.white60;
             }
-            return AppColors.white;
+            return AppColors.white87;
           }),
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(borderRadius: UIHelpers.radiusC8),
@@ -117,7 +117,7 @@ class PrimaryButton extends HookWidget {
     }
 
     if (label != null) {
-      final textWidget = BaseText(label!, textAlign: TextAlign.center);
+      final textWidget = BaseText.button(label!, textAlign: TextAlign.center);
 
       if (icon == null) {
         return textWidget;

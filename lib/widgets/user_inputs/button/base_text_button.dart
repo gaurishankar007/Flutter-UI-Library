@@ -1,5 +1,5 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:ui_library/widgets/animations/explicit/loading_circle.dart';
+import 'package:ui_library/widgets/animations/explicit/animated_loading_circle.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 
 class BaseTextButton extends StatelessWidget {
@@ -43,7 +43,7 @@ class BaseTextButton extends StatelessWidget {
     );
 
     if (loading) {
-      child = LoadingCircle.small(color: Colors.white);
+      child = AnimatedLoadingCircle.small(color: Colors.white);
     }
 
     if (expanded) {

@@ -101,7 +101,11 @@ class BaseTextField extends HookWidget {
       maxLength: maxLength,
       onChanged: onChanged,
       onTap: onTap,
-      onTapOutside: onTapOutside,
+      onTapOutside: (event) {
+        /// Helps to hide mobile native keyboard.
+        FocusManager.instance.primaryFocus?.unfocus();
+        onTapOutside?.call(event);
+      },
       onFieldSubmitted: onFieldSubmitted,
       validator: (value) {
         final validation = validator?.call(value);

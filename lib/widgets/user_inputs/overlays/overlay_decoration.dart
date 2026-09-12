@@ -14,7 +14,7 @@ class OverlayDecoration extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: UIHelpers.radiusC8,
-        border: Border.all(color: AppColors.fade),
+        border: Border.all(color: AppColors.gray),
         boxShadow: [
           BoxShadow(
             offset: const Offset(0, 1),

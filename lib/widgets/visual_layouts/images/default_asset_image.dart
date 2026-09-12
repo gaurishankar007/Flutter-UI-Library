@@ -10,6 +10,7 @@ class DefaultAssetImage extends StatelessWidget {
     this.cacheHeight,
     this.cacheWidth,
     this.fit,
+    this.alignment = Alignment.center,
   });
 
   final double? width;
@@ -17,6 +18,7 @@ class DefaultAssetImage extends StatelessWidget {
   final double? cacheHeight;
   final double? cacheWidth;
   final BoxFit? fit;
+  final AlignmentGeometry alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class DefaultAssetImage extends StatelessWidget {
       cacheHeight: cacheHeight?.scaledByDPR.toInt(),
       cacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
+      alignment: alignment,
       frameBuilder: (_, child, frame, _) =>
           frame != null ? child : CupertinoLoading(dimension: height ?? width),
     );

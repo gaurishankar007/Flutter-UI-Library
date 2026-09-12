@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart' as flutter_material;
 import 'package:material_ui/material_ui.dart';
 import 'package:pinput/pinput.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
@@ -25,40 +26,53 @@ class OTPField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Pinput(
-      length: otpLength,
-      controller: controller,
-      onChanged: onChanged,
-      onCompleted: onComplete,
-      enabled: enabled,
-      separatorBuilder: (index) {
-        final isMiddle = index == (otpLength / 2) - 1;
-        return isMiddle ? _buildTextFieldDivider() : UIHelpers.spaceH8;
-      },
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      defaultPinTheme: PinTheme(
-        width: 55,
-        height: 55,
-        padding: _getPadding(),
-        decoration: _getBoxDecoration(borderColor: AppColors.primary200),
-        textStyle: _getTextStyle(),
-      ),
-      focusedPinTheme: PinTheme(
-        width: 55,
-        height: 55,
-        padding: _getPadding(),
-        decoration: _getBoxDecoration(
-          color: AppColors.primary50,
-          borderColor: AppColors.primary,
+    // Pinput needs flutter/material.dart's Material/MaterialLocalizations,
+    // which package:material_ui's Scaffold/MaterialApp don't provide (distinct
+    // types despite the identical API) - supply them here directly. Using
+    // DefaultMaterialLocalizations since the app isn't otherwise localized.
+    return flutter_material.Localizations.override(
+      context: context,
+      delegates: const [
+        flutter_material.DefaultMaterialLocalizations.delegate,
+      ],
+      child: flutter_material.Material(
+        type: flutter_material.MaterialType.transparency,
+        child: Pinput(
+          length: otpLength,
+          controller: controller,
+          onChanged: onChanged,
+          onCompleted: onComplete,
+          enabled: enabled,
+          separatorBuilder: (index) {
+            final isMiddle = index == (otpLength / 2) - 1;
+            return isMiddle ? _buildTextFieldDivider() : UIHelpers.spaceH8;
+          },
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          defaultPinTheme: PinTheme(
+            width: 55,
+            height: 55,
+            padding: _getPadding(),
+            decoration: _getBoxDecoration(borderColor: AppColors.primary200),
+            textStyle: _getTextStyle(),
+          ),
+          focusedPinTheme: PinTheme(
+            width: 55,
+            height: 55,
+            padding: _getPadding(),
+            decoration: _getBoxDecoration(
+              color: AppColors.primary50,
+              borderColor: AppColors.primary,
+            ),
+            textStyle: _getTextStyle(),
+          ),
+          disabledPinTheme: PinTheme(
+            width: 55,
+            height: 55,
+            padding: _getPadding(),
+            decoration: _getBoxDecoration(borderColor: AppColors.gray),
+            textStyle: _getTextStyle(AppColors.gray),
+          ),
         ),
-        textStyle: _getTextStyle(),
-      ),
-      disabledPinTheme: PinTheme(
-        width: 55,
-        height: 55,
-        padding: _getPadding(),
-        decoration: _getBoxDecoration(borderColor: AppColors.gray),
-        textStyle: _getTextStyle(AppColors.gray),
       ),
     );
   }

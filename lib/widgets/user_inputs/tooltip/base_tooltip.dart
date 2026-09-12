@@ -27,7 +27,10 @@ class BaseTooltip extends StatelessWidget {
           WidgetSpan(child: BaseText.label(label, color: AppColors.white87)),
         ],
       ),
-      decoration: BoxDecoration(borderRadius: UIHelpers.radiusC8),
+      decoration: BoxDecoration(
+        color: AppColors.black87,
+        borderRadius: UIHelpers.radiusC8,
+      ),
       padding: UIHelpers.paddingH16V12,
       child: child,
     );

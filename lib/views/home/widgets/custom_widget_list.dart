@@ -26,7 +26,9 @@ import 'package:ui_library/widgets/visual_layouts/base_shimmer.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
 import 'package:ui_library/widgets/visual_layouts/dialog/generic_dialog.dart';
 import 'package:ui_library/widgets/visual_layouts/draggable/draggable_content.dart';
+import 'package:ui_library/widgets/visual_layouts/images/smart_network/smart_network_image.dart';
 import 'package:ui_library/widgets/visual_layouts/stopwatch_timer.dart';
+import 'package:ui_library/widgets/visual_layouts/video/app_video_player.dart';
 
 class CustomWidgetList extends StatelessWidget {
   const CustomWidgetList({super.key});
@@ -235,6 +237,23 @@ class CustomWidgetList extends StatelessWidget {
           },
         ),
         title: 'Stopwatch Timer',
+      ),
+      _buildListTile(
+        widget: const SmartNetworkImage(
+          url: 'https://picsum.photos/200',
+          width: 200,
+          height: 200,
+          fit: BoxFit.cover,
+        ),
+        title: 'Smart Network Image',
+      ),
+      _buildListTile(
+        widget: AppVideoPlayer.network(
+          path:
+              'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          autoPlay: false,
+        ),
+        title: 'App Video Player',
       ),
     ];
 

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 part 'screen_metrics.dart';
@@ -81,6 +82,21 @@ class ScreenUtil {
     return ScreenType.desktop;
   }
 
+  void setPhoneViewGlobalOrientation({bool allowLandscape = false}) {
+    final shortestSide = _width < _height ? _width : _height;
+    final isPhoneView = shortestSide <= 600;
+    if (isPhoneView) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+        if (allowLandscape) ...[
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight,
+        ],
+      ]);
+    }
+  }
+
   /// Get the required number within the limitation
   double _limitedNumber(double number, {double? min, double? max}) {
     if (min != null && number < min) {
@@ -132,6 +148,12 @@ class ScreenUtil {
 
   /// Whether the screen falls within smartphone view or not
   bool get isWithinPhoneView => _type.index <= ScreenType.phone.index;
+
+  /// Whether the screen's shortest side is within phone view, even in landscape.
+  bool get isWithinActualPhoneView {
+    final shortestSide = _width < _height ? _width : _height;
+    return shortestSide <= 600;
+  }
 
   /// Whether the screen falls within the tablet view or not
   bool get isWithinTabletView => _type.index <= ScreenType.tablet.index;

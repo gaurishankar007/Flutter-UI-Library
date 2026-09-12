@@ -1,11 +1,16 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:ui_library/widgets/animations/explicit/loading_circle.dart';
+import 'package:ui_library/widgets/animations/explicit/animated_loading_circle.dart';
 import 'package:ui_library/widgets/user_inputs/button/base_text_button.dart';
 
 class ResendOTPButton extends HookWidget {
-  const ResendOTPButton({super.key, required this.onOTPSend});
-  final void Function() onOTPSend;
+  const ResendOTPButton({
+    super.key,
+    required this.onOTPSend,
+    this.expiryDuration = const Duration(seconds: 10),
+  });
+  final Future<void> Function() onOTPSend;
+  final Duration expiryDuration;
 
   @override
   Widget build(BuildContext context) {
@@ -15,24 +20,24 @@ class ResendOTPButton extends HookWidget {
     if (loading.value) {
       return SizedBox(
         height: 30,
-        child: LoadingCircle.small(color: Colors.black),
+        child: AnimatedLoadingCircle.small(color: Colors.black),
       );
     }
 
     return TweenAnimationBuilder(
-      tween: Tween<Duration>(
-        begin: const Duration(seconds: 10),
-        end: Duration.zero,
-      ),
-      duration: const Duration(seconds: 10),
+      tween: Tween<Duration>(begin: expiryDuration, end: Duration.zero),
+      duration: expiryDuration,
       onEnd: () => showTimer.value = false,
       builder: (context, duration, child) {
         return BaseTextButton(
-          onPressed: () {
+          onPressed: () async {
             loading.value = true;
-            onOTPSend();
-            loading.value = false;
-            showTimer.value = true;
+            await onOTPSend();
+            // If the widget is disposed, don't update value
+            if (context.mounted) {
+              loading.value = false;
+              showTimer.value = true;
+            }
           },
           text: showTimer.value
               ? 'Resend OTP (${duration.inSeconds})'

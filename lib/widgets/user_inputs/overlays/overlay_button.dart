@@ -20,7 +20,7 @@ class OverlayButton extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: UIHelpers.paddingH16V12,
-        child: BaseText(label, textAlign: labelAlignment),
+        child: BaseText.body(label, textAlign: labelAlignment),
       ),
     );
   }

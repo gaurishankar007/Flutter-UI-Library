@@ -17,6 +17,8 @@ class BaseMemoryImage extends StatelessWidget {
     this.fit,
     this.borderRadius,
     this.fallbackImageFit,
+    this.fallbackWidget,
+    this.alignment = Alignment.center,
   });
 
   /// image bytes data
@@ -29,6 +31,8 @@ class BaseMemoryImage extends StatelessWidget {
   final BoxFit? fit;
   final BorderRadius? borderRadius;
   final BoxFit? fallbackImageFit;
+  final Widget? fallbackWidget;
+  final AlignmentGeometry alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +47,23 @@ class BaseMemoryImage extends StatelessWidget {
       cacheHeight: cacheHeight?.scaledByDPR.toInt(),
       cacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
+      alignment: alignment,
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
         if (frame != null) {
           return child;
         }
         return CupertinoLoading(dimension: height);
       },
-      errorBuilder: (_, _, _) => DefaultAssetImage(
-        width: width,
-        height: height,
-        cacheHeight: cacheHeight,
-        cacheWidth: cacheWidth,
-        fit: fallbackImageFit,
-      ),
+      errorBuilder: (_, _, _) =>
+          fallbackWidget ??
+          DefaultAssetImage(
+            width: width,
+            height: height,
+            cacheHeight: cacheHeight,
+            cacheWidth: cacheWidth,
+            fit: fallbackImageFit,
+            alignment: alignment,
+          ),
     );
 
     if (isCircular) {

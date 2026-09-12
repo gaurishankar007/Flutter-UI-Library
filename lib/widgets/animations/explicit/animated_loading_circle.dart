@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
-class LoadingCircle extends StatefulWidget {
-  const LoadingCircle({
+class AnimatedLoadingCircle extends StatefulWidget {
+  const AnimatedLoadingCircle({
     super.key,
     this.strokeWidth = 4,
     this.height = 30,
@@ -10,8 +10,8 @@ class LoadingCircle extends StatefulWidget {
     this.centered = true,
   });
 
-  factory LoadingCircle.small({Color? color, bool centered = true}) =>
-      LoadingCircle(
+  factory AnimatedLoadingCircle.small({Color? color, bool centered = true}) =>
+      AnimatedLoadingCircle(
         strokeWidth: 2,
         height: 20,
         width: 20,
@@ -25,10 +25,10 @@ class LoadingCircle extends StatefulWidget {
   final bool centered;
 
   @override
-  State<LoadingCircle> createState() => _LoadingCircleState();
+  State<AnimatedLoadingCircle> createState() => _AnimatedLoadingCircleState();
 }
 
-class _LoadingCircleState extends State<LoadingCircle>
+class _AnimatedLoadingCircleState extends State<AnimatedLoadingCircle>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<Color?> colorAnimation;

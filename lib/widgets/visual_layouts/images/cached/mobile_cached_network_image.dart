@@ -10,6 +10,7 @@ class BaseCachedNetworkImage extends StatelessWidget {
   const BaseCachedNetworkImage({
     super.key,
     required this.url,
+    this.cacheKey,
     this.width,
     this.height,
     this.fit,
@@ -19,9 +20,11 @@ class BaseCachedNetworkImage extends StatelessWidget {
     this.cacheWidth,
     this.fallbackWidget,
     this.fallbackImageFit,
+    this.alignment = Alignment.center,
   });
 
   final String url;
+  final String? cacheKey;
   final double? width;
   final double? height;
   final BoxFit? fit;
@@ -31,16 +34,19 @@ class BaseCachedNetworkImage extends StatelessWidget {
   final double? cacheWidth;
   final BoxFit? fallbackImageFit;
   final Widget? fallbackWidget;
+  final Alignment alignment;
 
   @override
   Widget build(BuildContext context) {
     Widget child = CachedNetworkImage(
       imageUrl: url,
+      cacheKey: cacheKey,
       width: width,
       height: height,
       memCacheHeight: cacheHeight?.scaledByDPR.toInt(),
       memCacheWidth: cacheWidth?.scaledByDPR.toInt(),
       fit: fit,
+      alignment: alignment,
       placeholder: (context, url) => CupertinoLoading(dimension: height),
       errorWidget: (context, error, stackTrace) {
         return fallbackWidget ??
@@ -50,6 +56,7 @@ class BaseCachedNetworkImage extends StatelessWidget {
               cacheHeight: cacheHeight,
               cacheWidth: cacheWidth,
               fit: fallbackImageFit,
+              alignment: alignment,
             );
       },
     );
@@ -66,6 +73,7 @@ class BaseCachedNetworkImage extends StatelessWidget {
   static Widget avatar({
     Key? key,
     required String url,
+    String? cacheKey,
     required double diameter,
     Widget? fallbackWidget,
     bool isBordered = false,
@@ -73,6 +81,7 @@ class BaseCachedNetworkImage extends StatelessWidget {
     final Widget child = BaseCachedNetworkImage(
       key: key,
       url: url,
+      cacheKey: cacheKey,
       width: diameter,
       height: diameter,
       cacheWidth: diameter,

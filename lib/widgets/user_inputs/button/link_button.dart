@@ -2,6 +2,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:ui_library/core/constants/app_colors.dart';
 import 'package:ui_library/widgets/visual_layouts/base_text.dart';
+import 'package:ui_library/widgets/visual_layouts/loading/loading_circle.dart';
 
 class LinkButton extends HookWidget {
   const LinkButton({
@@ -15,10 +16,12 @@ class LinkButton extends HookWidget {
     this.width,
     this.padding,
     this.fixedColor = false,
+    this.foregroundColor,
+    this.textDecorationColor,
     this.isLoadable = false,
     this.disabled = false,
   });
-  
+
   final void Function() onTap;
   final String? label;
   final double textSize;
@@ -33,12 +36,38 @@ class LinkButton extends HookWidget {
   /// Whether the button color should be changed or not based on the widget state.
   final bool fixedColor;
 
+  /// Color to use when [fixedColor] is true. Defaults to [AppColors.primary].
+  final Color? foregroundColor;
+  final Color? textDecorationColor;
+
   @override
   Widget build(BuildContext context) {
-    final colorNotifier = useValueNotifier(AppColors.primary);
+    final loadingNotifier = useValueNotifier(false);
+
+    final onPressed = useCallback(() async {
+      /// If the button is loading, discard the task
+      if (loadingNotifier.value) {
+        return;
+      }
+
+      if (isLoadable) {
+        loadingNotifier.value = true;
+      }
+
+      if (onTap case final Future<void> Function() onFutureTap) {
+        await onFutureTap.call();
+      } else {
+        onTap.call();
+      }
+
+      // If the widget is disposed, don't update value
+      if (context.mounted && isLoadable) {
+        loadingNotifier.value = false;
+      }
+    }, [onTap, isLoadable]);
 
     return TextButton(
-      onPressed: disabled ? null : onTap.call,
+      onPressed: disabled ? null : onPressed.call,
       style: ButtonStyle(
         padding: const WidgetStatePropertyAll(EdgeInsets.zero),
         minimumSize: const WidgetStatePropertyAll(Size.zero),
@@ -46,33 +75,42 @@ class LinkButton extends HookWidget {
         overlayColor: const WidgetStatePropertyAll(Colors.transparent),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (fixedColor) {
-            return colorNotifier.value;
+            return foregroundColor ?? AppColors.primary;
           }
           if (states.contains(WidgetState.disabled)) {
-            colorNotifier.value = AppColors.black25;
+            return AppColors.black25;
           } else if (states.contains(WidgetState.pressed)) {
-            colorNotifier.value = AppColors.primary;
+            return AppColors.primary;
           } else if (states.contains(WidgetState.hovered)) {
-            colorNotifier.value = AppColors.primary;
-          } else {
-            colorNotifier.value = AppColors.black70;
+            return AppColors.primary;
           }
-
-          return colorNotifier.value;
+          return AppColors.black70;
         }),
       ),
       child: ValueListenableBuilder(
-        valueListenable: colorNotifier,
-        builder: (builderContext, color, setState) {
-          return _buildChild(color);
+        valueListenable: loadingNotifier,
+        builder: (builderContext, loading, setState) {
+          return _buildChild(loading);
         },
       ),
     );
   }
 
-  Widget _buildChild(Color decorationColor) {
+  Widget _buildChild(bool loading) {
+    if (loading) {
+      return const LoadingCircle(
+        strokeWidth: 2,
+        dimension: 16,
+        centered: false,
+      );
+    }
+
     if (label != null) {
-      final textWidget = BaseText(label!, decorationColor: decorationColor);
+      final textWidget = BaseText.link(
+        label!,
+        fontSize: textSize,
+        decorationColor: textDecorationColor,
+      );
 
       if (icon == null) {
         return textWidget;

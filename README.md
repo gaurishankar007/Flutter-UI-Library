@@ -43,7 +43,7 @@ A collection of reusable and customizable widgets for Flutter, designed to accel
 Bring your UI to life with smooth animations:
 
 - **Explicit Animations**
-  - ✅ **Loading Circle**: An animated circular loader with changing colors to indicate progress.
+  - ✅ **Animated Loading Circle**: An animated circular loader with changing colors to indicate progress.
   - ✅ **Gradient Loading Circle**: A rotating circular loader with a gradient effect, perfect for stylish loading states.
 - **Implicit Animations**
   - ✅ **Animated Indicator**: A customizable indicator for page views or step-by-step progress, with smooth transitions between active and inactive states.
@@ -87,13 +87,16 @@ Draw custom shapes with ease:
 Intuitive and interactive components for user input:
 
 - ✅ **Bottom Sheet**: A structured bottom sheet component with a title and body for presenting options or information.
+  - ✅ **Bottom Sheet Button**: A loadable primary/secondary footer action button, sized for a bottom sheet.
 - **Button**
   - ✅ **Icon Button**: A simple `IconButton` with sensible defaults for padding and size.
   - ✅ **Link Button**: A button that looks like a hyperlink, with optional icons and customizable states.
   - ✅ **Primary Button**: A `FilledButton` for primary actions, with support for loading states and icons.
   - ✅ **Secondary Button**: An `OutlinedButton` for secondary actions, also with loading state and icon support.
   - ✅ **Text Button**: A wrapper around `TextButton` that can be expanded and show a loading indicator.
+  - ✅ **Text Field Clear Button**: A clear ("x") button that only appears once its target `TextEditingController` has text.
 - ✅ **Checkbox**: A `Checkbox` with an optional label and support for tristate values.
+- ✅ **Option Selection**: A selectable, loadable tile for choosing one option among a set, with a highlighted selected state.
 - **Dropdown**
   - ✅ **Drop Down Bottom Sheet**: A dropdown that opens a modal bottom sheet for item selection, ideal for mobile-friendly lists.
   - ✅ **Drop Down Button**: A styled wrapper around Flutter's native `DropdownButton`.
@@ -138,28 +141,41 @@ Enhance your UI with foundational layout elements:
 - **Icons**
   - ✅ **Error Icon**: A standardized red error icon for indicating failures or errors.
   - ✅ **Gradient Icon**: A versatile widget that applies a linear gradient to any icon.
+- **Icon Text**
+  - ✅ **Icon Text**: An `Icon` and label wrapped together, for inline icon+text rows.
+  - ✅ **Image Icon Text**: The same pattern, using an asset image in place of an `IconData` icon.
 - **Image**
   - ✅ **Asset Image**: A robust wrapper for `Image.asset` that provides a seamless experience by including loading and error builders, ensuring your UI remains graceful even if an image fails to load.
-  - ✅ **Cached Network Image**: An advanced widget for displaying and caching network images with platform-specific logic. It dynamically provides separate caching mechanisms for mobile and web, ensuring optimal performance on both platforms while supporting custom placeholders and error widgets.
+  - ✅ **Cached Network Image**: An advanced widget for displaying and caching network images with platform-specific logic. It dynamically provides separate caching mechanisms for mobile and web, ensuring optimal performance on both platforms while supporting custom placeholders, error widgets, and a cache-key override for cache-busting.
   - ✅ **File Image**: A convenient widget for displaying an image from a local `File` object. It simplifies handling images selected from the device's gallery or camera by managing loading and error states.
   - ✅ **Memory Image**: A specialized widget for rendering an image directly from a `Uint8List` in memory. This is particularly useful for displaying dynamically generated images or images received from an API as byte data.
-  - ✅ **Network Image**: A fundamental widget for displaying an image from a URL. It comes with built-in loading and error builders to handle different network states gracefully.
+  - ✅ **Network Image**: A fundamental widget for displaying an image from a URL. It comes with built-in loading and error builders to handle different network states gracefully, falling back to an HTML `<img>` element on web for CORS-less hosts.
+  - ✅ **Smart Network Image**: A platform-conditional network image - disk-cached via `CachedNetworkImage` on mobile, and `Image.network` with an HTML fallback on web - for sources known to break Flutter's default web image renderer (e.g. YouTube thumbnails).
 - **PDF**
+  - ✅ **Cached Network PDF Viewer**: Downloads and caches a PDF from a URL, then renders it from memory, with loading and error states.
   - ✅ **File PDF**: A widget to render a PDF document from a local `File`.
   - ✅ **Memory PDF**: A widget to render a PDF document from a `Uint8List` in memory.
 - **Tag**
   - ✅ **Base Tag**: A small, styled label widget for categories, status indicators, or chips, with optional icon support.
+- **Video**
+  - ✅ **App Video Player**: A generic player (network/file/asset) built on `video_player`, with YouTube-style controls - auto-hiding chrome, double-tap-to-seek with visual feedback, a hover-reveal/auto-collapsing volume slider, and playback speed.
 - **Youtube**
   - ✅ **Youtube Video Player**: An embedded YouTube video player with custom controls for a seamless viewing experience.
   - ✅ **Youtube Thumbnail Image**: Displays a thumbnail for a YouTube video from its URL, with a play button overlay.
+- ✅ **Android Navigation Safe Area**: Wraps a child in a `SafeArea` only on Android devices using 3-button navigation, avoiding double-padding on gesture-nav devices.
 - ✅ **Cupertino Loading**: A simple wrapper around `CupertinoActivityIndicator` for consistent iOS-style loading spinners.
 - ✅ **Error Indicator**: A centered error icon, often used as a placeholder when content fails to load.
+- ✅ **Full Screen Preview**: Wraps a child so tapping it opens a full-screen, dismissible preview overlay - handy for lightboxing images.
 - ✅ **Keyboard Space**: A dynamic `SizedBox` that adjusts its height to match the on-screen keyboard, preventing UI overlap.
+- ✅ **Light Annotated Region**: Forces a light status bar (dark icons), regardless of the ambient theme.
 - ✅ **Loading Circle**: A versatile circular progress indicator with options for Material or Cupertino styles.
+- ✅ **Not Found**: A centered, muted empty-state text widget.
+- ✅ **Pull To Refresh**: A themed wrapper around `RefreshIndicator`.
 - ✅ **Shimmer**: A loading placeholder that displays a shimmering animation, indicating that content is being loaded.
 - ✅ **Slider**: A styled slider for selecting a value from a range, with customizable track and thumb.
 - ✅ **Stopwatch**: A text widget that displays the elapsed time from a `Stopwatch` instance, formatted as HH:MM:SS.
 - ✅ **Text**: A foundational text widget with factory constructors for various text styles (headings, body, links) to ensure typographic consistency.
+- ✅ **Vertical Space**: An animated, `ValueNotifier`-driven `SizedBox` for dynamically adjustable vertical spacing.
 
 ---
 

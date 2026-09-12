@@ -5,11 +5,13 @@ import 'package:ui_library/utils/ui_helpers.dart';
 class BaseVerticalDivider extends StatelessWidget {
   const BaseVerticalDivider({
     super.key,
+    this.thickness,
     this.padding,
     this.color,
     this.indent,
     this.endIndent,
   });
+  final double? thickness;
   final EdgeInsets? padding;
   final Color? color;
   final double? indent;
@@ -19,7 +21,7 @@ class BaseVerticalDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget child = VerticalDivider(
       width: 2,
-      thickness: 2,
+      thickness: thickness ?? 2,
       color: color ?? AppColors.black70,
       indent: indent,
       endIndent: endIndent,
